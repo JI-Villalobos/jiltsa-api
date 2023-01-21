@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  appservice:
+    container_name: jiltsa
+    build: .
+    image: aplicationservice:v1
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/jiltsa_operation
+      SPRING_DATASOURCE_USERNAME: 'root'
+      SPRING_DATASOURCE_PASSWORD: 'root'
