@@ -16,7 +16,7 @@ public interface BranchMapper {
     List<BranchDto> toBranchesDto(List<Branch> branches);
 
     @InheritInverseConfiguration
-    @Mapping(target = "branch", ignore = true)
+    @Mapping(target = "sellers", ignore = true)
     Branch toBranch(BranchDto branchDto);
     List<Branch> toBranches(List<BranchDto> branchesDto);
 }

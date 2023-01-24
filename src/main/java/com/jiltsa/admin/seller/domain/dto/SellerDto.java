@@ -13,6 +13,5 @@ public class SellerDto {
     private Integer id;
     private String fullName;
     private Integer branchId;
-    private String password;
     private Boolean isActive;
 }
