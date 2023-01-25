@@ -33,3 +33,7 @@ public class Seller {
     @JoinColumn(name = "branch_id", insertable = false, updatable = false)
     private Branch branch;
 }
+
+
+
+

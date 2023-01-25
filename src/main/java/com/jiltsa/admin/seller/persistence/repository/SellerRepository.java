@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface SellerRepository extends JpaRepository<Seller, Integer> {
     List<Seller> findByIsActiveTrue();
-    Optional<Seller> getSeller(Integer sellerId);
 }

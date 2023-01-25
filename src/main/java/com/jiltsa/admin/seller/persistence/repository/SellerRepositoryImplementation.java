@@ -22,7 +22,7 @@ public class SellerRepositoryImplementation implements SellerDRepository {
 
     @Override
     public Optional<SellerDto> getSeller(Integer sellerId) {
-        return repository.getSeller(sellerId).map(mapper::toSellerDto);
+        return repository.findById(sellerId).map(mapper::toSellerDto);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class SellerRepositoryImplementation implements SellerDRepository {
 
     @Override
     public SellerDto disableSeller(Integer sellerId) {
-        return mapper.toSellerDto(repository.getSeller(sellerId).map(seller -> {
+        return mapper.toSellerDto(repository.findById(sellerId).map(seller -> {
             seller.setIsActive(false);
             return repository.save(seller);
         }).orElseThrow());
