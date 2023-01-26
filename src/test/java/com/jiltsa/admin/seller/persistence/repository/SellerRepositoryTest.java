@@ -50,5 +50,6 @@ class SellerRepositoryTest {
 
         //then
         assertThat(sellers).isInstanceOf(ArrayList.class);
+        assertThat(sellers.size()).isEqualTo(2);
     }
 }
