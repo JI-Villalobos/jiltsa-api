@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/seller")
+@RequestMapping("/sellers")
 @RequiredArgsConstructor
 public class SellerController {
     private final SellerDService service;

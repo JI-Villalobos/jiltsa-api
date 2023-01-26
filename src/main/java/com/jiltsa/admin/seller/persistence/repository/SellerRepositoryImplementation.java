@@ -27,7 +27,7 @@ public class SellerRepositoryImplementation implements SellerDRepository {
 
     @Override
     public SellerDto newSeller(SellerDto sellerDto) {
-        Seller seller = new Seller();
+        Seller seller = mapper.toSeller(sellerDto);
         return mapper.toSellerDto(repository.save(seller));
     }
 
