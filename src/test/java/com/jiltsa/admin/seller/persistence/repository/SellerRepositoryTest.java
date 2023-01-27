@@ -2,6 +2,7 @@ package com.jiltsa.admin.seller.persistence.repository;
 
 import com.jiltsa.admin.branch.persistence.entity.Branch;
 import com.jiltsa.admin.branch.persistence.repository.BranchRepository;
+import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.AfterEach;
@@ -25,13 +26,13 @@ class SellerRepositoryTest {
     @BeforeEach
     void setUp() {
         List<Seller> sellers = new ArrayList<>();
-
-        Branch branch = new Branch(1, "none", true, sellers);
+        List<Accounting> accountingList = new ArrayList<>();
+        Branch branch = new Branch(1, "none", true, sellers, accountingList);
         branchRepository.save(branch);
 
-        Seller seller = new Seller(1, "Diana Path", 1, "1234", true, branch);
-        Seller seller2 = new Seller(2, "Diana Path", 1, "1234", false, branch);
-        Seller seller3 = new Seller(3, "Diana Path", 1, "1234", true, branch);
+        Seller seller = new Seller(1, "Diana Path", 1, "1234", true, branch, accountingList);
+        Seller seller2 = new Seller(2, "Diana Path", 1, "1234", false, branch, accountingList);
+        Seller seller3 = new Seller(3, "Diana Path", 1, "1234", true, branch, accountingList);
 
         sellerRepositoryUnderTest.save(seller);
         sellerRepositoryUnderTest.save(seller2);

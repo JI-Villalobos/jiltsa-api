@@ -1,5 +1,6 @@
 package com.jiltsa.admin.branch.persistence.entity;
 
+import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -29,4 +30,6 @@ public class Branch {
     @OneToMany(mappedBy = "branch")
     private List<Seller> sellers;
 
+    @OneToMany(mappedBy = "branch")
+    private List<Accounting> accounting;
 }

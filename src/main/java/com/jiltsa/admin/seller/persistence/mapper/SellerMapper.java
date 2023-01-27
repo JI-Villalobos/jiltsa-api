@@ -5,6 +5,7 @@ import com.jiltsa.admin.seller.persistence.entity.Seller;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
@@ -14,7 +15,10 @@ public interface SellerMapper {
     List<SellerDto> toSellersDto(List<Seller> sellers);
 
     @InheritInverseConfiguration
-    @Mapping(target = "branch", ignore = true)
-    @Mapping(target = "password", ignore = true)
+    @Mappings({
+            @Mapping(target = "branch", ignore = true),
+            @Mapping(target = "password", ignore = true),
+            @Mapping(target = "accounting", ignore = true)
+    })
     Seller toSeller(SellerDto sellerDto);
 }

@@ -2,6 +2,7 @@ package com.jiltsa.admin.branch.persistence.mapper;
 
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.persistence.entity.Branch;
+import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,8 @@ class BranchMapperTest {
         //given
         BranchMapper mapper = Mappers.getMapper(BranchMapper.class);
         List<Seller> sellers = new ArrayList<>();
-        Branch branch = new Branch(1, "nazas", true, sellers);
+        List<Accounting> accountingList = new ArrayList<>();
+        Branch branch = new Branch(1, "nazas", true, sellers, accountingList);
 
         //when
         BranchDto branchDto = mapper.toBranchDto(branch);
