@@ -8,9 +8,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface AccountingMapper {
     AccountingDto toAccountingDto(Accounting accounting);
+    List<AccountingDto> toAccountingDtoList(List<Accounting> accountingList);
     CreateAccountingDto toCreateAccountingDto(Accounting accounting);
 
     @InheritInverseConfiguration
