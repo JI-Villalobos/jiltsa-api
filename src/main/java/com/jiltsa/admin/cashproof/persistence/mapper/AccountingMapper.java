@@ -18,7 +18,8 @@ public interface AccountingMapper {
             @Mapping(target = "branch", ignore = true),
             @Mapping(target = "seller", ignore = true),
             @Mapping(target = "incomeRegistries", ignore = true),
-            @Mapping(target = "expenseRegistries", ignore = true)
+            @Mapping(target = "expenseRegistries", ignore = true),
+            @Mapping(target = "date", ignore = true)
     })
     Accounting toAccounting(CreateAccountingDto createAccountingDto);
 }
