@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IncomeTypeDRepository {
     List<IncomeTypeDto> getIncomeTypes();
-    IncomeTypeDto createIncomeType();
+    IncomeTypeDto createIncomeType(IncomeTypeDto incomeTypeDto);
 }

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ExpenseTypeDRepository {
     List<ExpenseTypeDto> getExpenseTypes();
-    ExpenseTypeDto createExpenseType();
+    ExpenseTypeDto createExpenseType(ExpenseTypeDto expenseTypeDto);
 }
