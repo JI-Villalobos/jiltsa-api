@@ -22,7 +22,6 @@ import static org.mockito.Mockito.*;
 class SellerServiceTest {
     @Mock
     private SellerDRepository repository;
-
     @InjectMocks
     private SellerDService serviceUnderTest;
     @BeforeEach
