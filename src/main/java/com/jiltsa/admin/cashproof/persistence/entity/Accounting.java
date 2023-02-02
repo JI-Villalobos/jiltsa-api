@@ -35,7 +35,7 @@ public class Accounting {
     private Branch branch;
 
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_id", updatable = false, insertable = false)
     private Seller seller;
 
     @OneToMany(mappedBy = "accounting")
