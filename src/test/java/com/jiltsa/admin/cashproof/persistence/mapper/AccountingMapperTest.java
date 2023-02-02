@@ -58,7 +58,7 @@ class AccountingMapperTest {
     }
 
     @Test
-    void toCreateAccountingDto() {
+    void shouldMapperToCreateAccountingDto() {
         //given
         AccountingMapper mapper = Mappers.getMapper(AccountingMapper.class);
         Accounting accounting = new Accounting(1, 1, 1,
@@ -79,7 +79,7 @@ class AccountingMapperTest {
     }
 
     @Test
-    void toAccounting() {
+    void shouldMapperToAccounting() {
         //given
         CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1);
         AccountingMapper mapper = Mappers.getMapper(AccountingMapper.class);
