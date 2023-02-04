@@ -15,7 +15,7 @@ import java.util.List;
 public interface ExpenseRegistryMapper {
     ExpenseRegistryDto toExpenseRegistryDto(ExpenseRegistry expenseRegistry);
     List<ExpenseRegistryDto> toExpenseRegistryDtoList(List<ExpenseRegistry> expenseRegistryList);
-    CreateAccountingDto toCreateAccountingDto(ExpenseRegistry expenseRegistry);
+    CreateExpenseRegistryDto toCreateExpenseRegistryDto(ExpenseRegistry expenseRegistry);
 
     @InheritInverseConfiguration
     @Mappings({
