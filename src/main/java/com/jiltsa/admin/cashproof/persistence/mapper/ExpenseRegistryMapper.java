@@ -20,7 +20,8 @@ public interface ExpenseRegistryMapper {
     @InheritInverseConfiguration
     @Mappings({
             @Mapping(target = "accounting", ignore = true),
-            @Mapping(target = "expenseType", ignore = true)
+            @Mapping(target = "expenseType", ignore = true),
+            @Mapping(target = "time", ignore = true)
     })
     ExpenseRegistry toExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto);
 }

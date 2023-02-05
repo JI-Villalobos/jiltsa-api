@@ -103,6 +103,7 @@ class ExpenseRegistryMapperTest {
         CreateExpenseRegistryDto createExpenseRegistryDto = new CreateExpenseRegistryDto(
                 1,
                 1,
+                1,
                 "Expense Registry desc",
                 245.65);
 
