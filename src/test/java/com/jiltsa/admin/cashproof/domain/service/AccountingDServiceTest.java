@@ -42,7 +42,7 @@ class AccountingDServiceTest {
     }
 
     @Test
-    void getAccountingRegistriesBetweenTwoDates() {
+    void shouldGetAccountingRegistriesBetweenTwoDates() {
         //given
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
         LocalDateTime end = LocalDateTime.now();
@@ -55,7 +55,7 @@ class AccountingDServiceTest {
     }
 
     @Test
-    void createAccounting() {
+    void shouldCreateAccounting() {
         //given
         CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1);
 
