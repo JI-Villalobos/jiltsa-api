@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface IncomeRegistryDRepository {
     List<IncomeRegistryDto> getIncomeRegistries(Integer accountingId);
-    CreateIncomeRegistryDto createIncomeRegistry(CreateExpenseRegistryDto createExpenseRegistryDto);
+    CreateIncomeRegistryDto createIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto);
 }
