@@ -92,7 +92,7 @@ class IncomeRegistryMapperTest {
     }
 
     @Test
-    void toIncomeRegistry() {
+    void shouldMapToIncomeRegistry() {
         //given
         IncomeRegistryMapper mapper = Mappers.getMapper(IncomeRegistryMapper.class);
         CreateIncomeRegistryDto createIncomeRegistryDto = new CreateIncomeRegistryDto(1,

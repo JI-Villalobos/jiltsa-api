@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CreateCashWithdrawalDto {
     private Integer id;
-    private LocalDateTime date;
     private Double amount;
     private String concept;
+    private String sellerName;
 }

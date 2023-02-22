@@ -14,4 +14,5 @@ public class CashWithdrawalDto {
     private LocalDateTime date;
     private Double amount;
     private String concept;
+    private String sellerName;
 }
