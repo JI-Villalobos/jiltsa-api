@@ -14,4 +14,5 @@ public class CreateCashWithdrawalDto {
     private Double amount;
     private String concept;
     private String sellerName;
+    private String branch;
 }

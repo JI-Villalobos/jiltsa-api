@@ -25,6 +25,8 @@ public class CashWithdrawal {
     @NotNull
     private String concept;
     @NotNull
+    private String branch;
+    @NotNull
     @Column(name = "seller_name")
     private String sellerName;
 }

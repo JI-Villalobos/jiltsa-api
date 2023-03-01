@@ -15,4 +15,5 @@ public class CashWithdrawalDto {
     private Double amount;
     private String concept;
     private String sellerName;
+    private String branch;
 }

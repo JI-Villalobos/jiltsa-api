@@ -25,7 +25,9 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                "Dany");
+                "Nazas",
+                "Dany"
+                );
 
         //when
         CashWithdrawalDto cashWithdrawalDto = mapper.toCashWithdrawalDto(cashWithdrawal);
@@ -45,13 +47,15 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                "dany"
+                "Nazas",
+                "Dany"
         );
         CashWithdrawal cashWithdrawal2 = new CashWithdrawal(
                 2,
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
+                "Nazas",
                 "Dany"
         );
         cashWithdrawalList.add(cashWithdrawal);
@@ -74,7 +78,8 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                null
+                "Nazas",
+                "Dany"
         );
 
         //when
@@ -93,7 +98,8 @@ class CashWithdrawalMapperTest {
                 1,
                 645.5,
                 "Cash concept",
-                "Dany"
+                "Dany",
+                "Nazas"
                 );
 
         //when
