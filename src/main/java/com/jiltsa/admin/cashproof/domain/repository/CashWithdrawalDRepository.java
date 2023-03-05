@@ -6,6 +6,6 @@ import com.jiltsa.admin.cashproof.domain.dto.CreateCashWithdrawalDto;
 import java.util.List;
 
 public interface CashWithdrawalDRepository {
-    List<CashWithdrawalDto> getWithdrawalDtoList();
+    List<CashWithdrawalDto> getWithdrawalDtoList(String branch);
     CreateCashWithdrawalDto createCashWithdrawal(CreateCashWithdrawalDto createCashWithdrawalDto);
 }

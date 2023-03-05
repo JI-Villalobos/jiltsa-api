@@ -16,8 +16,8 @@ public class CashWithdrawalRepositoryImplementation implements CashWithdrawalDRe
     private final CashWithdrawalRepository repository;
     private final CashWithdrawalMapper mapper;
     @Override
-    public List<CashWithdrawalDto> getWithdrawalDtoList() {
-        return mapper.toCashWithdrawalDtoList(repository.findAll());
+    public List<CashWithdrawalDto> getWithdrawalDtoList(String branch) {
+        return mapper.toCashWithdrawalDtoList(repository.findByBranch(branch));
     }
 
     @Override
