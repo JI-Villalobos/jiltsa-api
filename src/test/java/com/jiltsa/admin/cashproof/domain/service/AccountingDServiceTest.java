@@ -35,10 +35,10 @@ class AccountingDServiceTest {
     @Test
     void shouldGetLastAccountingRegistries() {
         //when
-        serviceUnderTest.getLastAccountingRegistries();
+        serviceUnderTest.getLastAccountingRegistries(1);
 
         //then
-        verify(repository).getLastAccountingRegistries();
+        verify(repository).getLastAccountingRegistries(1);
     }
 
     @Test
@@ -48,10 +48,10 @@ class AccountingDServiceTest {
         LocalDateTime end = LocalDateTime.now();
 
         //when
-        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(start, end);
+        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(start, end, 1);
 
         //then
-        verify(repository).getAccountingRegistriesBetweenTwoDates(start, end);
+        verify(repository).getAccountingRegistriesBetweenTwoDates(start, end, 1);
     }
 
     @Test

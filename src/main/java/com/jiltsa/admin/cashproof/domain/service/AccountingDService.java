@@ -14,12 +14,14 @@ import java.util.List;
 public class AccountingDService {
     private final AccountingDRepository accountingDRepository;
 
-    public List<AccountingDto> getLastAccountingRegistries(){
-        return accountingDRepository.getLastAccountingRegistries();
+    public List<AccountingDto> getLastAccountingRegistries(Integer branchId){
+        return accountingDRepository.getLastAccountingRegistries(branchId);
     }
 
-    public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(LocalDateTime start, LocalDateTime end){
-        return accountingDRepository.getAccountingRegistriesBetweenTwoDates(start, end);
+    public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(
+            LocalDateTime start, LocalDateTime end, Integer branchId
+            ){
+        return accountingDRepository.getAccountingRegistriesBetweenTwoDates(start, end, branchId);
     }
 
     public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto){

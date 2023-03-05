@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AccountingDRepository {
-    List<AccountingDto> getLastAccountingRegistries();
-    List<AccountingDto> getAccountingRegistriesBetweenTwoDates(LocalDateTime start, LocalDateTime end);
+    List<AccountingDto> getLastAccountingRegistries(Integer branchId);
+    List<AccountingDto> getAccountingRegistriesBetweenTwoDates(LocalDateTime start, LocalDateTime end, Integer branchId);
     CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto);
 }

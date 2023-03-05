@@ -5,7 +5,6 @@ import com.jiltsa.admin.branch.persistence.repository.BranchRepository;
 import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
 import com.jiltsa.admin.seller.persistence.repository.SellerRepository;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AccountingRepositoryTest {
@@ -30,6 +29,8 @@ class AccountingRepositoryTest {
         List<Accounting> accountingList = new ArrayList<>();
         Branch branch = new Branch(1, "none", true, null, null);
         branchRepository.save(branch);
+        Branch branch2 = new Branch(2, "none", true, null, null);
+        branchRepository.save(branch2);
 
         Seller seller = new Seller(1, "Diana Path", 1, "1234", true, null, null);
         sellerRepository.save(seller);
@@ -55,6 +56,9 @@ class AccountingRepositoryTest {
         Accounting accounting19 = new Accounting(19, 1, 1, LocalDateTime.now().plusHours(2), null, null, null, null);
         Accounting accounting20 = new Accounting(20, 1, 1, LocalDateTime.now().plusHours(3), null, null, null, null);
         Accounting accounting21 = new Accounting(21, 1, 1, LocalDateTime.now(), null, null, null, null);
+        Accounting accounting22 = new Accounting(22, 1, 2, LocalDateTime.now().plusHours(2), null, null, null, null);
+        Accounting accounting23 = new Accounting(23, 1, 2, LocalDateTime.now().plusHours(3), null, null, null, null);
+        Accounting accounting24 = new Accounting(24, 1, 2, LocalDateTime.now(), null, null, null, null);
 
 
         accountingList.add(accounting);
@@ -78,13 +82,16 @@ class AccountingRepositoryTest {
         accountingList.add(accounting19);
         accountingList.add(accounting20);
         accountingList.add(accounting21);
+        accountingList.add(accounting22);
+        accountingList.add(accounting23);
+        accountingList.add(accounting24);
 
         accountingList.forEach(acc -> accountingRepositoryUnderTest.save(acc));
     }
     @Test
     void shouldFindTop20AccountingRegistries() {
         //when
-        List<Accounting> accountingList = accountingRepositoryUnderTest.findTop20ByOrderByIdDesc();
+        List<Accounting> accountingList = accountingRepositoryUnderTest.findTop20ByBranchIdOrderByIdDesc(1);
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);
@@ -97,7 +104,7 @@ class AccountingRepositoryTest {
         LocalDateTime end = LocalDateTime.now().plusMonths(1);
 
         //when
-        List<Accounting> accountingList = accountingRepositoryUnderTest.findByDateBetween(start, end);
+        List<Accounting> accountingList = accountingRepositoryUnderTest.findByDateBetweenAndBranchId(start, end, 1);
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);

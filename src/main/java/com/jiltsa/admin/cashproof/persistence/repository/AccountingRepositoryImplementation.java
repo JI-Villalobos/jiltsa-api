@@ -17,13 +17,15 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
     private final AccountingRepository repository;
     private final AccountingMapper mapper;
     @Override
-    public List<AccountingDto> getLastAccountingRegistries() {
-        return mapper.toAccountingDtoList(repository.findTop20ByOrderByIdDesc());
+    public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
+        return mapper.toAccountingDtoList(repository.findTop20ByBranchIdOrderByIdDesc(branchId));
     }
 
     @Override
-    public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(LocalDateTime start, LocalDateTime end) {
-        return mapper.toAccountingDtoList(repository.findByDateBetween(start, end));
+    public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(
+            LocalDateTime start, LocalDateTime end, Integer branchId
+    ) {
+        return mapper.toAccountingDtoList(repository.findByDateBetweenAndBranchId(start, end, branchId));
     }
 
     @Override
