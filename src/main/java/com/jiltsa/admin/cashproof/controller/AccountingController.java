@@ -20,6 +20,7 @@ public class AccountingController {
     }
 
     @GetMapping("/{initial}/{end}/{branchId}")
+    //jiltsa/api/v1/accounts/2023-03-25T18:29:08.608983/2023-03-29T18:29:08.608983/1
     public List<AccountingDto> getAccountingRegistriesBetweenDates(
             @PathVariable("initial")LocalDateTime initial,
             @PathVariable("end") LocalDateTime end,
