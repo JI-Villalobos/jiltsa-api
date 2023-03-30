@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/income-types")
+@RequestMapping("jiltsa/api/v1/income-types")
 @RequiredArgsConstructor
 public class IncomeTypeController {
     private final IncomeTypeService service;

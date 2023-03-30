@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/branches")
+@RequestMapping("jiltsa/api/v1/branches")
 @RequiredArgsConstructor
 public class BranchController{
     private final BranchDService service;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/expenses")
+@RequestMapping("jiltsa/api/v1/expenses")
 @RequiredArgsConstructor
 public class ExpenseRegistryController {
     private final ExpenseRegistryService service;

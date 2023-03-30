@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/expenses-types")
+@RequestMapping("jiltsa/api/v1/expenses-types")
 @RequiredArgsConstructor
 public class ExpenseTypeController {
     private final ExpenseTypeService service;

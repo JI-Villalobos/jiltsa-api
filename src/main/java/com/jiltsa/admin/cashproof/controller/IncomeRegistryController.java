@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/incomes")
+@RequestMapping("jiltsa/api/v1/incomes")
 @RequiredArgsConstructor
 public class IncomeRegistryController {
 

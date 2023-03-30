@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/sellers")
+@RequestMapping("jiltsa/api/v1/sellers")
 @RequiredArgsConstructor
 public class SellerController {
     private final SellerDService service;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/withdrawals")
+@RequestMapping("jiltsa/api/v1/withdrawals")
 @RequiredArgsConstructor
 public class CashWithdrawalController {
     private final CashWithdrawalService service;

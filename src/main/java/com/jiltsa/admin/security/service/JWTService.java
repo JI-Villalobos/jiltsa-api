@@ -19,7 +19,7 @@ public class JWTService {
     //TODO: just for early development stage, this is not the how key will be handled
     private static final String SECRET_KEY = "576D597133743677397A24432646294A404E635266556A586E32723475377821";
     public String extractUsername(String token){
-        return null;
+        return extractClaim(token, Claims::getSubject);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
@@ -49,13 +49,16 @@ public class JWTService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 15))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 ))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
+        System.out.println(username);
+        System.out.println(userDetails.getUsername());
+        System.out.println(isTokenExpired(token));
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
