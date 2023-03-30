@@ -24,7 +24,8 @@ public class AuthenticationService {
         AppUser user = AppUser.builder()
                 .username(request.username())
                 .email(request.email())
-                .pass(request.pass())
+                .pass(passwordEncoder.encode(request.pass()))
+                .branchId(request.branchId())
                 .role(Role.USER)
                 .build();
         repository.save(user);
