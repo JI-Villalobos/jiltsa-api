@@ -11,6 +11,6 @@ services:
     expose:
       - 8080
     environment:
-      SPRING_DATASOURCE_URL: ${DEV_JLTS_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${DEV_JLTS_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DEV_JLTS_DATASOURCE_PASSWORD}
+      SPRING_DATASOURCE_URL: op://Automation-Workflow/development_fm/url
+      SPRING_DATASOURCE_USERNAME: op://Automation-Workflow/development_fm/username
+      SPRING_DATASOURCE_PASSWORD: op://Automation-Workflow/development_fm/password
