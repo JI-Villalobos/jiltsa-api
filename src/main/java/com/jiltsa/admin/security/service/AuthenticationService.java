@@ -35,7 +35,8 @@ public class AuthenticationService {
 
     private AuthenticationResponse getAuthenticationResponse(AppUser user) {
         String token = jwtService.generateToken(user);
-        return new AuthenticationResponse(token);
+        String role = user.getRole().toString();
+        return new AuthenticationResponse(token, user.getBranchId(), role);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request){
