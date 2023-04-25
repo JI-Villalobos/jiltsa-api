@@ -11,6 +11,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class ExpenseRegistryDto {
     private Integer id;
+    private Integer accountingId;
     private Integer expenseTypeId;
     private Instant time;
     private String description;
