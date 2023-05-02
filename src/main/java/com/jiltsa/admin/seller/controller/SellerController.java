@@ -11,6 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("jiltsa/api/v1/sellers")
 @RequiredArgsConstructor
+@CrossOrigin
 public class SellerController {
     private final SellerDService service;
 

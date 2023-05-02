@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("jiltsa/api/v1/branches")
 @RequiredArgsConstructor
+@CrossOrigin
 public class BranchController{
     private final BranchDService service;
 

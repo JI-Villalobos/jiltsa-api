@@ -5,14 +5,12 @@ import com.jiltsa.admin.security.auth.AuthenticationResponse;
 import com.jiltsa.admin.security.auth.RegisterRequest;
 import com.jiltsa.admin.security.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/auth")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AuthenticationController {
     private final AuthenticationService service;
 

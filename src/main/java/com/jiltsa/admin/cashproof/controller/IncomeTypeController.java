@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("jiltsa/api/v1/income-types")
 @RequiredArgsConstructor
+@CrossOrigin
 public class IncomeTypeController {
     private final IncomeTypeService service;
     @GetMapping
