@@ -8,4 +8,4 @@ EXPOSE 8080
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*SNAPSHOT.jar /app/jiltsa-admin.jar
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod","/app/jiltsa-admin.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=pdn", "-jar","/app/jiltsa-admin.jar"]
