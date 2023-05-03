@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("jiltsa/api/v1/accounts")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AccountingController {
     private final AccountingDService service;
     @GetMapping("/{branchId}")
