@@ -7,6 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AccountingRepository extends JpaRepository<Accounting, Integer> {
-    List<Accounting> findTop20ByBranchIdOrderByIdDesc(Integer branchId);
+    List<Accounting> findTop20ByBranchId(Integer branchId);
     List<Accounting> findByDateBetweenAndBranchId(LocalDateTime start, LocalDateTime end, Integer branchId);
 }

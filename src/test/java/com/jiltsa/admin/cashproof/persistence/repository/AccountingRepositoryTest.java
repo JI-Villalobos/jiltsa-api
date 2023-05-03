@@ -91,7 +91,7 @@ class AccountingRepositoryTest {
     @Test
     void shouldFindTop20AccountingRegistries() {
         //when
-        List<Accounting> accountingList = accountingRepositoryUnderTest.findTop20ByBranchIdOrderByIdDesc(1);
+        List<Accounting> accountingList = accountingRepositoryUnderTest.findTop20ByBranchId(1);
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);

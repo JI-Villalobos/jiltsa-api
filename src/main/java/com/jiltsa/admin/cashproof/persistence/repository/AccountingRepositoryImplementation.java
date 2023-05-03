@@ -18,7 +18,7 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
     private final AccountingMapper mapper;
     @Override
     public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
-        return mapper.toAccountingDtoList(repository.findTop20ByBranchIdOrderByIdDesc(branchId));
+        return mapper.toAccountingDtoList(repository.findTop20ByBranchId(branchId));
     }
 
     @Override
