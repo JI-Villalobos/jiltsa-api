@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("jiltsa/api/v1/expenses")
 @RequiredArgsConstructor
-@CrossOrigin
 public class ExpenseRegistryController {
     private final ExpenseRegistryService service;
 

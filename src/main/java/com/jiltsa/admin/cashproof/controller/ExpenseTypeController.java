@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("jiltsa/api/v1/expenses-types")
 @RequiredArgsConstructor
-@CrossOrigin
 public class ExpenseTypeController {
     private final ExpenseTypeService service;
 

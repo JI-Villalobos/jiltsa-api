@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("jiltsa/api/v1/withdrawals")
 @RequiredArgsConstructor
-@CrossOrigin
 public class CashWithdrawalController {
     private final CashWithdrawalService service;
 
