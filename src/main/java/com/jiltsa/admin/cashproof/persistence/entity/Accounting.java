@@ -4,10 +4,7 @@ import com.jiltsa.admin.branch.persistence.entity.Branch;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
