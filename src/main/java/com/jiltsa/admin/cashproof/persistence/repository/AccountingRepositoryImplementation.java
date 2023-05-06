@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,6 +20,11 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
     @Override
     public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
         return mapper.toAccountingDtoList(repository.findTop20ByBranchId(branchId));
+    }
+
+    @Override
+    public Optional<AccountingDto> getAccounting(Integer accountingId) {
+        return repository.findById(accountingId).map(mapper::toAccountingDto);
     }
 
     @Override

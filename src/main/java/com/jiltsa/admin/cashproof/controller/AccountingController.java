@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/accounts")
@@ -17,6 +18,11 @@ public class AccountingController {
     @GetMapping("/{branchId}")
     public List<AccountingDto> getAccountingRegistries(@PathVariable("branchId") Integer id){
         return service.getLastAccountingRegistries(id);
+    }
+
+    @GetMapping("/account/{accountingId}")
+    public Optional<AccountingDto> getAccounting(@PathVariable("accountingId") Integer id){
+        return service.getAccounting(id);
     }
 
     @GetMapping("/{initial}/{end}/{branchId}")

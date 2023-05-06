@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,10 @@ public class AccountingDService {
 
     public List<AccountingDto> getLastAccountingRegistries(Integer branchId){
         return accountingDRepository.getLastAccountingRegistries(branchId);
+    }
+
+    public Optional<AccountingDto> getAccounting(Integer accountingId){
+        return accountingDRepository.getAccounting(accountingId);
     }
 
     public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(
