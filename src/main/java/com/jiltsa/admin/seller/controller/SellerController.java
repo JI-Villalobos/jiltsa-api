@@ -19,7 +19,10 @@ public class SellerController {
     public List<SellerDto> getSellers(){
         return service.getAllSellers();
     }
-
+    @GetMapping("/branch/{branchId}")
+    public List<SellerDto> getSellersByBranch(@PathVariable("branchId") Integer id){
+        return service.getSellersByBranch(id);
+    }
     @PostMapping
     public SellerDto newSeller(@RequestBody SellerDto sellerDto){
         return service.newSeller(sellerDto);

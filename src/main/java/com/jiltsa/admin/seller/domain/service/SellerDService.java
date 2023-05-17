@@ -16,6 +16,9 @@ public class SellerDService {
     public List<SellerDto> getAllSellers(){
         return  sellerDRepository.getAllSellers();
     }
+    public List<SellerDto> getSellersByBranch(Integer branchId){
+        return sellerDRepository.getSellersByBranch(branchId);
+    }
 
     public SellerDto newSeller(SellerDto sellerDto){
         return sellerDRepository.newSeller(sellerDto);

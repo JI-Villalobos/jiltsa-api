@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface SellerDRepository {
     List<SellerDto> getAllSellers();
+    List<SellerDto> getSellersByBranch(Integer branchId);
     Optional<SellerDto> getSeller(Integer sellerId);
     SellerDto newSeller(SellerDto sellerDto);
     SellerDto disableSeller(Integer idSeller);

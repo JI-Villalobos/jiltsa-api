@@ -21,6 +21,11 @@ public class SellerRepositoryImplementation implements SellerDRepository {
     }
 
     @Override
+    public List<SellerDto> getSellersByBranch(Integer branchId) {
+        return mapper.toSellersDto(repository.findByBranchId(branchId));
+    }
+
+    @Override
     public Optional<SellerDto> getSeller(Integer sellerId) {
         return repository.findById(sellerId).map(mapper::toSellerDto);
     }
