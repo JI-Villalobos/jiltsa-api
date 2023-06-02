@@ -40,7 +40,7 @@ class SellerServiceTest {
     @Test
     void shouldCreateANewSeller() {
         //given
-        SellerDto sellerDto = new SellerDto(1, "Diana Path", 1,true);
+        SellerDto sellerDto = new SellerDto(1, "Diana Path", 3,true);
 
         //when
         serviceUnderTest.newSeller(sellerDto);

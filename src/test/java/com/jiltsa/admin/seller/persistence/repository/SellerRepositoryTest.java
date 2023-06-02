@@ -4,7 +4,6 @@ import com.jiltsa.admin.branch.persistence.entity.Branch;
 import com.jiltsa.admin.branch.persistence.repository.BranchRepository;
 import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

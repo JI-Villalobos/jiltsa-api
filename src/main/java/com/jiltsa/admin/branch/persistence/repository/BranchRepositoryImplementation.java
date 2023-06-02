@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,6 +19,11 @@ public class BranchRepositoryImplementation implements BranchDRepository {
     @Override
     public List<BranchDto> getAll() {
         return mapper.toBranchesDto(repository.findAll());
+    }
+
+    @Override
+    public Optional<BranchDto> getById(Integer branchId) {
+        return repository.findById(branchId).map(mapper::toBranchDto);
     }
 
     @Override
