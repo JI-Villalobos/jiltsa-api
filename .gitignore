@@ -38,3 +38,5 @@ out/
 
 jwt.properties
 application-dev.properties
+
+docker-compose.override.yml
