@@ -22,7 +22,7 @@ public class SellerRepositoryImplementation implements SellerDRepository {
 
     @Override
     public List<SellerDto> getSellersByBranch(Integer branchId) {
-        return mapper.toSellersDto(repository.findByBranchId(branchId));
+        return mapper.toSellersDto(repository.findByBranchIdAndIsActiveTrue(branchId));
     }
 
     @Override

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface SellerRepository extends JpaRepository<Seller, Integer> {
     List<Seller> findByIsActiveTrue();
-    List<Seller> findByBranchId(Integer branchId);
+    List<Seller> findByBranchIdAndIsActiveTrue(Integer branchId);
 }
