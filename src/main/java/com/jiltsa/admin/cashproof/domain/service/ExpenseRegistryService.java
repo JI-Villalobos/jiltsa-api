@@ -20,4 +20,8 @@ public class ExpenseRegistryService {
     public CreateExpenseRegistryDto createExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto){
         return expenseRegistryDRepository.createExpenseRegistry(createExpenseRegistryDto);
     }
+
+    public CreateExpenseRegistryDto updateExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto, Integer expenseRegistryId){
+        return expenseRegistryDRepository.updateExpenseRegistry(createExpenseRegistryDto, expenseRegistryId);
+    }
 }

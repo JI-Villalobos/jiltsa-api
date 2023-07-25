@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -30,6 +32,10 @@ public class ExpenseRegistry {
     private Instant time = Instant.now();
     @NotNull
     private Double amount;
+
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
     @ManyToOne
     @JoinColumn(name ="accounting_id", insertable = false, updatable = false)

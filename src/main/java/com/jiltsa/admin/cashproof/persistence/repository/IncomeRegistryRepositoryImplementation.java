@@ -25,4 +25,10 @@ public class IncomeRegistryRepositoryImplementation implements IncomeRegistryDRe
         IncomeRegistry incomeRegistry = mapper.toIncomeRegistry(createIncomeRegistryDto);
         return mapper.toCreateIncomeRegistryDto(repository.save(incomeRegistry));
     }
+
+    @Override
+    public CreateIncomeRegistryDto updateIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto, Integer incomeRegistryId) {
+        IncomeRegistry incomeRegistry = mapper.toIncomeRegistry(createIncomeRegistryDto);
+        return mapper.toCreateIncomeRegistryDto(repository.save(incomeRegistry));
+    }
 }

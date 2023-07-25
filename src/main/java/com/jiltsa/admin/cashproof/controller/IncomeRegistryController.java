@@ -24,4 +24,11 @@ public class IncomeRegistryController {
         return service.createIncomeRegistry(createIncomeRegistryDto);
     }
 
+    @PutMapping("/{incomeRegistryId}")
+    public CreateIncomeRegistryDto updateIncomeRegistry(
+            @RequestBody CreateIncomeRegistryDto createIncomeRegistryDto,
+            @PathVariable("incomeRegistryId") Integer incomeRegistryId){
+        return service.updateIncomeRegistry(createIncomeRegistryDto, incomeRegistryId);
+    }
+
 }

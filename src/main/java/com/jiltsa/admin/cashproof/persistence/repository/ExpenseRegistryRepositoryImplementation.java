@@ -25,4 +25,11 @@ public class ExpenseRegistryRepositoryImplementation implements ExpenseRegistryD
         ExpenseRegistry expenseRegistry = mapper.toExpenseRegistry(createExpenseRegistryDto);
         return mapper.toCreateExpenseRegistryDto(repository.save(expenseRegistry));
     }
+
+    @Override
+    public CreateExpenseRegistryDto updateExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto, Integer expenseRegistryId) {
+        ExpenseRegistry expenseRegistry = mapper.toExpenseRegistry(createExpenseRegistryDto);
+        return mapper.toCreateExpenseRegistryDto(repository.save(expenseRegistry));
+    }
+
 }

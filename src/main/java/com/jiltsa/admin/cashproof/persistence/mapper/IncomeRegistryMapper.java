@@ -20,7 +20,8 @@ public interface IncomeRegistryMapper {
     @Mappings({
             @Mapping(target = "time", ignore = true),
             @Mapping(target = "accounting", ignore = true),
-            @Mapping(target = "incomeType", ignore = true)
+            @Mapping(target = "incomeType", ignore = true),
+            @Mapping(target = "modifiedDate", ignore = true)
     })
     IncomeRegistry toIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto);
 }

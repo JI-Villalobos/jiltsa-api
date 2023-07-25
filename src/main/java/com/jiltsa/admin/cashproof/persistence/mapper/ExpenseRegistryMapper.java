@@ -21,7 +21,8 @@ public interface ExpenseRegistryMapper {
     @Mappings({
             @Mapping(target = "accounting", ignore = true),
             @Mapping(target = "expenseType", ignore = true),
-            @Mapping(target = "time", ignore = true)
+            @Mapping(target = "time", ignore = true),
+            @Mapping(target = "modifiedDate", ignore = true)
     })
     ExpenseRegistry toExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto);
 }

@@ -21,4 +21,8 @@ public class IncomeRegistryService {
     public CreateIncomeRegistryDto createIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto){
         return incomeRegistryDRepository.createIncomeRegistry(createIncomeRegistryDto);
     }
+
+    public CreateIncomeRegistryDto updateIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto, Integer incomeRegistryId){
+        return incomeRegistryDRepository.updateIncomeRegistry(createIncomeRegistryDto, incomeRegistryId);
+    }
 }

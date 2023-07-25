@@ -23,4 +23,11 @@ public class ExpenseRegistryController {
     public CreateExpenseRegistryDto createExpenseRegistry(@RequestBody CreateExpenseRegistryDto createExpenseRegistryDto){
         return service.createExpenseRegistry(createExpenseRegistryDto);
     }
+
+    @PutMapping("/{expenseRegistryId}")
+    public CreateExpenseRegistryDto updateExpenseRegistry(
+            @RequestBody CreateExpenseRegistryDto createExpenseRegistryDto,
+            @PathVariable("expenseRegistryId") Integer expenseRegistryId){
+        return service.updateExpenseRegistry(createExpenseRegistryDto, expenseRegistryId);
+    }
 }
