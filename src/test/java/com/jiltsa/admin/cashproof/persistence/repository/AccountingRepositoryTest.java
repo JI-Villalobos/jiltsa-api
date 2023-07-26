@@ -91,7 +91,7 @@ class AccountingRepositoryTest {
     @Test
     void shouldFindTop20AccountingRegistries() {
         //when
-        List<Accounting> accountingList = accountingRepositoryUnderTest.findTop20ByBranchId(1);
+        List<Accounting> accountingList = accountingRepositoryUnderTest.findTop20ByBranchIdOrderByDateAsc(1);
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);
@@ -104,7 +104,7 @@ class AccountingRepositoryTest {
         LocalDateTime end = LocalDateTime.now().plusMonths(1);
 
         //when
-        List<Accounting> accountingList = accountingRepositoryUnderTest.findByDateBetweenAndBranchId(start, end, 1);
+        List<Accounting> accountingList = accountingRepositoryUnderTest.findByDateBetweenAndBranchIdOrderByDateAsc(start, end, 1);
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);

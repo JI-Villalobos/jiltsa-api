@@ -2,6 +2,7 @@ package com.jiltsa.admin.cashproof.persistence.repository;
 
 import com.jiltsa.admin.cashproof.domain.dto.AccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
+import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
 import com.jiltsa.admin.cashproof.domain.repository.AccountingDRepository;
 import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import com.jiltsa.admin.cashproof.persistence.mapper.AccountingMapper;
@@ -17,10 +18,6 @@ import java.util.Optional;
 public class AccountingRepositoryImplementation implements AccountingDRepository {
     private final AccountingRepository repository;
     private final AccountingMapper mapper;
-    @Override
-    public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
-        return mapper.toAccountingDtoList(repository.findTop20ByBranchId(branchId));
-    }
 
     @Override
     public Optional<AccountingDto> getAccounting(Integer accountingId) {
@@ -31,12 +28,24 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
     public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(
             LocalDateTime start, LocalDateTime end, Integer branchId
     ) {
-        return mapper.toAccountingDtoList(repository.findByDateBetweenAndBranchId(start, end, branchId));
+        return mapper.toAccountingDtoList(repository.findByDateBetweenAndBranchIdOrderByDateAsc(start, end, branchId));
+    }
+
+    @Override
+    public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
+        LocalDateTime date = LocalDateTime.now().minusDays(15);
+        return mapper.toAccountingDtoList(repository.findByBranchIdAndDateAfterOrderByDateAsc(branchId, date));
     }
 
     @Override
     public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto) {
         Accounting accounting = mapper.toAccounting(createAccountingDto);
         return mapper.toCreateAccountingDto(repository.save(accounting));
+    }
+
+    @Override
+    public CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto) {
+        Accounting accounting = mapper.toAccounting(customAccountingDto);
+        return mapper.toCustomAccountingDto(repository.save(accounting));
     }
 }

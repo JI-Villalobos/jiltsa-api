@@ -2,6 +2,7 @@ package com.jiltsa.admin.cashproof.domain.service;
 
 import com.jiltsa.admin.cashproof.domain.dto.AccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
+import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
 import com.jiltsa.admin.cashproof.domain.repository.AccountingDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,9 @@ public class AccountingDService {
 
     public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto){
         return accountingDRepository.createAccounting(createAccountingDto);
+    }
+
+    public CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto){
+        return accountingDRepository.createOutOfDateAccounting(customAccountingDto);
     }
 }
