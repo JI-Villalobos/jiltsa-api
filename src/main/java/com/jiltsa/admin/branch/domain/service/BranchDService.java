@@ -1,9 +1,11 @@
 package com.jiltsa.admin.branch.domain.service;
 
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
+import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.domain.repository.BranchDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,5 +23,9 @@ public class BranchDService {
     }
     public BranchDto createBranch(BranchDto branchDto){
         return branchDRepository.createBranch(branchDto);
+    }
+    @Transactional
+    public TotalBalanceDto getTotalBalance(Integer branchId){
+        return branchDRepository.getTotalBalance(branchId);
     }
 }

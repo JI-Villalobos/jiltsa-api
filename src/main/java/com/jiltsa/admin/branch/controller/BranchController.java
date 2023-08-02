@@ -1,6 +1,7 @@
 package com.jiltsa.admin.branch.controller;
 
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
+import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.domain.service.BranchDService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,5 +25,10 @@ public class BranchController{
     @PostMapping
     public BranchDto createBranch(@RequestBody BranchDto branchDto){
         return service.createBranch(branchDto);
+    }
+
+    @GetMapping("/balance/{branchId}")
+    public TotalBalanceDto getTotalBalance(@PathVariable("branchId") Integer branchId){
+        return service.getTotalBalance(branchId);
     }
 }

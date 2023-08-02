@@ -1,6 +1,7 @@
 package com.jiltsa.admin.branch.persistence.repository;
 
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
+import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.domain.repository.BranchDRepository;
 import com.jiltsa.admin.branch.persistence.entity.Branch;
 import com.jiltsa.admin.branch.persistence.mapper.BranchMapper;
@@ -30,5 +31,13 @@ public class BranchRepositoryImplementation implements BranchDRepository {
     public BranchDto createBranch(BranchDto branchDto) {
         Branch branch = mapper.toBranch(branchDto);
         return mapper.toBranchDto(repository.save(branch));
+    }
+
+    @Override
+    public TotalBalanceDto getTotalBalance(Integer branchId) {
+        String branch = repository.findById(branchId).get().getName();
+        Double total = repository.getTotalBalance(branchId, branch);
+
+        return  new TotalBalanceDto(total);
     }
 }

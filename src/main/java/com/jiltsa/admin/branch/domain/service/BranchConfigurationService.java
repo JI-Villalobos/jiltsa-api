@@ -23,4 +23,5 @@ public class BranchConfigurationService {
     public BranchConfigurationDto updateBranchConfiguration(Integer branchConfigId, BranchConfigurationDto branchConfigurationDto){
         return branchConfigurationDRepository.updateBranchConfiguration(branchConfigId, branchConfigurationDto);
     }
+
 }

@@ -27,4 +27,6 @@ public class BranchConfigurationController {
     public BranchConfigurationDto updateBranchConfiguration(@PathVariable("branchConfigId") Integer branchConfigId, @RequestBody BranchConfigurationDto branchConfigurationDto){
         return service.updateBranchConfiguration(branchConfigId, branchConfigurationDto);
     }
+
+
 }
