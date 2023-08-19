@@ -38,6 +38,13 @@ public class Seller {
 
     @OneToMany(mappedBy = "seller")
     private List<Accounting> accounting;
+
+    public Seller(String fullName, Integer branchId, String password, Boolean isActive) {
+        this.fullName = fullName;
+        this.branchId = branchId;
+        this.password = password;
+        this.isActive = isActive;
+    }
 }
 
 

@@ -25,6 +25,7 @@ class IncomeRegistryMapperTest {
                 Instant.now(),
                 "Income tag",
                 null,
+                null,
                 null
         );
 
@@ -48,6 +49,7 @@ class IncomeRegistryMapperTest {
                 Instant.now(),
                 "Income tag",
                 null,
+                null,
                 null
         );
         IncomeRegistry incomeRegistry2 = new IncomeRegistry(1,
@@ -55,6 +57,7 @@ class IncomeRegistryMapperTest {
                 1,645.45,
                 Instant.now(),
                 "Income tag",
+                null,
                 null,
                 null
         );
@@ -79,6 +82,7 @@ class IncomeRegistryMapperTest {
                 1,645.45,
                 Instant.now(),
                 "Income tag",
+                null,
                 null,
                 null
         );

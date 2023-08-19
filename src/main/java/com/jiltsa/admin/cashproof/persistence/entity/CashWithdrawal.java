@@ -29,4 +29,12 @@ public class CashWithdrawal {
     @NotNull
     @Column(name = "seller_name")
     private String sellerName;
+
+    public CashWithdrawal(LocalDateTime date, Double amount, String concept, String branch, String sellerName) {
+        this.date = date;
+        this.amount = amount;
+        this.concept = concept;
+        this.branch = branch;
+        this.sellerName = sellerName;
+    }
 }

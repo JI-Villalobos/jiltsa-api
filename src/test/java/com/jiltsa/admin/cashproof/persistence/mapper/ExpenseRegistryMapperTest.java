@@ -28,6 +28,7 @@ class ExpenseRegistryMapperTest {
                 Instant.now(),
                 456.6,
                 null,
+                null,
                 null);
 
         //when
@@ -52,6 +53,7 @@ class ExpenseRegistryMapperTest {
                 Instant.now(),
                 456.6,
                 null,
+                null,
                 null);
         ExpenseRegistry expenseRegistry2 = new ExpenseRegistry(
                 1,
@@ -60,6 +62,7 @@ class ExpenseRegistryMapperTest {
                 "Expense Registry desc",
                 Instant.now(),
                 456.6,
+                null,
                 null,
                 null);
         expenseRegistryList.add(expenseRegistry);
@@ -85,6 +88,7 @@ class ExpenseRegistryMapperTest {
                 "Expense Registry desc",
                 Instant.now(),
                 456.6,
+                null,
                 null,
                 null);
 

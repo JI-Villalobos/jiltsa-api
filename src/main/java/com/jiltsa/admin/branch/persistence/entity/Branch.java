@@ -32,4 +32,9 @@ public class Branch {
 
     @OneToMany(mappedBy = "branch")
     private List<Accounting> accounting;
+
+    public Branch(String name, Boolean isActive) {
+        this.name = name;
+        this.isActive = isActive;
+    }
 }

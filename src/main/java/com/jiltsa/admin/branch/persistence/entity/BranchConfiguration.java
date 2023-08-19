@@ -28,4 +28,10 @@ public class BranchConfiguration {
     @Column(name = "modified_date")
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    public BranchConfiguration(Integer branchId, Double initialBalance, LocalDateTime modifiedDate) {
+        this.branchId = branchId;
+        this.initialBalance = initialBalance;
+        this.modifiedDate = modifiedDate;
+    }
 }

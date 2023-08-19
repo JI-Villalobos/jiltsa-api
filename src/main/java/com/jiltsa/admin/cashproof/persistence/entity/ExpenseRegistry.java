@@ -44,4 +44,12 @@ public class ExpenseRegistry {
     @ManyToOne
     @JoinColumn(name = "expense_type_id", insertable = false, updatable = false)
     private ExpenseType expenseType;
+
+    public ExpenseRegistry(Integer accountingId, Integer expenseTypeId, String description, Instant time, Double amount) {
+        this.accountingId = accountingId;
+        this.expenseTypeId = expenseTypeId;
+        this.description = description;
+        this.time = time;
+        this.amount = amount;
+    }
 }

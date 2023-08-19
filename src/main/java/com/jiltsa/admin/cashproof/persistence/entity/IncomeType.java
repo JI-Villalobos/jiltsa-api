@@ -23,4 +23,8 @@ public class IncomeType {
     private String type;
     @OneToMany(mappedBy = "incomeType")
     private List<IncomeRegistry> incomeRegistries;
+
+    public IncomeType(String type) {
+        this.type = type;
+    }
 }

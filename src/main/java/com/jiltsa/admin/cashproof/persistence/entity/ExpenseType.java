@@ -24,4 +24,8 @@ public class ExpenseType {
 
     @OneToMany(mappedBy = "expenseType")
     private List<ExpenseRegistry> expenseRegistries;
+
+    public ExpenseType(String type) {
+        this.type = type;
+    }
 }

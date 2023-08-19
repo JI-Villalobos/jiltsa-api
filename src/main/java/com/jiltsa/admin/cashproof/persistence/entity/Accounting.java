@@ -40,4 +40,10 @@ public class Accounting {
 
     @OneToMany(mappedBy = "accounting")
     private List<ExpenseRegistry> expenseRegistries;
+
+    public Accounting(Integer sellerId, Integer branchId, LocalDateTime date) {
+        this.sellerId = sellerId;
+        this.branchId = branchId;
+        this.date = date;
+    }
 }

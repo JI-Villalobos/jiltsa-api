@@ -44,4 +44,12 @@ public class IncomeRegistry {
     @ManyToOne
     @JoinColumn(name = "income_type_id", insertable = false, updatable = false)
     private IncomeType incomeType;
+
+    public IncomeRegistry(Integer accountingId, Integer incomeTypeId, Double amount, Instant time, String tag) {
+        this.accountingId = accountingId;
+        this.incomeTypeId = incomeTypeId;
+        this.amount = amount;
+        this.time = time;
+        this.tag = tag;
+    }
 }

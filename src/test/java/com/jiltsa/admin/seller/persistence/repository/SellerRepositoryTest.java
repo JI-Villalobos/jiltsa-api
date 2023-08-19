@@ -22,18 +22,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 class SellerRepositoryTest {
     @Autowired
     private SellerRepository sellerRepositoryUnderTest;
-    @Autowired
-    private BranchRepository branchRepository;
     @BeforeEach
     void setUp() {
-        List<Seller> sellers = new ArrayList<>();
-        List<Accounting> accountingList = new ArrayList<>();
-        Branch branch = new Branch(1, "CENTRO", true, sellers, accountingList);
-        branchRepository.save(branch);
-
-        Seller seller = new Seller(1, "Diana Path", 1, "1234", true, branch, accountingList);
-        Seller seller2 = new Seller(2, "Diana Path", 1, "1234", false, branch, accountingList);
-        Seller seller3 = new Seller(3, "Diana Path", 1, "1234", true, branch, accountingList);
+        Seller seller = new Seller("Diana Path", 1, "1234", true);
+        Seller seller2 = new Seller("Diana Path", 1, "1234", false);
+        Seller seller3 = new Seller("Diana Path", 1, "1234", true);
 
         sellerRepositoryUnderTest.save(seller);
         sellerRepositoryUnderTest.save(seller2);
