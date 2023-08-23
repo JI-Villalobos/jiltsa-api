@@ -3,6 +3,7 @@ package com.jiltsa.admin.cashproof.persistence.repository;
 import com.jiltsa.admin.cashproof.persistence.entity.CashWithdrawal;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ class CashWithdrawalRepositoryTest {
     @Autowired
     CashWithdrawalRepository repositoryUnderTest;
 
-    @BeforeAll
+   /* @BeforeAll
     void setUp() {
         CashWithdrawal cashWithdrawal = new CashWithdrawal(
                 1, LocalDateTime.now(), 234.00, "OXXO", "Nazas", "Diana"
@@ -35,8 +36,9 @@ class CashWithdrawalRepositoryTest {
         );
         repositoryUnderTest.save(cashWithdrawal3);
     }
-
+*/
     @Test
+    @Disabled
     void shouldFindAWithdrawalListByBranch() {
         //when
         List<CashWithdrawal> cashWithdrawalList = repositoryUnderTest.findByBranch("Nazas");

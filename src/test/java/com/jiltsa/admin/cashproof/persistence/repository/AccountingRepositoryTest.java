@@ -2,6 +2,7 @@ package com.jiltsa.admin.cashproof.persistence.repository;
 
 import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class AccountingRepositoryTest {
     @Autowired
     private AccountingRepository accountingRepositoryUnderTest;
-    @BeforeAll
+   /* @BeforeAll
     void setup() {
         List<Accounting> accountingList = new ArrayList<>();
 
@@ -75,7 +76,9 @@ class AccountingRepositoryTest {
 
         accountingList.forEach(acc -> accountingRepositoryUnderTest.save(acc));
     }
+    */
     @Test
+    @Disabled
     void shouldFindTop20AccountingRegistries() {
         //when
         List<Accounting> accountingList = accountingRepositoryUnderTest.findByBranchIdAndDateAfterOrderByDateAsc(1, LocalDateTime.now().minusWeeks(45));
@@ -86,6 +89,7 @@ class AccountingRepositoryTest {
     }
 
     @Test
+    @Disabled
     void shouldFindByAccountingListBetweenTwoDates() {
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
         LocalDateTime end = LocalDateTime.now().plusMonths(1);

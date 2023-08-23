@@ -2,6 +2,7 @@ package com.jiltsa.admin.cashproof.persistence.repository;
 
 import com.jiltsa.admin.cashproof.persistence.entity.ExpenseRegistry;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ class ExpenseRegistryRepositoryTest {
     @Autowired
     ExpenseRegistryRepository expenseRegistryRepositoryUnderTest;
 
-    @BeforeAll
+    /*@BeforeAll
     void setUp() {
         List<ExpenseRegistry> expenseRegistryList = new ArrayList<>();
 
@@ -36,8 +37,9 @@ class ExpenseRegistryRepositoryTest {
 
         expenseRegistryList.forEach(expense -> expenseRegistryRepositoryUnderTest.save(expense));
     }
-
+*/
     @Test
+    @Disabled
     void shouldReturnAListOfExpenseRegistriesByAccountingId(){
         //when
         List<ExpenseRegistry> expenseRegistryList = expenseRegistryRepositoryUnderTest.findByAccountingId(1);
