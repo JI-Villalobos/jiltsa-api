@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,20 +17,28 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DataJpaTest
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
+@Testcontainers
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 class IncomeRegistryRepositoryTest {
     @Autowired
     IncomeRegistryRepository repositoryUnderTest;
 
-   /* @BeforeAll
+   @BeforeAll
     void setUp() {
         List<IncomeRegistry> incomeRegistryList = new ArrayList<>();
 
-        IncomeRegistry incomeRegistry = new IncomeRegistry(1, 1, 465.45, Instant.now(), "Income tag");
-        IncomeRegistry incomeRegistry2 = new IncomeRegistry(1, 1, 465.45, Instant.now(), "Income tag");
-        IncomeRegistry incomeRegistry3 = new IncomeRegistry(2, 1, 465.45, Instant.now(), "Income tag");
-        IncomeRegistry incomeRegistry4 = new IncomeRegistry(3, 1, 465.45, Instant.now(), "Income tag");
+        IncomeRegistry incomeRegistry = new IncomeRegistry(
+                1, 1, 465.45, Instant.now(), "Income tag");
+        IncomeRegistry incomeRegistry2 = new IncomeRegistry(
+                1, 1, 465.45, Instant.now(), "Income tag");
+        IncomeRegistry incomeRegistry3 = new IncomeRegistry(
+                2, 1, 465.45, Instant.now(), "Income tag");
+        IncomeRegistry incomeRegistry4 = new IncomeRegistry(
+                3, 1, 465.45, Instant.now(), "Income tag");
 
         incomeRegistryList.add(incomeRegistry);
         incomeRegistryList.add(incomeRegistry2);
@@ -36,9 +47,7 @@ class IncomeRegistryRepositoryTest {
 
         incomeRegistryList.forEach(income -> repositoryUnderTest.save(income));
     }
-*/
     @Test
-    @Disabled
     void shouldFindIncomeRegistriesByAccountingId() {
         //when
         List<IncomeRegistry> incomeRegistryList = repositoryUnderTest.findByAccountingId(1);

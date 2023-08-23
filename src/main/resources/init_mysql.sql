@@ -40,6 +40,14 @@ CREATE TABLE `accounts` (
   `seller_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `accounts`
+--
+INSERT INTO `accounts` (`id`, `branch_id`, `date`, `seller_id`) VALUES
+(1, 1, '2023-06-05 14:02:58.412754', 1),
+(2, 1, '2023-06-05 14:25:13.512888', 2),
+(3, 1, '2023-06-05 14:26:23.647339', 1);
+
 CREATE TABLE `app_users` (
   `id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL,

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,12 +17,17 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DataJpaTest
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
+@Testcontainers
+@ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AccountingRepositoryTest {
     @Autowired
     private AccountingRepository accountingRepositoryUnderTest;
-   /* @BeforeAll
+
+    @BeforeAll
     void setup() {
         List<Accounting> accountingList = new ArrayList<>();
 
@@ -76,26 +84,26 @@ class AccountingRepositoryTest {
 
         accountingList.forEach(acc -> accountingRepositoryUnderTest.save(acc));
     }
-    */
     @Test
-    @Disabled
     void shouldFindTop20AccountingRegistries() {
         //when
         List<Accounting> accountingList = accountingRepositoryUnderTest.findByBranchIdAndDateAfterOrderByDateAsc(1, LocalDateTime.now().minusWeeks(45));
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);
-        assertThat(accountingList.size()).isEqualTo(20);
+        assertThat(accountingList.size()).isEqualTo(21);
     }
 
     @Test
-    @Disabled
     void shouldFindByAccountingListBetweenTwoDates() {
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
         LocalDateTime end = LocalDateTime.now().plusMonths(1);
 
         //when
-        List<Accounting> accountingList = accountingRepositoryUnderTest.findByDateBetweenAndBranchIdOrderByDateAsc(start, end, 1);
+        List<Accounting> accountingList =
+                accountingRepositoryUnderTest.findByDateBetweenAndBranchIdOrderByDateAsc(
+                        start, end, 1
+                );
 
         //then
         assertThat(accountingList).isInstanceOf(ArrayList.class);
