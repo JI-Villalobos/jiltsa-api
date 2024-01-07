@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,6 +25,9 @@ public class Provider {
 
     @NotNull
     private String rfc;
+
+    @OneToMany(mappedBy = "provider")
+    private List<Bill> bills;
 
     public Provider(String name, String rfc) {
         this.name = name;

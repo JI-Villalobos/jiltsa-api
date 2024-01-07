@@ -51,6 +51,10 @@ public class Bill {
     @Column(name = "provider_id")
     private Integer providerId;
 
+    @ManyToOne
+    @JoinColumn(name = "provider_id", insertable = false, updatable = false)
+    private Provider provider;
+
     public Bill(LocalDateTime date, String invoice, String branch,
                 Integer branchId, Double amount, LocalDateTime limitPaymentDate, Integer providerId) {
         this.date = date;
