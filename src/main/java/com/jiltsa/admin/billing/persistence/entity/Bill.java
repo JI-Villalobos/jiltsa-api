@@ -51,12 +51,16 @@ public class Bill {
     @Column(name = "provider_id")
     private Integer providerId;
 
+    @NotNull
+    @Column(name = "is-active")
+    private Boolean isActive;
+
     @ManyToOne
     @JoinColumn(name = "provider_id", insertable = false, updatable = false)
     private Provider provider;
 
     public Bill(LocalDateTime date, String invoice, String branch,
-                Integer branchId, Double amount, LocalDateTime limitPaymentDate, Integer providerId) {
+                Integer branchId, Double amount, LocalDateTime limitPaymentDate, Integer providerId, Boolean isActive) {
         this.date = date;
         this.invoice = invoice;
         this.branch = branch;
@@ -64,10 +68,11 @@ public class Bill {
         this.amount = amount;
         this.limitPaymentDate = limitPaymentDate;
         this.providerId = providerId;
+        this.isActive = isActive;
     }
 
     public Bill(LocalDateTime date, String invoice, String branch, Integer branchId, Double amount,
-                LocalDateTime limitPaymentDate, Boolean isPaid, String paymentTicket, Integer providerId) {
+                LocalDateTime limitPaymentDate, Boolean isPaid, String paymentTicket, Integer providerId, Boolean isActive) {
         this.date = date;
         this.invoice = invoice;
         this.branch = branch;
@@ -77,5 +82,6 @@ public class Bill {
         this.isPaid = isPaid;
         this.paymentTicket = paymentTicket;
         this.providerId = providerId;
+        this.isActive = isActive;
     }
 }
