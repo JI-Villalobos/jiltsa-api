@@ -10,6 +10,7 @@ import java.util.List;
 public interface BillDRepository {
     Page<BillDto> getBills(Pageable pageable);
     Page<BillDto> getPendingBills(Pageable pageable);
+    BillDto getBill(Integer id);
     BillDto createBill(BillDto billDto);
     List<BillDto> updateBills(List<BillDto> billList);
 }
