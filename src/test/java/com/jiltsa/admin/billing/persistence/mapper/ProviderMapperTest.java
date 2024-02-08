@@ -30,7 +30,7 @@ class ProviderMapperTest {
     }
 
     @Test
-    void toProviderDtoList() {
+    void shouldMapToProviderDtoList() {
         //given
         ProviderMapper mapper = Mappers.getMapper(ProviderMapper.class);
         List<Provider> providers = new ArrayList<>();
@@ -48,7 +48,7 @@ class ProviderMapperTest {
     }
 
     @Test
-    void toProvider() {
+    void shouldMapToProvider() {
         //given
         ProviderMapper mapper = Mappers.getMapper(ProviderMapper.class);
         ProviderDto providerDto = new ProviderDto(1,"Provider", "PROVIDER");
