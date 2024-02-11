@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class PaymentService {
     public List<PaymentDto> getPaymentsSince(LocalDateTime date){
         return paymentDRepository.getPaymentsSince(date);
     }
-    public PaymentDto getPayment(Integer id){
+    public Optional<PaymentDto> getPayment(Integer id){
         return paymentDRepository.getPayment(id);
     }
     public PaymentDto createPayment(PaymentDto paymentDto){

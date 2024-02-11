@@ -52,7 +52,7 @@ public class Bill {
     private Integer providerId;
 
     @NotNull
-    @Column(name = "is-active")
+    @Column(name = "is_active")
     private Boolean isActive;
 
     @ManyToOne
