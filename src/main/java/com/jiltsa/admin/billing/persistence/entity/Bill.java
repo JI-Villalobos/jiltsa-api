@@ -84,4 +84,21 @@ public class Bill {
         this.providerId = providerId;
         this.isActive = isActive;
     }
+
+    public Bill(Integer id, LocalDateTime date, String invoice, String branch, Integer branchId, Double amount,
+                LocalDateTime limitPaymentDate, Boolean isPaid, String paymentTicket, Integer providerId,
+                Boolean isActive) {
+
+        this.id = id;
+        this.date = date;
+        this.invoice = invoice;
+        this.branch = branch;
+        this.branchId = branchId;
+        this.amount = amount;
+        this.limitPaymentDate = limitPaymentDate;
+        this.isPaid = isPaid;
+        this.paymentTicket = paymentTicket;
+        this.providerId = providerId;
+        this.isActive = isActive;
+    }
 }

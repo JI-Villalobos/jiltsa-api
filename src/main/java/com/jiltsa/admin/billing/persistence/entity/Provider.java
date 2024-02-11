@@ -33,4 +33,10 @@ public class Provider {
         this.name = name;
         this.rfc = rfc;
     }
+
+    public Provider(Integer id, String name, String rfc) {
+        this.id = id;
+        this.name = name;
+        this.rfc = rfc;
+    }
 }
