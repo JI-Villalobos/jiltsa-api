@@ -6,11 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BillDRepository {
-    Page<BillDto> getBills(Pageable pageable);
-    Page<BillDto> getPendingBills(Pageable pageable);
-    BillDto getBill(Integer id);
+    Page<BillDto> getBills(int page, int elements);
+    Page<BillDto> getPendingBills(int page, int elements);
+    Optional<BillDto> getBill(Integer id);
     BillDto createBill(BillDto billDto);
     List<BillDto> updateBills(List<BillDto> billList);
 }

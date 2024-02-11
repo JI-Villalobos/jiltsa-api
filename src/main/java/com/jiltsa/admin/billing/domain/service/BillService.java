@@ -2,34 +2,36 @@ package com.jiltsa.admin.billing.domain.service;
 
 import com.jiltsa.admin.billing.domain.dto.BillDto;
 import com.jiltsa.admin.billing.domain.repository.BillDRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BillService {
     private final BillDRepository billDRepository;
-    Page<BillDto> getAllBills(Pageable pageable){
-        return billDRepository.getBills(pageable);
+    public Page<BillDto> getAllBills(int page, int elements){
+        return billDRepository.getBills(page, elements);
     }
 
-    Page<BillDto> getPendingBills(Pageable pageable){
-        return billDRepository.getPendingBills(pageable);
+    public Page<BillDto> getPendingBills(int page, int elements){
+        return billDRepository.getPendingBills(page, elements);
     }
 
-    BillDto getBill(Integer id){
+    public Optional<BillDto> getBill(Integer id){
         return  billDRepository.getBill(id);
     }
 
-    BillDto createBill(BillDto billDto){
+    public BillDto createBill(BillDto billDto){
         return billDRepository.createBill(billDto);
     }
 
-    List<BillDto> updateBills(List<BillDto> billDtoList){
+    @Transactional
+    public List<BillDto> updateBills(List<BillDto> billDtoList){
         return billDRepository.updateBills(billDtoList);
     }
 }
