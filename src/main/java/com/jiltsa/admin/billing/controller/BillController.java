@@ -1,0 +1,44 @@
+package com.jiltsa.admin.billing.controller;
+
+import com.jiltsa.admin.billing.domain.dto.BillDto;
+import com.jiltsa.admin.billing.domain.service.BillService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("jiltsa/api/v1/bills")
+@RequiredArgsConstructor
+public class BillController {
+    private final BillService service;
+
+    @GetMapping
+    public Page<BillDto> getAllBills(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int elements){
+        return service.getAllBills(page, elements);
+    }
+
+    @GetMapping("/pending")
+    public Page<BillDto> getPendingBills(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int elements){
+        return service.getPendingBills(page, elements);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<BillDto> getBill(@PathVariable("id") Integer id){
+        return service.getBill(id);
+    }
+
+    @PostMapping
+    public BillDto createBill(@RequestBody BillDto billDto){
+        return service.createBill(billDto);
+    }
+
+    @PutMapping
+    public List<BillDto> updateBills(@RequestBody List<BillDto> billDtoList){
+        return service.updateBills(billDtoList);
+    }
+}
