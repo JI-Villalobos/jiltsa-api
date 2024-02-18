@@ -19,7 +19,7 @@ public class PaymentController {
         return service.getPayments();
     }
 
-    @GetMapping("/{date}")
+    @GetMapping("/since/{date}")
     public List<PaymentDto> getPaymentsSince(@PathVariable("date")LocalDateTime date){
         return service.getPaymentsSince(date);
     }
