@@ -12,7 +12,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BillMapper {
     BillDto toBillDto(Bill bill);
-    Page<BillDto> toBillDtoPage(Page<Bill> bills);
+    default Page<BillDto> toBillDtoPage(Page<Bill> bills){
+        return bills.map(this::toBillDto);
+    };
     List<BillDto> toBillDtoList(List<Bill> bills);
 
     @InheritInverseConfiguration

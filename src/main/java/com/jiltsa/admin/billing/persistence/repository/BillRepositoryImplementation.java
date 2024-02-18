@@ -23,13 +23,13 @@ public class BillRepositoryImplementation implements BillDRepository {
     @Override
     public Page<BillDto> getBills(int page, int elements) {
         Pageable pageRequest = PageRequest.of(page, elements);
-        return mapper.toBillDtoPage(repository.findBills(pageRequest));
+        return mapper.toBillDtoPage(repository.findAll(pageRequest));
     }
 
     @Override
     public Page<BillDto> getPendingBills(int page, int elements) {
         Pageable pageRequest = PageRequest.of(page, elements);
-        return mapper.toBillDtoPage(repository.findIsPaidTrue(pageRequest));
+        return mapper.toBillDtoPage(repository.findByIsPaidFalse(pageRequest));
     }
 
     @Override
