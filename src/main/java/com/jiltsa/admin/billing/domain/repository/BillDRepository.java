@@ -10,8 +10,9 @@ import java.util.Optional;
 
 public interface BillDRepository {
     Page<BillDto> getBills(int page, int elements);
-    Page<BillDto> getPendingBills(int page, int elements);
+    Page<BillDto> getPendingBills(int page, int elements, String sortBy, String sortDirection);
     Optional<BillDto> getBill(Integer id);
     BillDto createBill(BillDto billDto);
+    List<BillDto> createBills(List<BillDto> billDtoList);
     List<BillDto> updateBills(List<BillDto> billList);
 }

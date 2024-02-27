@@ -18,8 +18,8 @@ public class BillService {
         return billDRepository.getBills(page, elements);
     }
 
-    public Page<BillDto> getPendingBills(int page, int elements){
-        return billDRepository.getPendingBills(page, elements);
+    public Page<BillDto> getPendingBills(int page, int elements, String sortBy, String sortDirection){
+        return billDRepository.getPendingBills(page, elements, sortBy, sortDirection);
     }
 
     public Optional<BillDto> getBill(Integer id){
@@ -33,5 +33,10 @@ public class BillService {
     @Transactional
     public List<BillDto> updateBills(List<BillDto> billDtoList){
         return billDRepository.updateBills(billDtoList);
+    }
+
+    @Transactional
+    public List<BillDto> createBills(List<BillDto> billDtoList){
+        return billDRepository.createBills(billDtoList);
     }
 }

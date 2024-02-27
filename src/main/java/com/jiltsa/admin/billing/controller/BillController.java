@@ -23,8 +23,11 @@ public class BillController {
 
     @GetMapping("/pending")
     public Page<BillDto> getPendingBills(
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int elements){
-        return service.getPendingBills(page, elements);
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int elements,
+            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "acs") String sortDirection){
+        return service.getPendingBills(page, elements, sortBy, sortDirection);
     }
 
     @GetMapping("/{id}")
@@ -35,6 +38,11 @@ public class BillController {
     @PostMapping
     public BillDto createBill(@RequestBody BillDto billDto){
         return service.createBill(billDto);
+    }
+
+    @PostMapping("/save-all")
+    public List<BillDto> createBills(@RequestBody List<BillDto> billDtoList){
+        return service.createBills(billDtoList);
     }
 
     @PutMapping

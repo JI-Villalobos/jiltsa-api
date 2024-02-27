@@ -62,9 +62,9 @@ CREATE TABLE `app_users` (
 --
 
 INSERT INTO `app_users` (`id`, `branch_id`, `email`, `pass`, `role`, `username`) VALUES
-(1, 1, 'administracion@fmipueblito.com', '$2a$10$zH5CiBXzUsrrg.f7XgjayeuGJiQMq06moKcj2OTDGcxp51CcdN6te', 'USER', 'MATRIZ'),
-(2, 2, 'penon@fmipueblito.com', '$2a$10$oK6HpgcKrsHVKw2UQaDdeu.eio.nSZxWOrEtJ9f2avjh5Sb5RNMMa', 'USER', 'MATRIZ'),
-(3, 3, 'coyote@fmipueblito.com', '$2a$10$6IK3nq4iMLeAqkmYs4fl8OczxWRCO8cwOsYvmh53I1BIleQycPZM2', 'ADMIN', 'MATRIZ');
+(1, 1, 'administracion@fmipueblito.com', '', 'USER', 'MATRIZ'),
+(2, 2, 'penon@fmipueblito.com', '', 'USER', 'MATRIZ'),
+(3, 3, 'coyote@fmipueblito.com', '', 'ADMIN', 'MATRIZ');
 
 CREATE TABLE `branch_config` (
   `id` int(11) NOT NULL,

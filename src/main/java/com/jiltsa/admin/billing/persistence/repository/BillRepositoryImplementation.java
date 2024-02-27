@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,8 +28,9 @@ public class BillRepositoryImplementation implements BillDRepository {
     }
 
     @Override
-    public Page<BillDto> getPendingBills(int page, int elements) {
-        Pageable pageRequest = PageRequest.of(page, elements);
+    public Page<BillDto> getPendingBills(int page, int elements, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
         return mapper.toBillDtoPage(repository.findByIsPaidFalse(pageRequest));
     }
 
@@ -45,6 +47,17 @@ public class BillRepositoryImplementation implements BillDRepository {
         bill.setLimitPaymentDate(bill.getDate().plusMonths(1));
 
         return mapper.toBillDto(repository.save(bill));
+    }
+
+    @Override
+    public List<BillDto> createBills(List<BillDto> billDtoList) {
+        List<Bill> bills = mapper.toBillList(billDtoList);
+        bills.forEach(bill -> {
+            bill.setIsActive(true);
+            bill.setIsPaid(false);
+            bill.setLimitPaymentDate(bill.getDate().plusMonths(1));
+        });
+        return mapper.toBillDtoList(repository.saveAll(bills));
     }
 
     @Override
