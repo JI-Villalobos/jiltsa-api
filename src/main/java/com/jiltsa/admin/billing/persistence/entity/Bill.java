@@ -55,6 +55,9 @@ public class Bill {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "reception_date")
+    private LocalDateTime receptionDate;
+
     @ManyToOne
     @JoinColumn(name = "provider_id", insertable = false, updatable = false)
     private Provider provider;
@@ -87,7 +90,7 @@ public class Bill {
 
     public Bill(Integer id, LocalDateTime date, String invoice, String branch, Integer branchId, Double amount,
                 LocalDateTime limitPaymentDate, Boolean isPaid, String paymentTicket, Integer providerId,
-                Boolean isActive) {
+                Boolean isActive, LocalDateTime receptionDate) {
 
         this.id = id;
         this.date = date;
