@@ -17,14 +17,14 @@ public class BillController {
 
     @GetMapping
     public Page<BillDto> getAllBills(
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int elements){
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "7") int elements){
         return service.getAllBills(page, elements);
     }
 
     @GetMapping("/pending")
     public Page<BillDto> getPendingBills(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int elements,
+            @RequestParam(defaultValue = "7") int elements,
             @RequestParam(defaultValue = "date") String sortBy,
             @RequestParam(defaultValue = "acs") String sortDirection){
         return service.getPendingBills(page, elements, sortBy, sortDirection);
