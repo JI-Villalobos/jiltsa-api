@@ -17,7 +17,7 @@ public class BillController {
 
     @GetMapping
     public Page<BillDto> getAllBills(
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "7") int elements){
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int elements){
         return service.getAllBills(page, elements);
     }
 
