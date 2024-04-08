@@ -24,7 +24,7 @@ public class BillController {
     @GetMapping("/pending")
     public Page<BillDto> getPendingBills(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "7") int elements,
+            @RequestParam(defaultValue = "12") int elements,
             @RequestParam(defaultValue = "date") String sortBy,
             @RequestParam(defaultValue = "acs") String sortDirection){
         return service.getPendingBills(page, elements, sortBy, sortDirection);
