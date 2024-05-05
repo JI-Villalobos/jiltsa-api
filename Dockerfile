@@ -18,6 +18,6 @@ RUN gradle build -x test
 FROM openjdk:17-alpine
 EXPOSE $PORT
 RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*1.0.1.jar /app/jiltsa-admin.jar
+COPY --from=build /home/gradle/src/build/libs/*1.1.0.jar /app/jiltsa-admin.jar
 
 ENTRYPOINT ["java","-jar","/app/jiltsa-admin.jar"]
