@@ -7,12 +7,16 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.data.domain.Page;
 
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CashWithdrawalMapper {
+    default Page<CashWithdrawalDto> toCashwithdrawalPage(Page<CashWithdrawal> cashWithdrawals){
+        return cashWithdrawals.map(this::toCashWithdrawalDto);
+    }
     CashWithdrawalDto toCashWithdrawalDto(CashWithdrawal cashWithdrawal);
     List<CashWithdrawalDto> toCashWithdrawalDtoList(List<CashWithdrawal> cashWithdrawalList);
     CreateCashWithdrawalDto toCreateCashWithdrawalDto(CashWithdrawal cashWithdrawal);
