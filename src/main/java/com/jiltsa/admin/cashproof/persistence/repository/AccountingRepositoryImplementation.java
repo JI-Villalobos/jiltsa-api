@@ -33,7 +33,7 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
 
     @Override
     public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
-        LocalDateTime date = LocalDateTime.now().minusDays(15);
+        LocalDateTime date = LocalDateTime.now().minusDays(7);
         return mapper.toAccountingDtoList(repository.findByBranchIdAndDateAfterOrderByDateAsc(branchId, date));
     }
 
