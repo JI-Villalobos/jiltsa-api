@@ -13,5 +13,4 @@ public interface CashWithdrawalRepository extends JpaRepository<CashWithdrawal, 
     List<CashWithdrawal> findByBranchAndDateAfter(String branch, LocalDateTime date);
     Page<CashWithdrawal> findByBranchAndDateAfter(String branch, LocalDateTime date, Pageable page);
     Page<CashWithdrawal> findByBranchAndConceptContainingAndDateAfter(String branch, String concept, LocalDateTime date, Pageable page);
-    Page<CashWithdrawal> findByDateAfter(String branch, LocalDateTime date, Pageable page);
 }
