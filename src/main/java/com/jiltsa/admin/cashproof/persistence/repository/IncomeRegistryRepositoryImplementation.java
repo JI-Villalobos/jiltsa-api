@@ -1,6 +1,5 @@
 package com.jiltsa.admin.cashproof.persistence.repository;
 
-import com.jiltsa.admin.cashproof.domain.dto.CreateExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateIncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.IncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.repository.IncomeRegistryDRepository;
@@ -30,5 +29,12 @@ public class IncomeRegistryRepositoryImplementation implements IncomeRegistryDRe
     public CreateIncomeRegistryDto updateIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto, Integer incomeRegistryId) {
         IncomeRegistry incomeRegistry = mapper.toIncomeRegistry(createIncomeRegistryDto);
         return mapper.toCreateIncomeRegistryDto(repository.save(incomeRegistry));
+    }
+
+    @Override
+    public List<IncomeRegistryDto> createIncomesRegistry(List<CreateIncomeRegistryDto> incomes) {
+        List<IncomeRegistry> incomeRegistries = mapper.toIncomeRegistryList(incomes);
+
+        return mapper.toIncomeRegistryDtoList(repository.saveAll(incomeRegistries));
     }
 }

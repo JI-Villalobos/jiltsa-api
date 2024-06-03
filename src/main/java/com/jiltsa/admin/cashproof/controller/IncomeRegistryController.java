@@ -31,4 +31,9 @@ public class IncomeRegistryController {
         return service.updateIncomeRegistry(createIncomeRegistryDto, incomeRegistryId);
     }
 
+    @PostMapping("/all")
+    public List<IncomeRegistryDto> createIncomes(@RequestBody List<CreateIncomeRegistryDto> incomes){
+        return service.createIncomesRegistry(incomes);
+    }
+
 }

@@ -1,9 +1,9 @@
 package com.jiltsa.admin.cashproof.domain.service;
 
-import com.jiltsa.admin.cashproof.domain.dto.CreateExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateIncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.IncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.repository.IncomeRegistryDRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +24,10 @@ public class IncomeRegistryService {
 
     public CreateIncomeRegistryDto updateIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto, Integer incomeRegistryId){
         return incomeRegistryDRepository.updateIncomeRegistry(createIncomeRegistryDto, incomeRegistryId);
+    }
+
+    @Transactional
+    public List<IncomeRegistryDto> createIncomesRegistry(List<CreateIncomeRegistryDto> incomes){
+        return incomeRegistryDRepository.createIncomesRegistry(incomes);
     }
 }
