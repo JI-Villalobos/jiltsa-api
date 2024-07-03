@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class BranchConfigurationRepositoryImplementation implements BranchConfigurationDRepository {
@@ -28,5 +30,10 @@ public class BranchConfigurationRepositoryImplementation implements BranchConfig
     public BranchConfigurationDto updateBranchConfiguration(Integer branchConfigId, BranchConfigurationDto branchConfigurationDto) {
         BranchConfiguration branchConfiguration = mapper.toBranchConfiguration(branchConfigurationDto);
         return mapper.toBranchConfigurationDto(repository.save(branchConfiguration));
+    }
+
+    @Override
+    public Optional<BranchConfigurationDto> getBranchconfiguration(Integer branchId) {
+        return repository.findByBranchId(branchId).map(mapper::toBranchConfigurationDto);
     }
 }
