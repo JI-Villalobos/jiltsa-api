@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +31,12 @@ public class Partial {
 
     @NotNull
     private Double amount;
+
+    @ManyToOne
+    @JoinColumn(name = "credit_sale_id")
+    private CreditSale creditSale;
+
+
 
     public Partial(Integer creditSaleId, LocalDateTime paymentDate, Double amount) {
         this.creditSaleId = creditSaleId;

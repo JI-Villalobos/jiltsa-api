@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,12 +31,20 @@ public class CreditSale {
     @NotNull
     private Double amount;
 
+    @NotNull
+    @Column(name = "branch_id")
+    private Integer branchId;
+
     @Column(name = "is_paid")
     private Boolean isPaid;
 
-    public CreditSale(String concept, LocalDateTime date, Double amount) {
+    @OneToMany(mappedBy = "creditSale")
+    private List<Partial> partials;
+
+    public CreditSale(String concept, LocalDateTime date, Double amount, Integer branchId) {
         this.concept = concept;
         this.date = date;
         this.amount = amount;
+        this.branchId = branchId;
     }
 }
