@@ -33,7 +33,7 @@ public class BranchConfigurationRepositoryImplementation implements BranchConfig
     }
 
     @Override
-    public Optional<BranchConfigurationDto> getBranchconfiguration(Integer branchId) {
+    public Optional<BranchConfigurationDto> getBranchConfiguration(Integer branchId) {
         return repository.findByBranchId(branchId).map(mapper::toBranchConfigurationDto);
     }
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/branch-configuration")
@@ -28,5 +29,8 @@ public class BranchConfigurationController {
         return service.updateBranchConfiguration(branchConfigId, branchConfigurationDto);
     }
 
-
+    @GetMapping("/get/{branchId}")
+    public Optional<BranchConfigurationDto> getBranchConfiguration(@PathVariable("branchId") Integer branchId){
+        return service.getBranchConfiguration(branchId);
+    }
 }

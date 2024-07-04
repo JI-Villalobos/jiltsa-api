@@ -9,5 +9,5 @@ public interface BranchConfigurationDRepository {
     List<BranchConfigurationDto> getAllConfigurations();
     BranchConfigurationDto createBranchConfiguration(BranchConfigurationDto branchConfigurationDto);
     BranchConfigurationDto updateBranchConfiguration(Integer branchConfigId, BranchConfigurationDto branchConfigurationDto);
-    Optional<BranchConfigurationDto> getBranchconfiguration(Integer branchId);
+    Optional<BranchConfigurationDto> getBranchConfiguration(Integer branchId);
 }
