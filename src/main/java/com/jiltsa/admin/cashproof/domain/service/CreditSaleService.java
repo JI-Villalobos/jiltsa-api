@@ -13,19 +13,19 @@ import java.util.Optional;
 public class CreditSaleService {
     private final CreditSaleDRepository creditSaleDRepository;
 
-    Optional<CreditSaleDto> getCreditSale(Integer creditSaleId){
+    public Optional<CreditSaleDto> getCreditSale(Integer creditSaleId){
         return creditSaleDRepository.getCreditSale(creditSaleId);
     }
 
-    List<CreditSaleDto> getCreditSales(Integer branchId){
+    public List<CreditSaleDto> getCreditSales(Integer branchId){
         return creditSaleDRepository.getCreditSales(branchId);
     }
 
-    CreditSaleDto createCreditSale(CreditSaleDto creditSaleDto){
+    public CreditSaleDto createCreditSale(CreditSaleDto creditSaleDto){
         return creditSaleDRepository.createCreditSale(creditSaleDto);
     }
 
-    CreditSaleDto updateCreditSale(CreditSaleDto creditSaleDto){
+    public CreditSaleDto updateCreditSale(CreditSaleDto creditSaleDto){
         return creditSaleDRepository.updateCreditSale(creditSaleDto);
     }
 }

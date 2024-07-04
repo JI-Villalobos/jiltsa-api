@@ -4,6 +4,7 @@ import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.persistence.entity.CreditSale;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -13,5 +14,6 @@ public interface CreditSaleMapper {
     List<CreditSaleDto> toCreditSaleDtoList(List<CreditSale> creditSales);
 
     @InheritInverseConfiguration
+    @Mapping(target = "partials", ignore = true)
     CreditSale toCreditSale(CreditSaleDto creditSaleDto);
 }

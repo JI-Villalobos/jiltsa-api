@@ -33,7 +33,7 @@ public class Partial {
     private Double amount;
 
     @ManyToOne
-    @JoinColumn(name = "credit_sale_id")
+    @JoinColumn(name = "credit_sale_id", insertable = false, updatable = false)
     private CreditSale creditSale;
 
 
