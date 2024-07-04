@@ -12,11 +12,11 @@ import java.util.Optional;
 public class PartialService {
     private final PartialDRepository partialDRepository;
 
-    Optional<PartialDto> getPartial(Integer partialId){
+    public Optional<PartialDto> getPartial(Integer partialId){
         return partialDRepository.getPartial(partialId);
     }
 
-    PartialDto createPartial(PartialDto partialDto){
+    public PartialDto createPartial(PartialDto partialDto){
         return partialDRepository.createPartial(partialDto);
     }
 }
