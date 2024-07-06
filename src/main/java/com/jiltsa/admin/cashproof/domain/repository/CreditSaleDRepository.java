@@ -10,4 +10,5 @@ public interface CreditSaleDRepository {
     List<CreditSaleDto> getCreditSales(Integer branchId);
     CreditSaleDto createCreditSale(CreditSaleDto creditSaleDto);
     CreditSaleDto updateCreditSale(CreditSaleDto creditSaleDto);
+    List<CreditSaleDto> getCreditSalesByPaymentStatus(Integer branchId, Boolean isPaid);
 }

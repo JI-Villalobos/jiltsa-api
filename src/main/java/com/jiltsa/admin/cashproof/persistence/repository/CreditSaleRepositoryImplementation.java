@@ -39,4 +39,11 @@ public class CreditSaleRepositoryImplementation implements CreditSaleDRepository
 
         return mapper.toCreditSaleDto(repository.save(creditSale));
     }
+
+    @Override
+    public List<CreditSaleDto> getCreditSalesByPaymentStatus(Integer branchId, Boolean isPaid) {
+        if (isPaid)
+            return mapper.toCreditSaleDtoList(repository.findByBranchIdAndIsPaidTrue(branchId));
+        return mapper.toCreditSaleDtoList(repository.findByBranchIdAndIsPaidFalse(branchId));
+    }
 }

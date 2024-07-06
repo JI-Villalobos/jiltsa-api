@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CreditSaleRepository extends JpaRepository<CreditSale, Integer> {
     List<CreditSale> findByBranchId(Integer branchId);
+    List<CreditSale> findByBranchIdAndIsPaidTrue(Integer branchId);
+    List<CreditSale> findByBranchIdAndIsPaidFalse(Integer branchId);
 }

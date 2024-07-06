@@ -24,6 +24,11 @@ public class CreditSaleController {
         return service.getCreditSales(branchId);
     }
 
+    @GetMapping("/get-by-status/{branchId}/{isPaid}")
+    public List<CreditSaleDto> getCreditSalesByPaymentStatus(@PathVariable("branchId") Integer branchId, @PathVariable("isPaid") Boolean isPaid){
+        return service.getCreditSaleByPaymentStatus(branchId, isPaid);
+    }
+
     @PostMapping
     public CreditSaleDto createCreditSale(@RequestBody CreditSaleDto creditSaleDto){
         return service.createCreditSale(creditSaleDto);
@@ -33,4 +38,5 @@ public class CreditSaleController {
     public CreditSaleDto updateCreditSale(@RequestBody CreditSaleDto creditSaleDto){
         return service.updateCreditSale(creditSaleDto);
     }
+
 }

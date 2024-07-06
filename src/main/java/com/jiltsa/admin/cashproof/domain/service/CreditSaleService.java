@@ -28,4 +28,8 @@ public class CreditSaleService {
     public CreditSaleDto updateCreditSale(CreditSaleDto creditSaleDto){
         return creditSaleDRepository.updateCreditSale(creditSaleDto);
     }
+
+    public List<CreditSaleDto> getCreditSaleByPaymentStatus(Integer branchId, Boolean isPaid){
+        return creditSaleDRepository.getCreditSalesByPaymentStatus(branchId, isPaid);
+    }
 }
