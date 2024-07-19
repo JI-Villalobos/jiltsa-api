@@ -26,6 +26,9 @@ public class CreditSale {
     private String concept;
 
     @NotNull
+    private String client;
+
+    @NotNull
     private LocalDateTime date;
 
     @NotNull
@@ -41,8 +44,9 @@ public class CreditSale {
     @OneToMany(mappedBy = "creditSale")
     private List<Partial> partials;
 
-    public CreditSale(String concept, LocalDateTime date, Double amount, Integer branchId) {
+    public CreditSale(String concept, String client, LocalDateTime date, Double amount, Integer branchId) {
         this.concept = concept;
+        this.client = client;
         this.date = date;
         this.amount = amount;
         this.branchId = branchId;
