@@ -25,7 +25,7 @@ public class Accounting {
     @Column(name = "branch_id")
     @NotNull
     private Integer branchId;
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "branch_id", updatable = false, insertable = false)
