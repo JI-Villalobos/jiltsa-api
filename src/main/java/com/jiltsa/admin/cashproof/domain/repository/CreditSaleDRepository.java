@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.domain.repository;
 
+import com.jiltsa.admin.cashproof.domain.dto.CreditSaleBalanceDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface CreditSaleDRepository {
     CreditSaleDto createCreditSale(CreditSaleDto creditSaleDto);
     CreditSaleDto updateCreditSale(CreditSaleDto creditSaleDto);
     List<CreditSaleDto> getCreditSalesByPaymentStatus(Integer branchId, Boolean isPaid);
+    Optional<CreditSaleBalanceDto> getBalance(Integer creditSaleId);
 }

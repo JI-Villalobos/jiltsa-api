@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.domain.service;
 
+import com.jiltsa.admin.cashproof.domain.dto.CreditSaleBalanceDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.domain.repository.CreditSaleDRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,9 @@ public class CreditSaleService {
 
     public List<CreditSaleDto> getCreditSaleByPaymentStatus(Integer branchId, Boolean isPaid){
         return creditSaleDRepository.getCreditSalesByPaymentStatus(branchId, isPaid);
+    }
+
+    public Optional<CreditSaleBalanceDto> getCreditSaleBalance(Integer creditSaleId){
+        return creditSaleDRepository.getBalance(creditSaleId);
     }
 }

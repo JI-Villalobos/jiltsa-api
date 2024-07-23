@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.persistence.repository;
 
+import com.jiltsa.admin.cashproof.domain.dto.CreditSaleBalanceDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.domain.repository.CreditSaleDRepository;
 import com.jiltsa.admin.cashproof.persistence.entity.CreditSale;
@@ -45,5 +46,21 @@ public class CreditSaleRepositoryImplementation implements CreditSaleDRepository
         if (isPaid)
             return mapper.toCreditSaleDtoList(repository.findByBranchIdAndIsPaidTrue(branchId));
         return mapper.toCreditSaleDtoList(repository.findByBranchIdAndIsPaidFalse(branchId));
+    }
+
+    @Override
+    public Optional<CreditSaleBalanceDto> getBalance(Integer creditSaleId) {
+        Optional<CreditSale> creditSale = repository.findById(creditSaleId);
+        if (creditSale.isPresent()){
+          Integer payments = creditSale.get().getPartials().size();
+          Double totalPayments = creditSale.get().getPartials()
+                  .stream().reduce(0.0, (a, b) -> a + b.getAmount(), Double::sum);
+          Double outstandingBalance = creditSale.get().getAmount() - totalPayments;
+
+          CreditSaleBalanceDto creditSaleBalanceDto =
+                  new CreditSaleBalanceDto(payments, totalPayments, outstandingBalance);
+          return Optional.of(creditSaleBalanceDto);
+        }
+        return Optional.empty();
     }
 }
