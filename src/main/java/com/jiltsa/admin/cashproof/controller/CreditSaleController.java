@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import com.jiltsa.admin.cashproof.domain.dto.CreditSaleBalanceDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.domain.service.CreditSaleService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class CreditSaleController {
     @GetMapping("/get-by-status/{branchId}/{isPaid}")
     public List<CreditSaleDto> getCreditSalesByPaymentStatus(@PathVariable("branchId") Integer branchId, @PathVariable("isPaid") Boolean isPaid){
         return service.getCreditSaleByPaymentStatus(branchId, isPaid);
+    }
+
+    @GetMapping("/balance/{creditSaleId}")
+    public Optional<CreditSaleBalanceDto> getCreditSaleBalance(@PathVariable("creditSaleId") Integer creditSaleId){
+        return service.getCreditSaleBalance(creditSaleId);
     }
 
     @PostMapping
