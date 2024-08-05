@@ -16,6 +16,7 @@ import java.util.Optional;
 public class CreditSaleRepositoryImplementation implements CreditSaleDRepository {
     private final CreditSaleRepository repository;
     private final CreditSaleMapper mapper;
+
     @Override
     public Optional<CreditSaleDto> getCreditSale(Integer saleId) {
         return repository.findById(saleId).map(mapper::toCreditSaleDto);
@@ -63,4 +64,6 @@ public class CreditSaleRepositoryImplementation implements CreditSaleDRepository
         }
         return Optional.empty();
     }
+
+
 }

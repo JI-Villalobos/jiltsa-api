@@ -22,7 +22,7 @@ public class ExpenseRegistry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
-    @Column(name = "accounting_id")
+    @Column(name = "accountingId")
     private Integer accountingId;
     @NotNull
     @Column(name = "expense_type_id")
@@ -38,7 +38,7 @@ public class ExpenseRegistry {
     private LocalDateTime modifiedDate;
 
     @ManyToOne
-    @JoinColumn(name ="accounting_id", insertable = false, updatable = false)
+    @JoinColumn(name ="accountingId", insertable = false, updatable = false)
     private Accounting accounting;
 
     @ManyToOne
