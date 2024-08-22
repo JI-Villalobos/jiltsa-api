@@ -27,14 +27,16 @@ public class ActiveAccountingRepositoryImplementation implements ActiveAccountin
     }
 
     @Override
-    public void closeActiveAccounting(Integer accountingId) {
+    public Boolean closeActiveAccounting(Integer accountingId) {
         Optional<ActiveAccounting> activeAccounting = repository.findByAccountingId(accountingId);
         if (activeAccounting.isPresent()) {
             ActiveAccounting accounting = activeAccounting.get();
             accounting.setIsActive(false);
             repository.save(accounting);
+
+            return Boolean.TRUE;
         } else {
-            throw new RuntimeException("Active accounting not found");
+            return Boolean.FALSE;
         }
     }
 }

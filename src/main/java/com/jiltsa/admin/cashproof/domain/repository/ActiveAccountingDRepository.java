@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface ActiveAccountingDRepository {
     Optional<ActiveAccountingDto> getCurrentAccounting(Integer branchId);
     ActiveAccountingDto createActiveAccounting(ActiveAccountingDto accountingDto);
-    void closeActiveAccounting(Integer accountingId);
+    Boolean closeActiveAccounting(Integer accountingId);
 }

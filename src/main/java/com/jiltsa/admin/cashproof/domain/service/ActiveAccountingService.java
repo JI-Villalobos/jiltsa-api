@@ -20,7 +20,7 @@ public class ActiveAccountingService {
         return repository.getCurrentAccounting(branchId);
     }
 
-    public void closeCurrentAccounting(Integer accountingId){
-        repository.closeActiveAccounting(accountingId);
+    public Boolean closeCurrentAccounting(Integer accountingId){
+        return repository.closeActiveAccounting(accountingId);
     }
 }

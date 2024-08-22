@@ -24,7 +24,7 @@ public class ActiveAccountingController {
     }
 
     @PatchMapping("/{accountingId}")
-    public void closeActiveAccounting(@PathVariable("accountingId") Integer accountingId){
-        service.closeCurrentAccounting(accountingId);
+    public Boolean closeActiveAccounting(@PathVariable("accountingId") Integer accountingId){
+        return service.closeCurrentAccounting(accountingId);
     }
 }
