@@ -38,28 +38,31 @@ public class CashWithdrawalRepositoryImplementation implements CashWithdrawalDRe
     }
 
     @Override
-    public Page<CashWithdrawalDto> getLatestRegistries(
-            int page, int elements, String sortBy, String sortDirection, String branch) {
+    public Page<CashWithdrawalDto> getLatestRegistries(int page, int elements, String sortBy, String sortDirection, String branch) {
         Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
         Pageable pageRequest = PageRequest.of(page, elements,sort);
-        LocalDateTime date = LocalDateTime.now().minusMonths(1);
-        return mapper.toCashwithdrawalPage(repository.findByBranchAndDateAfter(branch, date, pageRequest));
+        LocalDateTime start = LocalDateTime.now().minusMonths(1);
+        return mapper.toCashwithdrawalPage(repository.findByBranchAndDateBetween(branch, start, LocalDateTime.now(), pageRequest));
     }
 
     @Override
-    public Page<CashWithdrawalDto> getRegistriesByTagAndDate(
-            int page, int elements, String sortBy, String sortDirection, String branch,
-            String concept, LocalDateTime date) {
+    public Page<CashWithdrawalDto> getRegistriesByTagAndDateBetween(int page, int elements, String sortBy, String sortDirection,
+                                                                    String branch, String concept, LocalDateTime start,
+                                                                    LocalDateTime finish) {
         Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
         Pageable pageRequest = PageRequest.of(page, elements, sort);
-        return mapper.toCashwithdrawalPage(repository.findByBranchAndConceptContainingAndDateAfter(
-                branch, concept, date, pageRequest));
+
+        return mapper.toCashwithdrawalPage(repository.findByBranchAndConceptContainingAndDateBetween(
+                branch, concept, start, finish, pageRequest));
     }
 
     @Override
-    public Page<CashWithdrawalDto> getRegistriesByDate(int page, int elements, String sortBy, String sortDirection, String branch, LocalDateTime date) {
+    public Page<CashWithdrawalDto> getRegistriesByDateBetween(int page, int elements, String sortBy, String sortDirection,
+                                                              String branch, LocalDateTime start, LocalDateTime finish) {
         Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements,sort);
-        return mapper.toCashwithdrawalPage(repository.findByBranchAndDateAfter(branch, date, pageRequest));
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+
+        return mapper.toCashwithdrawalPage(repository.findByBranchAndDateBetween(branch, start, finish, pageRequest));
     }
+
 }

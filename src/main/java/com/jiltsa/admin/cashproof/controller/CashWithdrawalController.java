@@ -41,26 +41,28 @@ public class CashWithdrawalController {
         return service.getCurrentCashWithdrawalsRegistries(branch);
     }
 
-    @GetMapping("/latest/{branch}/{date}/{tag}")
+    @GetMapping("/latest/{branch}/{start}/to/{finish}/{tag}")
     public Page<CashWithdrawalDto> getRegistriesByTagAndDate(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int elements,
             @RequestParam(defaultValue = "date") String sortBy,
             @RequestParam(defaultValue = "acs") String sortDirection,
             @PathVariable("branch") String branch,
-            @PathVariable("date") LocalDateTime date,
+            @PathVariable("start") LocalDateTime start,
+            @PathVariable("finish") LocalDateTime finish,
             @PathVariable("tag") String concept){
-        return service.getRegistriesByTagAndDate(page, elements, sortBy, sortDirection, branch, concept, date);
+        return service.getRegistriesByTagAndDate(page, elements, sortBy, sortDirection, branch, concept, start, finish);
     }
 
-    @GetMapping("/{branch}/since/{date}")
+    @GetMapping("/{branch}/since/{start}/to/{finish}")
     public Page<CashWithdrawalDto> getRegistriesByDate(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int elements,
             @RequestParam(defaultValue = "date") String sortBy,
             @RequestParam(defaultValue = "acs") String sortDirection,
             @PathVariable("branch") String branch,
-            @PathVariable("date") LocalDateTime date){
-        return service.getRegistriesByDate(page, elements, sortBy, sortDirection, branch, date);
+            @PathVariable("start") LocalDateTime start,
+            @PathVariable("finish") LocalDateTime finish){
+        return service.getRegistriesByDateBetween(page, elements, sortBy, sortDirection, branch, start, finish);
     }
 }

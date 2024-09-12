@@ -15,11 +15,11 @@ public interface CashWithdrawalDRepository {
             int page, int elements, String sortBy, String sortDirection,
             String branch);
 
-    Page<CashWithdrawalDto> getRegistriesByTagAndDate(
+    Page<CashWithdrawalDto> getRegistriesByTagAndDateBetween(
             int page, int elements, String sortBy, String sortDirection,
-            String branch, String concept, LocalDateTime date);
+            String branch, String concept, LocalDateTime start, LocalDateTime finish);
 
-    Page<CashWithdrawalDto> getRegistriesByDate(
+    Page<CashWithdrawalDto> getRegistriesByDateBetween(
             int page, int elements, String sortBy, String sortDirection,
-            String branch, LocalDateTime date);
+            String branch, LocalDateTime start, LocalDateTime finish);
 }

@@ -34,15 +34,15 @@ public class CashWithdrawalService {
 
     public Page<CashWithdrawalDto> getRegistriesByTagAndDate(
             int page, int elements, String sortBy, String sortDirection, String branch,
-            String concept, LocalDateTime dateTime){
-        return cashWithdrawalDRepository.getRegistriesByTagAndDate(page, elements, sortBy, sortDirection,
-                branch, concept, dateTime);
+            String concept, LocalDateTime start, LocalDateTime finish){
+        return cashWithdrawalDRepository.getRegistriesByTagAndDateBetween(page, elements, sortBy, sortDirection,
+                branch, concept, start, finish);
     }
 
-    public Page<CashWithdrawalDto> getRegistriesByDate(
+    public Page<CashWithdrawalDto> getRegistriesByDateBetween(
             int page, int elements, String sortBy, String sortDirection, String branch,
-            LocalDateTime dateTime){
-        return cashWithdrawalDRepository.getRegistriesByDate(page, elements, sortBy, sortDirection,
-                branch, dateTime);
+            LocalDateTime start, LocalDateTime finish){
+        return cashWithdrawalDRepository.getRegistriesByDateBetween(page, elements, sortBy, sortDirection,
+                branch, start, finish);
     }
 }

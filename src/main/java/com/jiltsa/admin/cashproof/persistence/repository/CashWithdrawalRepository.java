@@ -11,6 +11,6 @@ import java.util.List;
 public interface CashWithdrawalRepository extends JpaRepository<CashWithdrawal, Integer> {
     List<CashWithdrawal> findByBranch(String branch);
     List<CashWithdrawal> findByBranchAndDateAfter(String branch, LocalDateTime date);
-    Page<CashWithdrawal> findByBranchAndDateAfter(String branch, LocalDateTime date, Pageable page);
-    Page<CashWithdrawal> findByBranchAndConceptContainingAndDateAfter(String branch, String concept, LocalDateTime date, Pageable page);
+    Page<CashWithdrawal> findByBranchAndDateBetween(String branch, LocalDateTime start, LocalDateTime finish, Pageable page);
+    Page<CashWithdrawal> findByBranchAndConceptContainingAndDateBetween(String branch, String concept, LocalDateTime start, LocalDateTime finish, Pageable page);
 }
