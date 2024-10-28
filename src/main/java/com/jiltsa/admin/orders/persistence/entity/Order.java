@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,7 +28,7 @@ public class Order {
 
     @Column(name = "creation_date")
     @NotNull
-    private Date creationDate;
+    private LocalDate creationDate;
 
     @Column(name = "estimated_cost")
     @NotNull
@@ -46,6 +46,7 @@ public class Order {
     @NotNull
     private Boolean isOpen;
 
+    @Getter
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
@@ -65,11 +66,11 @@ public class Order {
         this.branchId = branchId;
     }
 
-    public @NotNull Date getCreationDate() {
+    public @NotNull LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(@NotNull Date creationDate) {
+    public void setCreationDate(@NotNull LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -106,7 +107,7 @@ public class Order {
         isOpen = open;
     }
 
-    public Order(Integer providerId, Integer branchId, Date creationDate, Double estimatedCost, Double realCost,
+    public Order(Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
                  Integer status, Boolean isOpen) {
         this.providerId = providerId;
         this.branchId = branchId;
@@ -117,7 +118,7 @@ public class Order {
         this.isOpen = isOpen;
     }
 
-    public Order(Integer id, Integer providerId, Integer branchId, Date creationDate, Double estimatedCost, Double realCost,
+    public Order(Integer id, Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
                  Integer status, Boolean isOpen) {
         this.id = id;
         this.providerId = providerId;
@@ -129,7 +130,7 @@ public class Order {
         this.isOpen = isOpen;
     }
 
-    public Order(Integer id, Integer providerId, Integer branchId, Date creationDate, Double estimatedCost, Double realCost,
+    public Order(Integer id, Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
                  Integer status, Boolean isOpen, List<OrderItem> items) {
         this.id = id;
         this.providerId = providerId;
@@ -142,7 +143,4 @@ public class Order {
         this.items = items;
     }
 
-    public List<OrderItem> getItems() {
-        return items;
-    }
 }
