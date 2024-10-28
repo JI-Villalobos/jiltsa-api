@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface OrderItemDRepository {
     List<OrderItemDto> saveOrders(List<OrderItemDto> items);
     OrderItemDto saveOrderItem(OrderItemDto item);
-    Optional<OrderItemDto> getorderItem(Integer itemId);
-    Boolean deleteOrderItem(Integer itemId);
+    Optional<OrderItemDto> getOrderItem(Integer itemId);
+    void deleteOrderItem(Integer itemId);
 }

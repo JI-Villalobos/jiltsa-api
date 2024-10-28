@@ -11,6 +11,7 @@ public record OrderDto(
     public OrderDto(
             Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
             Integer status, Boolean isOpen) {
-        this(0, providerId, branchId, creationDate, estimatedCost, realCost, status, isOpen, null);
+        this(null, providerId, branchId, creationDate, estimatedCost, realCost, status, isOpen, null);
     }
+
 }

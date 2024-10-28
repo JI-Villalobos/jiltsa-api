@@ -2,18 +2,16 @@ package com.jiltsa.admin.orders.domain.service;
 
 import com.jiltsa.admin.orders.domain.dto.OrderDto;
 import com.jiltsa.admin.orders.domain.repository.OrderDRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
     private final OrderDRepository orderDRepository;
-
-    public OrderService(OrderDRepository orderDRepository) {
-        this.orderDRepository = orderDRepository;
-    }
 
     public List<OrderDto> getActiveOrders(){
         return orderDRepository.getActiveOrders();

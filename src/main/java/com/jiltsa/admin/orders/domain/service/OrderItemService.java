@@ -3,18 +3,16 @@ package com.jiltsa.admin.orders.domain.service;
 import com.jiltsa.admin.orders.domain.dto.OrderItemDto;
 import com.jiltsa.admin.orders.domain.repository.OrderItemDRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderItemService {
     private final OrderItemDRepository orderItemDRepository;
-
-    public OrderItemService(OrderItemDRepository orderItemDRepository) {
-        this.orderItemDRepository = orderItemDRepository;
-    }
 
     public OrderItemDto saveOrderItem(OrderItemDto orderItemDto){
         return orderItemDRepository.saveOrderItem(orderItemDto);
@@ -26,10 +24,10 @@ public class OrderItemService {
     }
 
     public Optional<OrderItemDto> getOrderItem(Integer orderItemId){
-        return orderItemDRepository.getorderItem(orderItemId);
+        return orderItemDRepository.getOrderItem(orderItemId);
     }
 
-    public Boolean deleteOrderItem(Integer orderItemId){
-        return orderItemDRepository.deleteOrderItem(orderItemId);
+    public void deleteOrderItem(Integer orderItemId){
+        orderItemDRepository.deleteOrderItem(orderItemId);
     }
 }

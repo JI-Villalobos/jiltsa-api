@@ -2,18 +2,22 @@ package com.jiltsa.admin.orders.persistence.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "orders")
 public class Order {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -46,66 +50,9 @@ public class Order {
     @NotNull
     private Boolean isOpen;
 
-    @Getter
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
-    public @NotNull Integer getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(@NotNull Integer providerId) {
-        this.providerId = providerId;
-    }
-
-    public @NotNull Integer getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(@NotNull Integer branchId) {
-        this.branchId = branchId;
-    }
-
-    public @NotNull LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(@NotNull LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public @NotNull Double getEstimatedCost() {
-        return estimatedCost;
-    }
-
-    public void setEstimatedCost(@NotNull Double estimatedCost) {
-        this.estimatedCost = estimatedCost;
-    }
-
-
-    public @NotNull Integer getStatus() {
-        return status;
-    }
-
-    public @NotNull Boolean getOpen() {
-        return isOpen;
-    }
-
-    public void setStatus(@NotNull Integer status) {
-        this.status = status;
-    }
-
-    public @NotNull Double getRealCost() {
-        return realCost;
-    }
-
-    public void setRealCost(@NotNull Double realCost) {
-        this.realCost = realCost;
-    }
-
-    public void setOpen(@NotNull Boolean open) {
-        isOpen = open;
-    }
 
     public Order(Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
                  Integer status, Boolean isOpen) {
@@ -117,30 +64,4 @@ public class Order {
         this.status = status;
         this.isOpen = isOpen;
     }
-
-    public Order(Integer id, Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
-                 Integer status, Boolean isOpen) {
-        this.id = id;
-        this.providerId = providerId;
-        this.branchId = branchId;
-        this.creationDate = creationDate;
-        this.estimatedCost = estimatedCost;
-        this.realCost = realCost;
-        this.status = status;
-        this.isOpen = isOpen;
-    }
-
-    public Order(Integer id, Integer providerId, Integer branchId, LocalDate creationDate, Double estimatedCost, Double realCost,
-                 Integer status, Boolean isOpen, List<OrderItem> items) {
-        this.id = id;
-        this.providerId = providerId;
-        this.branchId = branchId;
-        this.creationDate = creationDate;
-        this.estimatedCost = estimatedCost;
-        this.realCost = realCost;
-        this.status = status;
-        this.isOpen = isOpen;
-        this.items = items;
-    }
-
 }
