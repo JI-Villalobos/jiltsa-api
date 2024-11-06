@@ -24,4 +24,8 @@ public class OrderService {
     public OrderDto saveOrder(OrderDto orderDto){
         return orderDRepository.saveOrder(orderDto);
     }
+
+    public void deleteOrder(Integer orderId){
+        orderDRepository.deleteOrder(orderId);
+    }
 }

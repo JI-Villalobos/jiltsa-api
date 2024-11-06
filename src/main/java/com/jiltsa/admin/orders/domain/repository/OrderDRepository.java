@@ -9,4 +9,5 @@ public interface OrderDRepository {
     List<OrderDto> getActiveOrders();
     Optional<OrderDto> getOrder(Integer orderId);
     OrderDto saveOrder(OrderDto order);
+    void deleteOrder(Integer orderId);
 }

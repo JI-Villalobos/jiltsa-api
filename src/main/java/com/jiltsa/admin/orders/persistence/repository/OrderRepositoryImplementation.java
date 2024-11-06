@@ -34,4 +34,9 @@ public class OrderRepositoryImplementation implements OrderDRepository {
         Order order = mapper.toOrder(orderDto);
         return mapper.toOrderDto(repository.save(order));
     }
+
+    @Override
+    public void deleteOrder(Integer orderId) {
+        repository.deleteById(orderId);
+    }
 }
