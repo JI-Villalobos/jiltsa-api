@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +19,9 @@ public class ProviderService {
 
     public ProviderDto saveProvider(ProviderDto providerDto){
         return providerDRepository.createProvider(providerDto);
+    }
+
+    public Optional<ProviderDto> getProvider(Integer providerId){
+        return providerDRepository.getProvider(providerId);
     }
 }
