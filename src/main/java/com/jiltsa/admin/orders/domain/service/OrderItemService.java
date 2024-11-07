@@ -30,4 +30,8 @@ public class OrderItemService {
     public void deleteOrderItem(Integer orderItemId){
         orderItemDRepository.deleteOrderItem(orderItemId);
     }
+
+    public void disableItems(Integer orderId){
+        orderItemDRepository.disableItems(orderId);
+    }
 }

@@ -40,4 +40,17 @@ public class OrderItemRepositoryImplementation implements OrderItemDRepository {
     public void deleteOrderItem(Integer itemId) {
         repository.deleteById(itemId);
     }
+
+    @Override
+    public void disableItems(Integer orderId) {
+        List<OrderItem> itemList = repository.findByOrderId(orderId).stream()
+                .filter(item -> item.getStatus().equals(1)).toList();
+        List<OrderItem> disabled = itemList.stream().map(item -> new OrderItem(
+                item.getId(), item.getOrderId(), item.getItem(), item.getRequested(),
+                item.getPrice(), item.getBudgeted(), item.getItemType(), item.getStocked(),
+                item.getFinalPrice(), item.getTotal(), 4
+        )).toList();
+
+        disabled.forEach(repository::save);
+    }
 }

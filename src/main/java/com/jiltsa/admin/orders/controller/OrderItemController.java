@@ -43,4 +43,9 @@ public class OrderItemController {
     public List<OrderItemDto> updateAll(@RequestBody List<OrderItemDto> itemDtoList){
         return service.saveOrderItemDtoList(itemDtoList);
     }
+
+    @PutMapping("/disable/{orderId}")
+    public void disableItems(@PathVariable("orderId") Integer orderId){
+        service.disableItems(orderId);
+    }
 }
