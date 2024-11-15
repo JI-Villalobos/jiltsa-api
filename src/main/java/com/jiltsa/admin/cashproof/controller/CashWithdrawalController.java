@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/withdrawals")
@@ -64,5 +65,20 @@ public class CashWithdrawalController {
             @PathVariable("start") LocalDateTime start,
             @PathVariable("finish") LocalDateTime finish){
         return service.getRegistriesByDateBetween(page, elements, sortBy, sortDirection, branch, start, finish);
+    }
+
+    @GetMapping("/{cashId}")
+    public Optional<CashWithdrawalDto> getCashWithdrawal(@PathVariable("cashId") Integer cashId){
+        return service.getCashWithdrawal(cashId);
+    }
+
+    @PutMapping
+    public CashWithdrawalDto updateCashWithdrawal(@RequestBody CashWithdrawalDto cashWithdrawalDto){
+        return service.updateCashWithdrawal(cashWithdrawalDto);
+    }
+
+    @DeleteMapping("/{cashId}")
+    public void deleteCashWithdrawal(@PathVariable("cashId") Integer cashId){
+        service.deleteCashWithdrawal(cashId);
     }
 }

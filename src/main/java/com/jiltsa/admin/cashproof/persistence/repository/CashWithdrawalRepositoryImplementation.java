@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -63,6 +64,23 @@ public class CashWithdrawalRepositoryImplementation implements CashWithdrawalDRe
         Pageable pageRequest = PageRequest.of(page, elements, sort);
 
         return mapper.toCashwithdrawalPage(repository.findByBranchAndDateBetween(branch, start, finish, pageRequest));
+    }
+
+    @Override
+    public Optional<CashWithdrawalDto> getCashWithdrawal(Integer cashWithdrawalId) {
+        return repository.findById(cashWithdrawalId).map(mapper::toCashWithdrawalDto);
+    }
+
+    @Override
+    public CashWithdrawalDto updateCashWithdrawal(CashWithdrawalDto cashWithdrawalDto) {
+        CashWithdrawal cashWithdrawal = mapper.toCashWithdrawal(cashWithdrawalDto);
+
+        return mapper.toCashWithdrawalDto(repository.save(cashWithdrawal));
+    }
+
+    @Override
+    public void deleteCashWithdrawal(Integer cashWithdrawalId) {
+        repository.deleteById(cashWithdrawalId);
     }
 
 }

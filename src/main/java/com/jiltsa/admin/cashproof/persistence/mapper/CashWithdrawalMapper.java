@@ -26,4 +26,6 @@ public interface CashWithdrawalMapper {
             @Mapping(target="date", ignore = true)
     })
     CashWithdrawal toCashWithdrawal(CreateCashWithdrawalDto createCashWithdrawalDto);
+    
+    CashWithdrawal toCashWithdrawal(CashWithdrawalDto cashWithdrawalDto);
 }

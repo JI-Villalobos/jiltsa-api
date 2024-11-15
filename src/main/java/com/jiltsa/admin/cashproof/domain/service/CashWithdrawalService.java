@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +45,17 @@ public class CashWithdrawalService {
             LocalDateTime start, LocalDateTime finish){
         return cashWithdrawalDRepository.getRegistriesByDateBetween(page, elements, sortBy, sortDirection,
                 branch, start, finish);
+    }
+
+    public Optional<CashWithdrawalDto> getCashWithdrawal(Integer cashWithdrawalId){
+        return cashWithdrawalDRepository.getCashWithdrawal(cashWithdrawalId);
+    }
+
+    public CashWithdrawalDto updateCashWithdrawal(CashWithdrawalDto cashWithdrawalDto){
+        return cashWithdrawalDRepository.updateCashWithdrawal(cashWithdrawalDto);
+    }
+
+    public void deleteCashWithdrawal(Integer cashWithdrawalId){
+        cashWithdrawalDRepository.deleteCashWithdrawal(cashWithdrawalId);
     }
 }
