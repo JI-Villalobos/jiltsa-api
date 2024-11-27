@@ -30,4 +30,10 @@ public class ProviderRepositoryImplementation implements ProviderDRepository {
     public Optional<ProviderDto> getProvider(Integer providerId) {
         return repository.findById(providerId).map(mapper::toProviderDto);
     }
+
+    @Override
+    public ProviderDto updateProvider(ProviderDto providerDto) {
+        Provider provider = mapper.toProvider(providerDto);
+        return mapper.toProviderDto(repository.save(provider));
+    }
 }

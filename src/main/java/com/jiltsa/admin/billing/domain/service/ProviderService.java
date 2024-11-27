@@ -24,4 +24,8 @@ public class ProviderService {
     public Optional<ProviderDto> getProvider(Integer providerId){
         return providerDRepository.getProvider(providerId);
     }
+
+    public ProviderDto updateProvider(ProviderDto providerDto) {
+        return providerDRepository.updateProvider(providerDto);
+    }
 }

@@ -9,4 +9,5 @@ public interface ProviderDRepository {
     List<ProviderDto> getProviders();
     ProviderDto createProvider(ProviderDto providerDto);
     Optional<ProviderDto> getProvider(Integer providerId);
+    ProviderDto updateProvider(ProviderDto providerDto);
 }

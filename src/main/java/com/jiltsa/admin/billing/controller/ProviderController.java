@@ -28,4 +28,9 @@ public class ProviderController {
     public Optional<ProviderDto> getProvider(@PathVariable("providerId") Integer providerId){
         return service.getProvider(providerId);
     }
+
+    @PutMapping
+    public ProviderDto updateProvider(@RequestBody ProviderDto providerDto){
+        return service.updateProvider(providerDto);
+    }
 }
