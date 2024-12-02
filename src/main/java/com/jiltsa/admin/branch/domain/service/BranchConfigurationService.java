@@ -2,6 +2,7 @@ package com.jiltsa.admin.branch.domain.service;
 
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.repository.BranchConfigurationDRepository;
+import com.jiltsa.admin.branch.persistence.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,15 @@ public class BranchConfigurationService {
         return branchConfigurationDRepository.createBranchConfiguration(branchConfigurationDto);
     }
 
-    public BranchConfigurationDto updateBranchConfiguration(Integer branchConfigId, BranchConfigurationDto branchConfigurationDto){
-        return branchConfigurationDRepository.updateBranchConfiguration(branchConfigId, branchConfigurationDto);
+    public BranchConfigurationDto updateBranchConfiguration(BranchConfigurationDto branchConfigurationDto){
+        return branchConfigurationDRepository.updateBranchConfiguration(branchConfigurationDto);
     }
 
     public Optional<BranchConfigurationDto> getBranchConfiguration(Integer branchId){
         return branchConfigurationDRepository.getBranchConfiguration(branchId);
+    }
+
+    public List<BranchConfigurationDto> getBranchConfigurationsByProfile(Profile profile){
+        return branchConfigurationDRepository.getConfigurationsByProfile(profile);
     }
 }

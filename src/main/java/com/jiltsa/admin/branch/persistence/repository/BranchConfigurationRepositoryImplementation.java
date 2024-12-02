@@ -3,6 +3,7 @@ package com.jiltsa.admin.branch.persistence.repository;
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.repository.BranchConfigurationDRepository;
 import com.jiltsa.admin.branch.persistence.entity.BranchConfiguration;
+import com.jiltsa.admin.branch.persistence.entity.Profile;
 import com.jiltsa.admin.branch.persistence.mapper.BranchConfigurationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,7 @@ public class BranchConfigurationRepositoryImplementation implements BranchConfig
     }
 
     @Override
-    public BranchConfigurationDto updateBranchConfiguration(Integer branchConfigId, BranchConfigurationDto branchConfigurationDto) {
+    public BranchConfigurationDto updateBranchConfiguration(BranchConfigurationDto branchConfigurationDto) {
         BranchConfiguration branchConfiguration = mapper.toBranchConfiguration(branchConfigurationDto);
         return mapper.toBranchConfigurationDto(repository.save(branchConfiguration));
     }
@@ -35,5 +36,10 @@ public class BranchConfigurationRepositoryImplementation implements BranchConfig
     @Override
     public Optional<BranchConfigurationDto> getBranchConfiguration(Integer branchId) {
         return repository.findByBranchId(branchId).map(mapper::toBranchConfigurationDto);
+    }
+
+    @Override
+    public List<BranchConfigurationDto> getConfigurationsByProfile(Profile profile) {
+        return mapper.toBranchConfigurationDtoList(repository.findByProfile(profile));
     }
 }

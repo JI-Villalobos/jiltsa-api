@@ -2,6 +2,7 @@ package com.jiltsa.admin.branch.controller;
 
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.service.BranchConfigurationService;
+import com.jiltsa.admin.branch.persistence.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +25,18 @@ public class BranchConfigurationController {
         return service.createBranchConfiguration(branchConfigurationDto);
     }
 
-    @PutMapping("/{branchConfigId}")
-    public BranchConfigurationDto updateBranchConfiguration(@PathVariable("branchConfigId") Integer branchConfigId, @RequestBody BranchConfigurationDto branchConfigurationDto){
-        return service.updateBranchConfiguration(branchConfigId, branchConfigurationDto);
+    @PutMapping()
+    public BranchConfigurationDto updateBranchConfiguration(@RequestBody BranchConfigurationDto branchConfigurationDto){
+        return service.updateBranchConfiguration(branchConfigurationDto);
     }
 
     @GetMapping("/get/{branchId}")
     public Optional<BranchConfigurationDto> getBranchConfiguration(@PathVariable("branchId") Integer branchId){
         return service.getBranchConfiguration(branchId);
+    }
+
+    @GetMapping("/profile/{profile}")
+    public List<BranchConfigurationDto> getBranchconfigurationsByProfile(@PathVariable("profile")Profile profile){
+        return service.getBranchConfigurationsByProfile(profile);
     }
 }
