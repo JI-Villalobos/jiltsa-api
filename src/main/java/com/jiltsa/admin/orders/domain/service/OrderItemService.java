@@ -31,7 +31,7 @@ public class OrderItemService {
         orderItemDRepository.deleteOrderItem(orderItemId);
     }
 
-    public void disableItems(Integer orderId){
-        orderItemDRepository.disableItems(orderId);
+    public void disableItems(Integer orderId, Integer status){
+        orderItemDRepository.disableItems(orderId, status);
     }
 }

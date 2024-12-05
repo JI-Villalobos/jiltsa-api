@@ -45,7 +45,10 @@ public class OrderItemController {
     }
 
     @PutMapping("/disable/{orderId}")
-    public void disableItems(@PathVariable("orderId") Integer orderId){
-        service.disableItems(orderId);
+    public void disableItems(
+            @PathVariable("orderId") Integer orderId,
+            @RequestParam int status
+    ){
+        service.disableItems(orderId, status);
     }
 }

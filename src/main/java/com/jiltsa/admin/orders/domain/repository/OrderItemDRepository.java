@@ -10,5 +10,5 @@ public interface OrderItemDRepository {
     OrderItemDto saveOrderItem(OrderItemDto item);
     Optional<OrderItemDto> getOrderItem(Integer itemId);
     void deleteOrderItem(Integer itemId);
-    void disableItems(Integer orderId);
+    void disableItems(Integer orderId, Integer status);
 }

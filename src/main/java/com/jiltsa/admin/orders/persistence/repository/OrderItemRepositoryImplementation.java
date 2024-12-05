@@ -42,13 +42,14 @@ public class OrderItemRepositoryImplementation implements OrderItemDRepository {
     }
 
     @Override
-    public void disableItems(Integer orderId) {
+    public void disableItems(Integer orderId, Integer status) {
+        int currentStatus = status == 4 ? 1 : 2;
         List<OrderItem> itemList = repository.findByOrderId(orderId).stream()
-                .filter(item -> item.getStatus().equals(1)).toList();
+                .filter(item -> item.getStatus().equals(currentStatus)).toList();
         List<OrderItem> disabled = itemList.stream().map(item -> new OrderItem(
                 item.getId(), item.getOrderId(), item.getItem(), item.getRequested(),
                 item.getPrice(), item.getBudgeted(), item.getItemType(), item.getStocked(),
-                item.getFinalPrice(), item.getTotal(), 4
+                item.getFinalPrice(), item.getTotal(), status
         )).toList();
 
         disabled.forEach(repository::save);
