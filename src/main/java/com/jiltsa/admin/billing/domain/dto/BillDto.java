@@ -17,4 +17,8 @@ public record BillDto(Integer id, LocalDateTime date, String invoice,
         this(null, date, invoice, branch, branchId, amount, null, null, null,
                 providerId, null, null);
     }
+
+    public BillDto(LocalDateTime date, String invoice, String branch, Integer branchId, Double amount, LocalDateTime limitPaymentDate, Integer providerId) {
+        this(null, date, invoice, branch, branchId, amount, limitPaymentDate, null, null, providerId, null, null);
+    }
 }

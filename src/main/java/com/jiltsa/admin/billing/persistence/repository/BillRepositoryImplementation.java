@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,22 @@ public class BillRepositoryImplementation implements BillDRepository {
     }
 
     @Override
+    public Page<BillDto> getBillsAfter(int page, int elements, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+
+        return mapper.toBillDtoPage(repository.findByDateAfter(pageRequest, LocalDateTime.now().minusMonths(4)));
+    }
+
+    @Override
+    public Page<BillDto> getBillsBetween(int page, int elements, String sortBy, String sortDirection, LocalDateTime start, LocalDateTime finish) {
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+
+        return mapper.toBillDtoPage(repository.findByDateBetween(pageRequest, start, finish));
+    }
+
+    @Override
     public Optional<BillDto> getBill(Integer id) {
         return repository.findById(id).map(mapper::toBillDto);
     }
@@ -46,6 +63,12 @@ public class BillRepositoryImplementation implements BillDRepository {
         bill.setIsPaid(false);
         bill.setLimitPaymentDate(bill.getDate().plusMonths(1));
 
+        return mapper.toBillDto(repository.save(bill));
+    }
+
+    @Override
+    public BillDto updateBill(BillDto billDto) {
+        Bill bill = mapper.toBill(billDto);
         return mapper.toBillDto(repository.save(bill));
     }
 
