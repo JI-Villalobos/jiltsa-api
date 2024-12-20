@@ -23,6 +23,9 @@ public class PaymentService {
     public Optional<PaymentDto> getPayment(Integer id){
         return paymentDRepository.getPayment(id);
     }
+    public Optional<PaymentDto> getPaymentByTicket(String ticket){
+        return paymentDRepository.getPaymentByTicket(ticket);
+    }
     public PaymentDto createPayment(PaymentDto paymentDto){
         return paymentDRepository.createPayment(paymentDto);
     }

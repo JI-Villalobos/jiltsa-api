@@ -11,6 +11,7 @@ public interface PaymentDRepository {
     List<PaymentDto> getPayments();
     List<PaymentDto> getPaymentsSince(LocalDateTime date);
     Optional<PaymentDto> getPayment(Integer id);
+    Optional<PaymentDto> getPaymentByTicket(String ticket);
     PaymentDto createPayment(PaymentDto paymentDto);
     String generateTicket();
 }

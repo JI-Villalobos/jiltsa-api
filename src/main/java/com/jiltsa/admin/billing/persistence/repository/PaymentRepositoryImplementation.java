@@ -33,6 +33,11 @@ public class PaymentRepositoryImplementation implements PaymentDRepository {
     }
 
     @Override
+    public Optional<PaymentDto> getPaymentByTicket(String ticket) {
+        return repository.findByTicket(ticket).map(mapper::toPaymentDto);
+    }
+
+    @Override
     public PaymentDto createPayment(PaymentDto paymentDto) {
         Payment payment = mapper.toPayment(paymentDto);
         return mapper.toPaymentDto(repository.save(payment));

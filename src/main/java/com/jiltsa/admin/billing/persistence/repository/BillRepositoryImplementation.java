@@ -61,7 +61,8 @@ public class BillRepositoryImplementation implements BillDRepository {
         Bill bill = mapper.toBill(billDto);
         bill.setIsActive(true);
         bill.setIsPaid(false);
-        bill.setLimitPaymentDate(bill.getDate().plusMonths(1));
+        if (bill.getLimitPaymentDate() == null)
+            bill.setLimitPaymentDate(bill.getDate().plusMonths(1));
 
         return mapper.toBillDto(repository.save(bill));
     }

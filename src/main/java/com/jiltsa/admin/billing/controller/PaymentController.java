@@ -24,6 +24,11 @@ public class PaymentController {
         return service.getPaymentsSince(date);
     }
 
+    @GetMapping("/uuid/{uuid}")
+    public Optional<PaymentDto> getPaymentByTicket(@PathVariable("uuid") String uuid){
+        return service.getPaymentByTicket(uuid);
+    }
+
     @GetMapping("/{id}")
     public Optional<PaymentDto> getPayment(@PathVariable("id") Integer id){
         return service.getPayment(id);
