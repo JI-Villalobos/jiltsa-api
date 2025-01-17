@@ -32,5 +32,14 @@ public interface IncomeRegistryMapper {
             @Mapping(target = "incomeType", ignore = true),
             @Mapping(target = "modifiedDate", ignore = true)
     })
+    IncomeRegistry toIncomeRegistry(IncomeRegistryDto incomeRegistryDto);
+
+    @InheritInverseConfiguration
+    @Mappings({
+            @Mapping(target = "time", ignore = true),
+            @Mapping(target = "accounting", ignore = true),
+            @Mapping(target = "incomeType", ignore = true),
+            @Mapping(target = "modifiedDate", ignore = true)
+    })
     List<IncomeRegistry> toIncomeRegistryList(List<CreateIncomeRegistryDto> incomes);
 }

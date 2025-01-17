@@ -24,11 +24,10 @@ public class IncomeRegistryController {
         return service.createIncomeRegistry(createIncomeRegistryDto);
     }
 
-    @PutMapping("/{incomeRegistryId}")
-    public CreateIncomeRegistryDto updateIncomeRegistry(
-            @RequestBody CreateIncomeRegistryDto createIncomeRegistryDto,
-            @PathVariable("incomeRegistryId") Integer incomeRegistryId){
-        return service.updateIncomeRegistry(createIncomeRegistryDto, incomeRegistryId);
+    @PutMapping()
+    public IncomeRegistryDto updateIncomeRegistry(
+            @RequestBody IncomeRegistryDto incomeRegistryDto){
+        return service.updateIncomeRegistry(incomeRegistryDto);
     }
 
     @PostMapping("/all")
@@ -36,4 +35,8 @@ public class IncomeRegistryController {
         return service.createIncomesRegistry(incomes);
     }
 
+    @DeleteMapping()
+    public void deleteIncomeRegistry(@RequestParam Integer incomeRegistryId){
+        service.deleteIncomeRegistry(incomeRegistryId);
+    }
 }

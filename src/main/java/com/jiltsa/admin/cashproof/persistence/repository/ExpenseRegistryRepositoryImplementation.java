@@ -27,9 +27,14 @@ public class ExpenseRegistryRepositoryImplementation implements ExpenseRegistryD
     }
 
     @Override
-    public CreateExpenseRegistryDto updateExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto, Integer expenseRegistryId) {
-        ExpenseRegistry expenseRegistry = mapper.toExpenseRegistry(createExpenseRegistryDto);
-        return mapper.toCreateExpenseRegistryDto(repository.save(expenseRegistry));
+    public ExpenseRegistryDto updateExpenseRegistry(ExpenseRegistryDto expenseRegistryDto) {
+        ExpenseRegistry expenseRegistry = mapper.toExpenseRegistry(expenseRegistryDto);
+        return mapper.toExpenseRegistryDto(repository.save(expenseRegistry));
+    }
+
+    @Override
+    public void deleteExpenseRegistry(Integer expenseRegistryId) {
+        repository.deleteById(expenseRegistryId);
     }
 
 }

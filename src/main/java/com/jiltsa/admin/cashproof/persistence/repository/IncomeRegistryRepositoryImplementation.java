@@ -26,9 +26,9 @@ public class IncomeRegistryRepositoryImplementation implements IncomeRegistryDRe
     }
 
     @Override
-    public CreateIncomeRegistryDto updateIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto, Integer incomeRegistryId) {
-        IncomeRegistry incomeRegistry = mapper.toIncomeRegistry(createIncomeRegistryDto);
-        return mapper.toCreateIncomeRegistryDto(repository.save(incomeRegistry));
+    public IncomeRegistryDto updateIncomeRegistry(IncomeRegistryDto incomeRegistryDto) {
+        IncomeRegistry incomeRegistry = mapper.toIncomeRegistry(incomeRegistryDto);
+        return mapper.toIncomeRegistryDto(repository.save(incomeRegistry));
     }
 
     @Override
@@ -36,5 +36,10 @@ public class IncomeRegistryRepositoryImplementation implements IncomeRegistryDRe
         List<IncomeRegistry> incomeRegistries = mapper.toIncomeRegistryList(incomes);
 
         return mapper.toIncomeRegistryDtoList(repository.saveAll(incomeRegistries));
+    }
+
+    @Override
+    public void deleteIncomeRegistry(Integer incomeRegistryId) {
+        repository.deleteById(incomeRegistryId);
     }
 }

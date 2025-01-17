@@ -22,8 +22,12 @@ public class IncomeRegistryService {
         return incomeRegistryDRepository.createIncomeRegistry(createIncomeRegistryDto);
     }
 
-    public CreateIncomeRegistryDto updateIncomeRegistry(CreateIncomeRegistryDto createIncomeRegistryDto, Integer incomeRegistryId){
-        return incomeRegistryDRepository.updateIncomeRegistry(createIncomeRegistryDto, incomeRegistryId);
+    public IncomeRegistryDto updateIncomeRegistry(IncomeRegistryDto createIncomeRegistryDto){
+        return incomeRegistryDRepository.updateIncomeRegistry(createIncomeRegistryDto);
+    }
+
+    public void deleteIncomeRegistry(Integer incomeRegistryId){
+        incomeRegistryDRepository.deleteIncomeRegistry(incomeRegistryId);
     }
 
     @Transactional

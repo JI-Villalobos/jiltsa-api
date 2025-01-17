@@ -24,10 +24,14 @@ public class ExpenseRegistryController {
         return service.createExpenseRegistry(createExpenseRegistryDto);
     }
 
-    @PutMapping("/{expenseRegistryId}")
-    public CreateExpenseRegistryDto updateExpenseRegistry(
-            @RequestBody CreateExpenseRegistryDto createExpenseRegistryDto,
-            @PathVariable("expenseRegistryId") Integer expenseRegistryId){
-        return service.updateExpenseRegistry(createExpenseRegistryDto, expenseRegistryId);
+    @PutMapping()
+    public ExpenseRegistryDto updateExpenseRegistry(
+            @RequestBody ExpenseRegistryDto expenseRegistryDto){
+        return service.updateExpenseRegistry(expenseRegistryDto);
+    }
+
+    @DeleteMapping
+    public void deleteExpenseRegistry(@RequestParam Integer expenseRegistryId){
+        service.deleteExpenseRegistry(expenseRegistryId);
     }
 }

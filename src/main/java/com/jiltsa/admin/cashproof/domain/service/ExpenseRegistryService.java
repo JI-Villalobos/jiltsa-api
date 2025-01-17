@@ -21,7 +21,11 @@ public class ExpenseRegistryService {
         return expenseRegistryDRepository.createExpenseRegistry(createExpenseRegistryDto);
     }
 
-    public CreateExpenseRegistryDto updateExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto, Integer expenseRegistryId){
-        return expenseRegistryDRepository.updateExpenseRegistry(createExpenseRegistryDto, expenseRegistryId);
+    public ExpenseRegistryDto updateExpenseRegistry(ExpenseRegistryDto expenseRegistryDto){
+        return expenseRegistryDRepository.updateExpenseRegistry(expenseRegistryDto);
+    }
+
+    public void deleteExpenseRegistry(Integer expenseRegistryId){
+        expenseRegistryDRepository.deleteExpenseRegistry(expenseRegistryId);
     }
 }

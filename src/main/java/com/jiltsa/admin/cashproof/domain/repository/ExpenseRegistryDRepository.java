@@ -8,5 +8,6 @@ import java.util.List;
 public interface ExpenseRegistryDRepository {
     List<ExpenseRegistryDto> getExpenseRegistries(Integer accountingId);
     CreateExpenseRegistryDto createExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto);
-    CreateExpenseRegistryDto updateExpenseRegistry(CreateExpenseRegistryDto createExpenseRegistryDto, Integer expenseRegistryId);
+    ExpenseRegistryDto updateExpenseRegistry(ExpenseRegistryDto expenseRegistryDto);
+    void deleteExpenseRegistry(Integer expenseRegistryId);
 }
