@@ -44,4 +44,8 @@ public class AccountingDService {
     public CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto){
         return accountingDRepository.createOutOfDateAccounting(customAccountingDto);
     }
+
+    public void deleteAccounting(Integer accountingId){
+        accountingDRepository.deleteAccounting(accountingId);
+    }
 }

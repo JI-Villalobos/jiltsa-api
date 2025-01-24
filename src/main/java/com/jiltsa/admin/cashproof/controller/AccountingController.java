@@ -56,4 +56,9 @@ public class AccountingController {
     public CustomAccountingDto createOutOfDateAccounting(@RequestBody CustomAccountingDto customAccountingDto){
         return service.createOutOfDateAccounting(customAccountingDto);
     }
+
+    @DeleteMapping("/account/{accountingId}")
+    public void deleteAccounting(@PathVariable("accountingId") Integer accountingId){
+        service.deleteAccounting(accountingId);
+    }
 }

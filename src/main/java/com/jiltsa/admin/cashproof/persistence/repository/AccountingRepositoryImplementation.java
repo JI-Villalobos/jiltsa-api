@@ -61,4 +61,9 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
         Accounting accounting = mapper.toAccounting(customAccountingDto);
         return mapper.toCustomAccountingDto(repository.save(accounting));
     }
+
+    @Override
+    public void deleteAccounting(Integer accountingId) {
+        repository.deleteById(accountingId);
+    }
 }

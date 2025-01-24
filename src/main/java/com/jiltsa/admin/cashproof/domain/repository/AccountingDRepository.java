@@ -17,4 +17,5 @@ public interface AccountingDRepository {
     List<AccountingDto> getLastAccountingRegistriesAllBranches();
     CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto);
     CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto);
+    void deleteAccounting(Integer accountingId);
 }
