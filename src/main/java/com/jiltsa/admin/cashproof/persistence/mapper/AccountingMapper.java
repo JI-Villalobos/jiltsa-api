@@ -8,12 +8,16 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AccountingMapper {
     AccountingDto toAccountingDto(Accounting accounting);
+    default Page<AccountingDto> toAccountingDtoPage(Page<Accounting> accounts){
+        return accounts.map(this::toAccountingDto);
+    }
     List<AccountingDto> toAccountingDtoList(List<Accounting> accountingList);
     CreateAccountingDto toCreateAccountingDto(Accounting accounting);
     CustomAccountingDto toCustomAccountingDto(Accounting accounting);

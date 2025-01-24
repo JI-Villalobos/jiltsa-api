@@ -5,6 +5,7 @@ import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
 import com.jiltsa.admin.cashproof.domain.service.AccountingDService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,11 @@ import java.util.Optional;
 public class AccountingController {
     private final AccountingDService service;
 
+    @GetMapping
+    public List<AccountingDto> getLastesAccountingRegitriesAllBranches(){
+        return service.getLastAccountingRegistriesAllBranches();
+    }
+
     @GetMapping("/{branchId}")
     public List<AccountingDto> getLatestAccountingRegistries(@PathVariable("branchId") Integer id){
         return service.getLastAccountingRegistries(id);
@@ -27,13 +33,18 @@ public class AccountingController {
         return service.getAccounting(id);
     }
 
-    @GetMapping("/{initial}/{end}/{branchId}")
+    @GetMapping("/range")
     //jiltsa/api/v1/accounts/2023-03-25T18:29:08.608983/2023-03-29T18:29:08.608983/1
-    public List<AccountingDto> getAccountingRegistriesBetweenDates(
-            @PathVariable("initial")LocalDateTime initial,
-            @PathVariable("end") LocalDateTime end,
-            @PathVariable("branchId") Integer branchId){
-        return service.getAccountingRegistriesBetweenTwoDates(initial, end, branchId);
+    public Page<AccountingDto> getAccountingRegistriesBetweenDates(
+            @RequestParam LocalDateTime initial,
+            @RequestParam LocalDateTime end,
+            @RequestParam Integer branchId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int elements,
+            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "acs") String sortDirection
+            ){
+        return service.getAccountingRegistriesBetweenTwoDates(page, elements, sortBy, sortDirection, initial, end, branchId);
     }
 
     @PostMapping

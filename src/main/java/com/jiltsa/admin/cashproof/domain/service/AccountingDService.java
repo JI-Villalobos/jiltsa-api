@@ -5,6 +5,7 @@ import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
 import com.jiltsa.admin.cashproof.domain.repository.AccountingDRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,14 +21,20 @@ public class AccountingDService {
         return accountingDRepository.getLastAccountingRegistries(branchId);
     }
 
+    public List<AccountingDto> getLastAccountingRegistriesAllBranches(){
+        return accountingDRepository.getLastAccountingRegistriesAllBranches();
+    }
+
     public Optional<AccountingDto> getAccounting(Integer accountingId){
         return accountingDRepository.getAccounting(accountingId);
     }
 
-    public List<AccountingDto> getAccountingRegistriesBetweenTwoDates(
+    public Page<AccountingDto> getAccountingRegistriesBetweenTwoDates(
+            int page, int elements, String sortBy, String sortDirection,
             LocalDateTime start, LocalDateTime end, Integer branchId
             ){
-        return accountingDRepository.getAccountingRegistriesBetweenTwoDates(start, end, branchId);
+        return accountingDRepository.getAccountingRegistriesBetweenTwoDates(page, elements, sortBy,
+                sortDirection, start, end, branchId);
     }
 
     public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto){
