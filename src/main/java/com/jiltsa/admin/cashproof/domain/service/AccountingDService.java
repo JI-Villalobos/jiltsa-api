@@ -21,8 +21,8 @@ public class AccountingDService {
         return accountingDRepository.getLastAccountingRegistries(branchId);
     }
 
-    public List<AccountingDto> getLastAccountingRegistriesAllBranches(){
-        return accountingDRepository.getLastAccountingRegistriesAllBranches();
+    public Page<AccountingDto> getLastAccountingRegistriesAllBranches(int page, int elements, String sortBy, String sortDirection){
+        return accountingDRepository.getLastAccountingRegistriesAllBranches(page, elements, sortBy, sortDirection);
     }
 
     public Optional<AccountingDto> getAccounting(Integer accountingId){
@@ -35,6 +35,10 @@ public class AccountingDService {
             ){
         return accountingDRepository.getAccountingRegistriesBetweenTwoDates(page, elements, sortBy,
                 sortDirection, start, end, branchId);
+    }
+
+    public Page<AccountingDto> getLastAccountingRegistriesByPage(int page, int elements, String sortBy, String sortDirection, Integer branchId){
+        return accountingDRepository.getLastAccountingRegistriesByPage(page, elements, sortBy, sortDirection, branchId);
     }
 
     public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto){

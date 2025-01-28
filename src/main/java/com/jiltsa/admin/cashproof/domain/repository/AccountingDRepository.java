@@ -14,7 +14,8 @@ public interface AccountingDRepository {
     Page<AccountingDto> getAccountingRegistriesBetweenTwoDates(int page, int elements, String sortBy, String sortDirection,
                                                                LocalDateTime start, LocalDateTime end, Integer branchId);
     List<AccountingDto> getLastAccountingRegistries(Integer branchId);
-    List<AccountingDto> getLastAccountingRegistriesAllBranches();
+    Page<AccountingDto> getLastAccountingRegistriesAllBranches(int page, int elements, String sortBy, String sortDirection);
+    Page<AccountingDto> getLastAccountingRegistriesByPage(int page, int elements, String sortBy, String sortDirection, Integer branchId);
     CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto);
     CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto);
     void deleteAccounting(Integer accountingId);

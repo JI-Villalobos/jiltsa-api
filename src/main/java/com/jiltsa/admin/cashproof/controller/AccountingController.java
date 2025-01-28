@@ -19,13 +19,29 @@ public class AccountingController {
     private final AccountingDService service;
 
     @GetMapping
-    public List<AccountingDto> getLastesAccountingRegitriesAllBranches(){
-        return service.getLastAccountingRegistriesAllBranches();
+    public Page<AccountingDto> getLastesAccountingRegitriesAllBranches(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int elements,
+            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "acs") String sortDirection
+    ){
+        return service.getLastAccountingRegistriesAllBranches(page, elements, sortBy, sortDirection);
     }
 
     @GetMapping("/{branchId}")
     public List<AccountingDto> getLatestAccountingRegistries(@PathVariable("branchId") Integer id){
         return service.getLastAccountingRegistries(id);
+    }
+
+    @GetMapping("/by-page")
+    public Page<AccountingDto> getgetLatestAccountingRegistriesByPage(
+            @RequestParam Integer branchId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int elements,
+            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "acs") String sortDirection
+    ){
+        return service.getLastAccountingRegistriesByPage(page, elements, sortBy, sortDirection, branchId);
     }
 
     @GetMapping("/account/{accountingId}")

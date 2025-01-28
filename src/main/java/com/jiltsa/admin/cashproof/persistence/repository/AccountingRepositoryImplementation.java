@@ -35,7 +35,7 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
     ) {
         Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
         Pageable pageRequest = PageRequest.of(page, elements, sort);
-        return mapper.toAccountingDtoPage(repository.findByDateBetweenAndBranchIdOrderByDate(pageRequest, start, end, branchId));
+        return mapper.toAccountingDtoPage(repository.findByDateBetweenAndBranchIdOrderByDateAsc(pageRequest, start, end, branchId));
     }
 
     @Override
@@ -45,9 +45,19 @@ public class AccountingRepositoryImplementation implements AccountingDRepository
     }
 
     @Override
-    public List<AccountingDto> getLastAccountingRegistriesAllBranches() {
+    public Page<AccountingDto> getLastAccountingRegistriesAllBranches( int page, int elements, String sortBy, String sortDirection) {
         LocalDateTime date = LocalDateTime.now().minusDays(4);
-        return mapper.toAccountingDtoList(repository.findByDateAfterOrderByDateAsc(date));
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+        return mapper.toAccountingDtoPage(repository.findByDateAfterOrderByDateAsc(pageRequest, date));
+    }
+
+    @Override
+    public Page<AccountingDto> getLastAccountingRegistriesByPage(int page, int elements, String sortBy, String sortDirection, Integer branchId) {
+        LocalDateTime date = LocalDateTime.now().minusDays(4);
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+        return mapper.toAccountingDtoPage(repository.findByBranchIdAndDateAfterOrderByDateDesc(pageRequest, branchId, date));
     }
 
     @Override

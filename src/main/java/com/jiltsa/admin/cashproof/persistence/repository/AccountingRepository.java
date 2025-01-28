@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AccountingRepository extends JpaRepository<Accounting, Integer> {
-    Page<Accounting> findByDateBetweenAndBranchIdOrderByDate(Pageable pageable, LocalDateTime start, LocalDateTime end, Integer branchId);
+    Page<Accounting> findByDateBetweenAndBranchIdOrderByDateAsc(Pageable pageable, LocalDateTime start, LocalDateTime end, Integer branchId);
     List<Accounting> findByBranchIdAndDateAfterOrderByDateAsc(Integer branchId, LocalDateTime date);
-    List<Accounting> findByDateAfterOrderByDateAsc(LocalDateTime date);
+    Page<Accounting> findByDateAfterOrderByDateAsc(Pageable pageable, LocalDateTime date);
+    Page<Accounting> findByBranchIdAndDateAfterOrderByDateDesc(Pageable pageable, Integer branchId, LocalDateTime date);
 }
