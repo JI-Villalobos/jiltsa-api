@@ -26,7 +26,7 @@ public class BillController {
     public Page<BillDto> getPendingBills(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "limitPaymentDate") String sortBy,
             @RequestParam(defaultValue = "acs") String sortDirection){
         return service.getPendingBills(page, elements, sortBy, sortDirection);
     }
