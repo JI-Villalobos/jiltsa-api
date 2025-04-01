@@ -19,7 +19,7 @@ public class CashWithdrawal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime date;
     @NotNull
     private Double amount;
     @NotNull

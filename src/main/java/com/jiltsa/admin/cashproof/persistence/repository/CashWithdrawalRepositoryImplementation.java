@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,9 @@ public class CashWithdrawalRepositoryImplementation implements CashWithdrawalDRe
     @Override
     public CreateCashWithdrawalDto createCashWithdrawal(CreateCashWithdrawalDto createCashWithdrawalDto) {
         CashWithdrawal cashWithdrawal = mapper.toCashWithdrawal(createCashWithdrawalDto);
+        //user of this app are only from mx
+        ZonedDateTime mxTime = ZonedDateTime.now(ZoneId.of("America/Mexico_City"));
+        cashWithdrawal.setDate(mxTime.toLocalDateTime());
         return mapper.toCreateCashWithdrawalDto(repository.save(cashWithdrawal));
     }
 
