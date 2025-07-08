@@ -30,7 +30,7 @@ public class ExpenseRegistryController {
         return service.updateExpenseRegistry(expenseRegistryDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{expenseRegistryId}")
     public void deleteExpenseRegistry(@RequestParam Integer expenseRegistryId){
         service.deleteExpenseRegistry(expenseRegistryId);
     }

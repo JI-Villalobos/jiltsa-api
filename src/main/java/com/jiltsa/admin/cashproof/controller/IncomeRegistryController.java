@@ -35,7 +35,7 @@ public class IncomeRegistryController {
         return service.createIncomesRegistry(incomes);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{incomeRegistryId}")
     public void deleteIncomeRegistry(@RequestParam Integer incomeRegistryId){
         service.deleteIncomeRegistry(incomeRegistryId);
     }
