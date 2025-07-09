@@ -31,7 +31,7 @@ public class ExpenseRegistryController {
     }
 
     @DeleteMapping("/{expenseRegistryId}")
-    public void deleteExpenseRegistry(@RequestParam Integer expenseRegistryId){
+    public void deleteExpenseRegistry(@PathVariable Integer expenseRegistryId){
         service.deleteExpenseRegistry(expenseRegistryId);
     }
 }

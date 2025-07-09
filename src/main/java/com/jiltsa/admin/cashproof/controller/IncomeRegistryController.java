@@ -36,7 +36,7 @@ public class IncomeRegistryController {
     }
 
     @DeleteMapping("/{incomeRegistryId}")
-    public void deleteIncomeRegistry(@RequestParam Integer incomeRegistryId){
+    public void deleteIncomeRegistry(@PathVariable Integer incomeRegistryId){
         service.deleteIncomeRegistry(incomeRegistryId);
     }
 }
