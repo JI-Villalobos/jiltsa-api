@@ -30,8 +30,8 @@ public class ExpenseRegistryController {
         return service.updateExpenseRegistry(expenseRegistryDto);
     }
 
-    @DeleteMapping
-    public void deleteExpenseRegistry(@RequestParam Integer expenseRegistryId){
+    @DeleteMapping("/{expenseRegistryId}")
+    public void deleteExpenseRegistry(@PathVariable Integer expenseRegistryId){
         service.deleteExpenseRegistry(expenseRegistryId);
     }
 }
