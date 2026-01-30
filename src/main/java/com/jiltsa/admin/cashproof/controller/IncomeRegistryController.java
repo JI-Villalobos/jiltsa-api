@@ -15,7 +15,7 @@ public class IncomeRegistryController {
 
     public final IncomeRegistryService service;
     @GetMapping("/{accountingId}")
-    public List<IncomeRegistryDto> getIncomeRegistries(@PathVariable("accountingId") Integer accountingId){
+    public List<IncomeRegistryDto> getIncomeRegistries(@PathVariable Integer accountingId){
         return service.getIncomeRegistries(accountingId);
     }
 

@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/jiltsa/api/v1/auth/**")
+                .requestMatchers("/jiltsa/api/v1/auth/register", "/jiltsa/api/v1/auth/authenticate")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
