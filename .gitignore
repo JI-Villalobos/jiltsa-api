@@ -40,3 +40,7 @@ jwt.properties
 application-dev.properties
 
 docker-compose.override.yml
+
+### dev run config###
+.env
+run.sh
