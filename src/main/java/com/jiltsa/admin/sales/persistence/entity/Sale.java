@@ -18,20 +18,18 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "branch_id")
     private Integer branchId;
     private String key;
     private String description;
+    private Long ticket;
     private String category;
     private Integer quantity;
     private Double price;
-    private Double amount;
     @Column(name = "purchase_price")
     private Double purchasePrice;
     @Column(name = "approximate_utility")
-    private Double approximateUtility;
-    private Long ticket;
+    private Double approximatedUtility;
+    private Double total;
+    private LocalDateTime timestamp;
     private String user;
-    @Column(name = "sale_date")
-    private LocalDateTime saleDate;
 }
