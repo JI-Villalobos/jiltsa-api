@@ -1,0 +1,27 @@
+package com.jiltsa.admin.sales.controller;
+
+import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
+import com.jiltsa.admin.sales.projections.SalesProjectionService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
+
+@RestController
+@RequestMapping("jiltsa/api/v1/sales-projections")
+@RequiredArgsConstructor
+public class SalesProjectionController {
+    private final SalesProjectionService salesProjectionService;
+
+    @GetMapping
+    public SalesProjectionDto getSalesProjection(
+            @RequestParam Integer branchId,
+            @RequestParam LocalDateTime initialDate,
+            @RequestParam LocalDateTime finalDate
+            ){
+        return salesProjectionService.getSalesProjection(branchId, initialDate, finalDate);
+    }
+}

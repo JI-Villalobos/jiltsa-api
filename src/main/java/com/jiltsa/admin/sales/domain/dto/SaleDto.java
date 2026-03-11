@@ -1,6 +1,4 @@
-package com.jiltsa.admin.sales.domain;
-
-import jakarta.persistence.Column;
+package com.jiltsa.admin.sales.domain.dto;
 
 import java.time.LocalDateTime;
 
