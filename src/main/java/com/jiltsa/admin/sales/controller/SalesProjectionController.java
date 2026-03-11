@@ -1,6 +1,7 @@
 package com.jiltsa.admin.sales.controller;
 
 import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
+import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
 import com.jiltsa.admin.sales.projections.SalesProjectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,4 +25,13 @@ public class SalesProjectionController {
             ){
         return salesProjectionService.getSalesProjection(branchId, initialDate, finalDate);
     }
+
+    @GetMapping("/total-sales")
+    public TotalSalesDto getTotalSales(
+            @RequestParam Integer branchId,
+            @RequestParam LocalDateTime initialDate,
+            @RequestParam LocalDateTime finalDate
+    ) {
+        return salesProjectionService.getTotalSales(branchId, initialDate, finalDate);
+    };
 }
