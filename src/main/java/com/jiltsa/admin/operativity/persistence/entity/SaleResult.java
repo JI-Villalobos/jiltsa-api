@@ -32,6 +32,10 @@ public class SaleResult {
     @NotNull
     private Integer weekNumber;
 
+    @Column
+    @NotNull
+    private Integer year;
+
     @Column(name = "initial_date")
     @NotNull
     private LocalDateTime initialDate;

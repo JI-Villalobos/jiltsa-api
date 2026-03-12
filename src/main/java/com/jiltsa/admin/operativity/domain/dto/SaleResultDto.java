@@ -4,6 +4,6 @@ import java.time.LocalDateTime;
 
 public record SaleResultDto(
         Integer id, Double pharmacyAmount, Double servicesAmount,
-        Integer weekNumber, LocalDateTime initialDate, LocalDateTime finalDate, Integer branchId
+        Integer weekNumber, Integer year, LocalDateTime initialDate, LocalDateTime finalDate, Integer branchId
 ) {
 }
