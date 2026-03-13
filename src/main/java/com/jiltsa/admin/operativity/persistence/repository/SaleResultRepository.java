@@ -7,6 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SaleResultRepository extends JpaRepository<SaleResult, Integer> {
-    List<SaleResult> findByBranchIdAndDateAfter(Integer branchId, LocalDateTime date);
-    List<SaleResult> findByBranchIdAndDateBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
+    List<SaleResult> findByBranchIdAndInitialDateAfter(Integer branchId, LocalDateTime date);
+    List<SaleResult> findByBranchIdAndInitialDateBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
 }

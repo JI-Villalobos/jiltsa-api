@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("jiltsa/api/v1/operative-expense")
+@RequestMapping("jiltsa/api/v1/sale-results")
 @RequiredArgsConstructor
 public class SaleResultController {
     private final SaleResultService service;
 
-    @GetMapping("/{branchId}")
+    @GetMapping("/latest/{branchId}")
     public List<SaleResultDto> getResults(@PathVariable("branchId") Integer branchId){
         return service.findByBranch(branchId);
     }

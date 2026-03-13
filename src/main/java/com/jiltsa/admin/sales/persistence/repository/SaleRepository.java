@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SaleRepository extends JpaRepository<Sale, Long> {
     List<Sale> findByBranchIdAndTimestampBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
+    List<Sale> findByBranchId(Integer branchId);
 }

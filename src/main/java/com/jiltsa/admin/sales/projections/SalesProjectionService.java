@@ -1,6 +1,7 @@
 package com.jiltsa.admin.sales.projections;
 
 import com.jiltsa.admin.operativity.domain.dto.SaleResultDto;
+import com.jiltsa.admin.sales.domain.dto.SaleSummaryDto;
 import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
 import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
 import com.jiltsa.admin.sales.persistence.entity.Sale;
@@ -18,15 +19,19 @@ public class SalesProjectionService {
     private final SaleRepository saleRepository;
 
     public SalesProjectionDto getSalesProjection(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
-        List<Sale> sales = saleRepository.findByBranchIdAndTimestampBetween(branchId, initialDate, finalDate);
+        List<Sale> rawSales = saleRepository.findByBranchIdAndTimestampBetween(branchId, initialDate, finalDate);
+        List<Sale> sales = rawSales.stream().filter(sale -> !sale.getKey().equals("TA")).toList();
+        List<Sale> onlyMedicine = sales.stream().filter(sale -> sale.getCategory().equals("MEDICAMENTO")).toList();
 
-        Map<String, Double> totalByCategory = sales.stream().collect(
-                Collectors.groupingBy(
+        Map<String, SaleSummaryDto> totalByCategory = sales.stream().collect(
+                Collectors.toUnmodifiableMap(
                         Sale::getCategory,
-                        Collectors.summingDouble(Sale::getTotal)
+                        sale -> new SaleSummaryDto(sale.getTotal(), sale.getQuantity(), sale.getApproximatedUtility(), 1),
+                        SaleSummaryDto::merge
                 )
         );
 
+        //this is ok
         Map<String, Double> totalByUser = sales.stream().collect(
                 Collectors.groupingBy(
                         Sale::getUser,
@@ -34,14 +39,15 @@ public class SalesProjectionService {
                 )
         );
 
-        LinkedHashMap<String, Double> totalByArticle = sales.stream().collect(
-                Collectors.groupingBy(
+        LinkedHashMap<String, SaleSummaryDto> totalByArticle = onlyMedicine.stream().collect(
+                Collectors.toUnmodifiableMap(
                         Sale::getDescription,
-                        Collectors.summingDouble(Sale::getTotal)
+                        sale -> new SaleSummaryDto(sale.getTotal(), sale.getQuantity(), sale.getApproximatedUtility(), 1),
+                        SaleSummaryDto::merge
                 )
         )
                 .entrySet().stream()
-                .sorted(Map.Entry.<String, Double>comparingByValue(Comparator.reverseOrder()))
+                .sorted(Map.Entry.<String, SaleSummaryDto>comparingByValue(Comparator.comparingInt(SaleSummaryDto::quantity).reversed()))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
@@ -64,7 +70,7 @@ public class SalesProjectionService {
         return new TotalSalesDto(branchId, total);
     }
 
-    private Map<String, Double> getBestSellingArticles(LinkedHashMap<String, Double> totalByArticle){
+    private Map<String, SaleSummaryDto> getBestSellingArticles(LinkedHashMap<String, SaleSummaryDto> totalByArticle){
         return totalByArticle.entrySet().stream().limit(5).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

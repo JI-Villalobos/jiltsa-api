@@ -19,12 +19,12 @@ public class SaleResultRepositoryImplementation implements SaleResultDRepository
     @Override
     public List<SaleResultDto> findByBranchId(Integer branchId) {
         LocalDateTime monthlyResults = LocalDateTime.now().minusMonths(1);
-        return mapper.toSaleResultDtoList(repository.findByBranchIdAndDateAfter(branchId, monthlyResults));
+        return mapper.toSaleResultDtoList(repository.findByBranchIdAndInitialDateAfter(branchId, monthlyResults));
     }
 
     @Override
     public List<SaleResultDto> findByBranchIdAndDateRange(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate) {
-        return mapper.toSaleResultDtoList(repository.findByBranchIdAndDateBetween(branchId, initialDate, finalDate));
+        return mapper.toSaleResultDtoList(repository.findByBranchIdAndInitialDateBetween(branchId, initialDate, finalDate));
     }
 
     @Override

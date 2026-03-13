@@ -18,6 +18,7 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "branch_id")
     private Integer branchId;
     private String key;
     private String description;
