@@ -15,7 +15,7 @@ ENV PORT=$PORT
 WORKDIR /home/gradle/src
 RUN gradle build -x test 
 
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-jdk-alpine
 EXPOSE $PORT
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*1.1.0.jar /app/jiltsa-admin.jar
