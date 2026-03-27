@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface OperativeExpenseRepository  extends JpaRepository<OperativeExpense, Integer> {
     List<OperativeExpense> findByBranchIdAndExpenseDateAfter(Integer branchId, LocalDateTime date);
+    List<OperativeExpense> findByBranchIdAndExpenseDateBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
 }
