@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ExpenseRegistryRepository extends JpaRepository<ExpenseRegistry, Integer> {
     List<ExpenseRegistry> findByAccountingId(Integer accountingId);
+    List<ExpenseRegistry> findByExpenseTypeIdIn(List<Integer> expenseTypeIds);
 }
