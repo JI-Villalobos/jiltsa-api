@@ -19,6 +19,10 @@ public class BreakEvenPoint {
     private Integer id;
 
     @NotNull
+    @Column(name = "branch_id")
+    private Integer branchId;
+
+    @NotNull
     private Double paysheet;
 
     @NotNull
