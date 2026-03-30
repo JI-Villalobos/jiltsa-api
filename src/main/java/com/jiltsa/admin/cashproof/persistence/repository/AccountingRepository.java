@@ -13,5 +13,4 @@ public interface AccountingRepository extends JpaRepository<Accounting, Integer>
     List<Accounting> findByBranchIdAndDateAfterOrderByDateAsc(Integer branchId, LocalDateTime date);
     Page<Accounting> findByDateAfterOrderByDateAsc(Pageable pageable, LocalDateTime date);
     Page<Accounting> findByBranchIdAndDateAfterOrderByDateDesc(Pageable pageable, Integer branchId, LocalDateTime date);
-    List<Accounting> findByDateBetweenAndBranchId(LocalDateTime start, LocalDateTime end, Integer branchId);
 }
