@@ -1,5 +1,6 @@
 package com.jiltsa.admin.sales.controller;
 
+import com.jiltsa.admin.sales.domain.dto.PharmacySalesResumeDto;
 import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
 import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
 import com.jiltsa.admin.sales.projections.SalesProjectionService;
@@ -33,5 +34,14 @@ public class SalesProjectionController {
             @RequestParam LocalDateTime finalDate
     ) {
         return salesProjectionService.getTotalSales(branchId, initialDate, finalDate);
-    };
+    }
+
+    @GetMapping("/pharmacy")
+    public PharmacySalesResumeDto getPharmacyResume(
+            @RequestParam Integer branchId,
+            @RequestParam LocalDateTime initialDate,
+            @RequestParam LocalDateTime finalDate
+    ){
+        return salesProjectionService.getPharmacySales(branchId, initialDate, finalDate);
+    }
 }

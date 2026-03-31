@@ -52,6 +52,9 @@ public class BreakEvenPoint {
     private Double operatingCost;
 
     @NotNull
+    @Column(name = "other_expenses")
+    private  Double otherExpenses;
+    @NotNull
     @Column(name = "fixed_expenses")
     private Double fixedExpenses;
 

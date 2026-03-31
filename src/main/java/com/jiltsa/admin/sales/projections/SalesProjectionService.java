@@ -1,6 +1,7 @@
 package com.jiltsa.admin.sales.projections;
 
 import com.jiltsa.admin.operativity.domain.dto.SaleResultDto;
+import com.jiltsa.admin.sales.domain.dto.PharmacySalesResumeDto;
 import com.jiltsa.admin.sales.domain.dto.SaleSummaryDto;
 import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
 import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,6 +74,20 @@ public class SalesProjectionService {
 
     private Map<String, SaleSummaryDto> getBestSellingArticles(LinkedHashMap<String, SaleSummaryDto> totalByArticle){
         return totalByArticle.entrySet().stream().limit(5).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public PharmacySalesResumeDto getPharmacySales (Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate) {
+        Predicate<Sale> med = sale -> sale.getCategory().equals("MEDICAMENTO");
+        Predicate<Sale> mat = sale -> sale.getCategory().equals("MATERIAL DE CURACION/INSTR.");
+        Predicate<Sale> vit = sale -> sale.getCategory().equals("VITAMINAS Y SUPLEMENTOS");
+
+        List<Sale> sales = saleRepository.findByBranchIdAndTimestampBetween(branchId, initialDate, finalDate);
+        List<Sale> pharmacySales = sales.stream().filter(med.or(mat).or(vit)).toList();
+
+        Double pharmacy = pharmacySales.stream().reduce(0.0, (acc, curr) -> acc + curr.getTotal(), Double::sum);
+        Double utility = pharmacySales.stream().reduce(0.0, (acc, curr) -> acc + curr.getApproximatedUtility(), Double::sum);
+
+        return new PharmacySalesResumeDto(pharmacy, utility, branchId);
     }
 }
 
