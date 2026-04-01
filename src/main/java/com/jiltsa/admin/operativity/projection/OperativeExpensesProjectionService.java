@@ -4,6 +4,7 @@ import com.jiltsa.admin.cashproof.persistence.repository.ExpenseRegistryReposito
 import com.jiltsa.admin.cashproof.persistence.repository.ExpenseResult;
 import com.jiltsa.admin.operativity.domain.dto.OperativeCostDto;
 import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseProjectionDto;
+import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseTotalsDto;
 import com.jiltsa.admin.operativity.persistence.entity.OperativeExpense;
 import com.jiltsa.admin.operativity.persistence.repository.OperativeExpenseRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,11 @@ public class OperativeExpensesProjectionService {
         var cost = operative + local;
 
         return new OperativeCostDto(branchId, cost);
+    }
+
+    public OperativeExpenseTotalsDto getTotalExpenses(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
+        Double totals = operativeExpenseRepository.getTotalExpenses(branchId, initialDate, finalDate);
+
+        return new OperativeExpenseTotalsDto(branchId, totals);
     }
 }

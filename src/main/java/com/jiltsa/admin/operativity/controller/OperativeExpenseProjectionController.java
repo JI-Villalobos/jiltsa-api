@@ -2,6 +2,7 @@ package com.jiltsa.admin.operativity.controller;
 
 import com.jiltsa.admin.operativity.domain.dto.OperativeCostDto;
 import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseProjectionDto;
+import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseTotalsDto;
 import com.jiltsa.admin.operativity.projection.OperativeExpensesProjectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,14 @@ public class OperativeExpenseProjectionController {
             @RequestParam LocalDateTime finalDate
     ){
         return operativeExpensesProjectionService.getOperativeCost(branchId, initialDate, finalDate);
+    }
+
+    @GetMapping("/expense-totals")
+    public OperativeExpenseTotalsDto getExpenseTotals(
+            @RequestParam Integer branchId,
+            @RequestParam LocalDateTime initialDate,
+            @RequestParam LocalDateTime finalDate
+    ){
+        return operativeExpensesProjectionService.getTotalExpenses(branchId, initialDate, finalDate);
     }
 }
