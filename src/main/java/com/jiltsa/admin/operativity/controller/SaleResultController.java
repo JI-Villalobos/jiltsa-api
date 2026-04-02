@@ -1,5 +1,6 @@
 package com.jiltsa.admin.operativity.controller;
 
+import com.jiltsa.admin.operativity.domain.dto.AverageSalesResultDto;
 import com.jiltsa.admin.operativity.domain.dto.SaleResultDto;
 import com.jiltsa.admin.operativity.domain.service.SaleResultService;
 import lombok.RequiredArgsConstructor;

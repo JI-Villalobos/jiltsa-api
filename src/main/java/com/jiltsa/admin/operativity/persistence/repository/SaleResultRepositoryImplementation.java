@@ -1,5 +1,6 @@
 package com.jiltsa.admin.operativity.persistence.repository;
 
+import com.jiltsa.admin.operativity.domain.dto.AverageSalesResultDto;
 import com.jiltsa.admin.operativity.domain.dto.SaleResultDto;
 import com.jiltsa.admin.operativity.domain.repository.SaleResultDRepository;
 import com.jiltsa.admin.operativity.persistence.entity.SaleResult;
