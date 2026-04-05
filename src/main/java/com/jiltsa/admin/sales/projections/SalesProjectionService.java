@@ -89,5 +89,18 @@ public class SalesProjectionService {
 
         return new PharmacySalesResumeDto(pharmacy, utility, branchId);
     }
+
+    public Map<String, SaleSummaryDto> computeBudget(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
+        List<String> pharmacyCat = List.of("MEDICAMENTO", "MATERIAL DE CURACION/INSTR.", "VITAMINAS Y SUPLEMENTOS");
+        List<Sale> sales = saleRepository.findByBranchIdAndTimestampBetweenAndCategoryIn(branchId, initialDate, finalDate, pharmacyCat);
+
+        return sales.stream().collect(
+                Collectors.toUnmodifiableMap(
+                        Sale::getCategory,
+                        sale -> new SaleSummaryDto(sale.getTotal(), sale.getQuantity(), sale.getApproximatedUtility(), 1),
+                        SaleSummaryDto::merge
+                )
+        );
+    }
 }
 

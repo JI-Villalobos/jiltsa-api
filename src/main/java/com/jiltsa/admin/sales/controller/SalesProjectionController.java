@@ -1,6 +1,7 @@
 package com.jiltsa.admin.sales.controller;
 
 import com.jiltsa.admin.sales.domain.dto.PharmacySalesResumeDto;
+import com.jiltsa.admin.sales.domain.dto.SaleSummaryDto;
 import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
 import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
 import com.jiltsa.admin.sales.projections.SalesProjectionService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/sales-projections")
@@ -43,5 +45,14 @@ public class SalesProjectionController {
             @RequestParam LocalDateTime finalDate
     ){
         return salesProjectionService.getPharmacySales(branchId, initialDate, finalDate);
+    }
+
+    @GetMapping("/budget")
+    public Map<String, SaleSummaryDto> getBudget(
+            @RequestParam Integer branchId,
+            @RequestParam LocalDateTime initialDate,
+            @RequestParam LocalDateTime finalDate
+    ){
+        return salesProjectionService.computeBudget(branchId, initialDate, finalDate);
     }
 }
