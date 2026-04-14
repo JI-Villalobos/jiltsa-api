@@ -1,10 +1,6 @@
 package com.jiltsa.admin.sales.projections;
 
-import com.jiltsa.admin.operativity.domain.dto.SaleResultDto;
-import com.jiltsa.admin.sales.domain.dto.PharmacySalesResumeDto;
-import com.jiltsa.admin.sales.domain.dto.SaleSummaryDto;
-import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
-import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
+import com.jiltsa.admin.sales.domain.dto.*;
 import com.jiltsa.admin.sales.persistence.entity.Sale;
 import com.jiltsa.admin.sales.persistence.repository.SaleRepository;
 import lombok.RequiredArgsConstructor;
@@ -101,6 +97,23 @@ public class SalesProjectionService {
                         SaleSummaryDto::merge
                 )
         );
+    }
+
+    public List<ConsignmentSaleDto> consignmentSalesReport(LocalDateTime initialDate, LocalDateTime finalDate){
+        List<ConsignmentSaleDto> consignmentSales = new ArrayList<>();
+        List<Sale> sales = saleRepository.findByTimestampBetweenAndCategoryIn(initialDate, finalDate, List.of("ORLANDO"));
+
+        sales.forEach(sale -> consignmentSales.add(
+                new ConsignmentSaleDto(
+                        sale.getBranchId(),
+                        sale.getDescription(),
+                        sale.getQuantity(),
+                        sale.getTotal(),
+                        sale.getTimestamp()
+                )
+        ));
+
+        return consignmentSales;
     }
 }
 

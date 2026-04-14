@@ -10,4 +10,5 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     List<Sale> findByBranchIdAndTimestampBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
     List<Sale> findByBranchId(Integer branchId);
     List<Sale> findByBranchIdAndTimestampBetweenAndCategoryIn(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate, List<String> categories);
+    List<Sale> findByTimestampBetweenAndCategoryIn(LocalDateTime initialDate, LocalDateTime finalDate, List<String> categories);
 }

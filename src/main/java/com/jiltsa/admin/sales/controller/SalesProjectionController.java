@@ -1,9 +1,6 @@
 package com.jiltsa.admin.sales.controller;
 
-import com.jiltsa.admin.sales.domain.dto.PharmacySalesResumeDto;
-import com.jiltsa.admin.sales.domain.dto.SaleSummaryDto;
-import com.jiltsa.admin.sales.domain.dto.SalesProjectionDto;
-import com.jiltsa.admin.sales.domain.dto.TotalSalesDto;
+import com.jiltsa.admin.sales.domain.dto.*;
 import com.jiltsa.admin.sales.projections.SalesProjectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -54,5 +52,13 @@ public class SalesProjectionController {
             @RequestParam LocalDateTime finalDate
     ){
         return salesProjectionService.computeBudget(branchId, initialDate, finalDate);
+    }
+
+    @GetMapping("/consignment")
+    public List<ConsignmentSaleDto> getConsignmentReport(
+            @RequestParam LocalDateTime initialDate,
+            @RequestParam LocalDateTime finalDate
+    ){
+        return salesProjectionService.consignmentSalesReport(initialDate, finalDate);
     }
 }
