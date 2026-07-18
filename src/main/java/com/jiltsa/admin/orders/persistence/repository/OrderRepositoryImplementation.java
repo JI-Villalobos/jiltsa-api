@@ -39,4 +39,9 @@ public class OrderRepositoryImplementation implements OrderDRepository {
     public void deleteOrder(Integer orderId) {
         repository.deleteById(orderId);
     }
+
+    @Override
+    public List<OrderDto> getActiveOrdersByBranch(Integer branchId) {
+        return mapper.toOrderDtoList(repository.findByBranchIdAndIsOpenTrue(branchId));
+    }
 }

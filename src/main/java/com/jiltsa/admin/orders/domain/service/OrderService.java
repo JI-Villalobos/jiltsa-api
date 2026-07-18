@@ -28,4 +28,8 @@ public class OrderService {
     public void deleteOrder(Integer orderId){
         orderDRepository.deleteOrder(orderId);
     }
+
+    public List<OrderDto> getActiveOrdersByBranch(Integer branchId){
+        return orderDRepository.getActiveOrdersByBranch(branchId);
+    }
 }

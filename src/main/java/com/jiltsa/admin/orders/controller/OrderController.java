@@ -38,4 +38,9 @@ public class OrderController {
     public void deleteOrder(@PathVariable("orderId") Integer orderId){
         service.deleteOrder(orderId);
     }
+
+    @GetMapping("/by-branch/${branchId}")
+    public List<OrderDto> getActiveOrdersByBranch(@PathVariable("branchId") Integer branchId){
+        return service.getActiveOrdersByBranch(branchId);
+    }
 }
