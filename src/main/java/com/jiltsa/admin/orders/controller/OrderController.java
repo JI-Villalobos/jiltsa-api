@@ -39,7 +39,7 @@ public class OrderController {
         service.deleteOrder(orderId);
     }
 
-    @GetMapping("/by-branch/${branchId}")
+    @GetMapping("/by-branch/{branchId}")
     public List<OrderDto> getActiveOrdersByBranch(@PathVariable("branchId") Integer branchId){
         return service.getActiveOrdersByBranch(branchId);
     }
