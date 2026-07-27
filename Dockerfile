@@ -1,4 +1,4 @@
-FROM gradle:7.5.0-jdk17-alpine AS build
+FROM gradle:8.14-jdk-21-and-24 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 ARG PORT
 ARG JLTS_DATASOURCE_URL
@@ -15,7 +15,7 @@ ENV PORT=$PORT
 WORKDIR /home/gradle/src
 RUN gradle build -x test 
 
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 EXPOSE $PORT
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*1.1.0.jar /app/jiltsa-admin.jar
