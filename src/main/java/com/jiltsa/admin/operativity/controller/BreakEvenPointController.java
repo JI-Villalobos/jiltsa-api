@@ -1,5 +1,6 @@
 package com.jiltsa.admin.operativity.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.operativity.domain.dto.BreakEvenPointDto;
 import com.jiltsa.admin.operativity.domain.service.BreakEventPointService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -14,12 +15,12 @@ public class BreakEvenPointController {
     private final BreakEventPointService service;
 
     @PostMapping
-    public BreakEvenPointDto saveBEP(@RequestBody BreakEvenPointDto breakEvenPointDto){
+    public BreakEvenPointDto saveBEP(@Valid @RequestBody BreakEvenPointDto breakEvenPointDto){
         return service.saveBEP(breakEvenPointDto);
     }
 
     @PutMapping
-    public BreakEvenPointDto updateBEP(@RequestBody BreakEvenPointDto breakEvenPointDto){
+    public BreakEvenPointDto updateBEP(@Valid @RequestBody BreakEvenPointDto breakEvenPointDto){
         return service.saveBEP(breakEvenPointDto);
     }
 

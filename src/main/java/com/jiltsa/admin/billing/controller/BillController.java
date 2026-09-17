@@ -1,5 +1,6 @@
 package com.jiltsa.admin.billing.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.billing.domain.dto.BillDto;
 import com.jiltsa.admin.billing.domain.service.BillService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -58,22 +59,22 @@ public class BillController {
     }
 
     @PostMapping
-    public BillDto createBill(@RequestBody BillDto billDto){
+    public BillDto createBill(@Valid @RequestBody BillDto billDto){
         return service.createBill(billDto);
     }
 
     @PostMapping("/save-all")
-    public List<BillDto> createBills(@RequestBody List<BillDto> billDtoList){
+    public List<BillDto> createBills(@RequestBody List<@Valid BillDto> billDtoList){
         return service.createBills(billDtoList);
     }
 
     @PutMapping
-    public List<BillDto> updateBills(@RequestBody List<BillDto> billDtoList){
+    public List<BillDto> updateBills(@RequestBody List<@Valid BillDto> billDtoList){
         return service.updateBills(billDtoList);
     }
 
     @PutMapping("/update")
-    public  BillDto updateBill(@RequestBody BillDto billDto){
+    public  BillDto updateBill(@Valid @RequestBody BillDto billDto){
         return service.updateBill(billDto);
     }
 }

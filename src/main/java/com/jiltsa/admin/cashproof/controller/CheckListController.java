@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CheckListDto;
 import com.jiltsa.admin.cashproof.domain.service.CheckListService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -20,7 +21,7 @@ public class CheckListController {
     }
 
     @PostMapping
-    public CheckListDto createCheckList(@RequestBody CheckListDto checkListDto){
+    public CheckListDto createCheckList(@Valid @RequestBody CheckListDto checkListDto){
         return service.createCheckList(checkListDto);
     }
 }

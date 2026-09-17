@@ -1,5 +1,6 @@
 package com.jiltsa.admin.operativity.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseDto;
 import com.jiltsa.admin.operativity.domain.service.OperativeExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class OperativeExpenseController {
     }
 
     @PostMapping
-    public OperativeExpenseDto saveOperativeExpense(@RequestBody OperativeExpenseDto operativeExpenseDto){
+    public OperativeExpenseDto saveOperativeExpense(@Valid @RequestBody OperativeExpenseDto operativeExpenseDto){
         return service.saveOperativeExpense(operativeExpenseDto);
     }
 

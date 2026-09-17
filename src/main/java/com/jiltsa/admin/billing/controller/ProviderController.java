@@ -1,5 +1,6 @@
 package com.jiltsa.admin.billing.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.billing.domain.dto.ProviderDto;
 import com.jiltsa.admin.billing.domain.service.ProviderService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -20,7 +21,7 @@ public class ProviderController {
     }
 
     @PostMapping
-    public ProviderDto createProvider(@RequestBody ProviderDto providerDto){
+    public ProviderDto createProvider(@Valid @RequestBody ProviderDto providerDto){
         return service.saveProvider(providerDto);
     }
 
@@ -31,7 +32,7 @@ public class ProviderController {
     }
 
     @PutMapping
-    public ProviderDto updateProvider(@RequestBody ProviderDto providerDto){
+    public ProviderDto updateProvider(@Valid @RequestBody ProviderDto providerDto){
         return service.updateProvider(providerDto);
     }
 }

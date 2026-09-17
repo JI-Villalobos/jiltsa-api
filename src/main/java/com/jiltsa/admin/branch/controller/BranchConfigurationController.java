@@ -1,5 +1,6 @@
 package com.jiltsa.admin.branch.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.service.BranchConfigurationService;
 import com.jiltsa.admin.branch.persistence.entity.Profile;
@@ -21,12 +22,12 @@ public class BranchConfigurationController {
     }
 
     @PostMapping
-    public BranchConfigurationDto createBranchConfiguration(@RequestBody BranchConfigurationDto branchConfigurationDto){
+    public BranchConfigurationDto createBranchConfiguration(@Valid @RequestBody BranchConfigurationDto branchConfigurationDto){
         return service.createBranchConfiguration(branchConfigurationDto);
     }
 
     @PutMapping()
-    public BranchConfigurationDto updateBranchConfiguration(@RequestBody BranchConfigurationDto branchConfigurationDto){
+    public BranchConfigurationDto updateBranchConfiguration(@Valid @RequestBody BranchConfigurationDto branchConfigurationDto){
         return service.updateBranchConfiguration(branchConfigurationDto);
     }
 

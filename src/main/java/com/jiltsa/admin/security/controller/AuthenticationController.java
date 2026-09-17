@@ -1,5 +1,6 @@
 package com.jiltsa.admin.security.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.security.auth.AuthenticationRequest;
 import com.jiltsa.admin.security.auth.AuthenticationResponse;
 import com.jiltsa.admin.security.auth.RegisterRequest;
@@ -14,12 +15,12 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public AuthenticationResponse register(@RequestBody RegisterRequest request){
+    public AuthenticationResponse register(@Valid @RequestBody RegisterRequest request){
         return service.register(request);
     }
 
     @PostMapping("/authenticate")
-    public AuthenticationResponse authenticate(@RequestBody AuthenticationRequest request){
+    public AuthenticationResponse authenticate(@Valid @RequestBody AuthenticationRequest request){
         return service.authenticate(request);
     }
 }

@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CashSortingDto;
 import com.jiltsa.admin.cashproof.domain.service.CashSortingService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -20,7 +21,7 @@ public class CashSortingController {
     }
 
     @PostMapping()
-    public CashSortingDto saveCashSorting(@RequestBody CashSortingDto cashSortingDto){
+    public CashSortingDto saveCashSorting(@Valid @RequestBody CashSortingDto cashSortingDto){
         return service.saveCashSorting(cashSortingDto);
     }
 }

@@ -1,5 +1,6 @@
 package com.jiltsa.admin.billing.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.billing.domain.dto.PaymentDto;
 import com.jiltsa.admin.billing.domain.service.PaymentService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -37,7 +38,7 @@ public class PaymentController {
     }
 
     @PostMapping
-    public PaymentDto createPayment(@RequestBody PaymentDto paymentDto){
+    public PaymentDto createPayment(@Valid @RequestBody PaymentDto paymentDto){
         return service.createPayment(paymentDto);
     }
 

@@ -1,4 +1,6 @@
 package com.jiltsa.admin.security.auth;
 
-public record   AuthenticationRequest(String email, String pass) {
+import jakarta.validation.constraints.NotBlank;
+
+public record AuthenticationRequest(@NotBlank String email, @NotBlank String pass) {
 }

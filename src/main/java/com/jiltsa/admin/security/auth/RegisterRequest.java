@@ -1,4 +1,7 @@
 package com.jiltsa.admin.security.auth;
 
-public record RegisterRequest(String username, String email, String pass, Integer branchId) {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+public record RegisterRequest(@NotBlank String username, @NotBlank @Email String email, @NotBlank String pass, Integer branchId) {
 }

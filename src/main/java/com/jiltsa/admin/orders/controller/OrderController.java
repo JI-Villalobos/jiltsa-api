@@ -1,5 +1,6 @@
 package com.jiltsa.admin.orders.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.orders.domain.dto.OrderDto;
 import com.jiltsa.admin.orders.domain.service.OrderService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -20,7 +21,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderDto saveOrder(@RequestBody OrderDto orderDto){
+    public OrderDto saveOrder(@Valid @RequestBody OrderDto orderDto){
         return service.saveOrder(orderDto);
     }
 
@@ -31,7 +32,7 @@ public class OrderController {
     }
 
     @PutMapping
-    public OrderDto updateOrder(@RequestBody OrderDto orderDto){
+    public OrderDto updateOrder(@Valid @RequestBody OrderDto orderDto){
         return service.saveOrder(orderDto);
     }
 

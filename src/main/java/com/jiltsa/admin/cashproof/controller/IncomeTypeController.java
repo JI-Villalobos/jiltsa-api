@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.IncomeTypeDto;
 import com.jiltsa.admin.cashproof.domain.service.IncomeTypeService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class IncomeTypeController {
     }
 
     @PostMapping
-    public IncomeTypeDto createIncomeType(@RequestBody IncomeTypeDto incomeTypeDto){
+    public IncomeTypeDto createIncomeType(@Valid @RequestBody IncomeTypeDto incomeTypeDto){
         return service.createIncomeType(incomeTypeDto);
     }
 

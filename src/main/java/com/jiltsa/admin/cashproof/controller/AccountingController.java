@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.AccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
@@ -65,12 +66,12 @@ public class AccountingController {
     }
 
     @PostMapping
-    public CreateAccountingDto createAccounting(@RequestBody CreateAccountingDto createAccountingDto){
+    public CreateAccountingDto createAccounting(@Valid @RequestBody CreateAccountingDto createAccountingDto){
         return service.createAccounting(createAccountingDto);
     }
 
     @PostMapping("/out-of-date")
-    public CustomAccountingDto createOutOfDateAccounting(@RequestBody CustomAccountingDto customAccountingDto){
+    public CustomAccountingDto createOutOfDateAccounting(@Valid @RequestBody CustomAccountingDto customAccountingDto){
         return service.createOutOfDateAccounting(customAccountingDto);
     }
 

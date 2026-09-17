@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.PartialDto;
 import com.jiltsa.admin.cashproof.domain.service.PartialService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -20,7 +21,7 @@ public class PartialController {
     }
 
     @PostMapping
-    public PartialDto createPartial(@RequestBody PartialDto partialDto){
+    public PartialDto createPartial(@Valid @RequestBody PartialDto partialDto){
         return service.createPartial(partialDto);
     }
 }

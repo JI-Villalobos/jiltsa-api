@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CreateExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.ExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.service.ExpenseRegistryService;
@@ -20,13 +21,13 @@ public class ExpenseRegistryController {
     }
 
     @PostMapping
-    public CreateExpenseRegistryDto createExpenseRegistry(@RequestBody CreateExpenseRegistryDto createExpenseRegistryDto){
+    public CreateExpenseRegistryDto createExpenseRegistry(@Valid @RequestBody CreateExpenseRegistryDto createExpenseRegistryDto){
         return service.createExpenseRegistry(createExpenseRegistryDto);
     }
 
     @PutMapping()
     public ExpenseRegistryDto updateExpenseRegistry(
-            @RequestBody ExpenseRegistryDto expenseRegistryDto){
+            @Valid @RequestBody ExpenseRegistryDto expenseRegistryDto){
         return service.updateExpenseRegistry(expenseRegistryDto);
     }
 

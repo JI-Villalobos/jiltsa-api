@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateCashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.service.CashWithdrawalService;
@@ -23,7 +24,7 @@ public class CashWithdrawalController {
     }
 
     @PostMapping
-    public CreateCashWithdrawalDto createCashWithdrawalDto(@RequestBody CreateCashWithdrawalDto createCashWithdrawalDto){
+    public CreateCashWithdrawalDto createCashWithdrawalDto(@Valid @RequestBody CreateCashWithdrawalDto createCashWithdrawalDto){
         return service.createCashWithdrawal(createCashWithdrawalDto);
     }
 
@@ -74,7 +75,7 @@ public class CashWithdrawalController {
     }
 
     @PutMapping
-    public CashWithdrawalDto updateCashWithdrawal(@RequestBody CashWithdrawalDto cashWithdrawalDto){
+    public CashWithdrawalDto updateCashWithdrawal(@Valid @RequestBody CashWithdrawalDto cashWithdrawalDto){
         return service.updateCashWithdrawal(cashWithdrawalDto);
     }
 

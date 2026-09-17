@@ -1,5 +1,6 @@
 package com.jiltsa.admin.seller.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
 import com.jiltsa.admin.seller.domain.service.SellerDService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
@@ -24,7 +25,7 @@ public class SellerController {
         return service.getSellersByBranch(id);
     }
     @PostMapping
-    public SellerDto newSeller(@RequestBody SellerDto sellerDto){
+    public SellerDto newSeller(@Valid @RequestBody SellerDto sellerDto){
         return service.newSeller(sellerDto);
     }
 

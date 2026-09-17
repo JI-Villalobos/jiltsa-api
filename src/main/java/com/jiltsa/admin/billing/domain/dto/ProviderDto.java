@@ -1,6 +1,7 @@
 package com.jiltsa.admin.billing.domain.dto;
 
-public record ProviderDto(Integer id, String name, String rfc) {
+import jakarta.validation.constraints.NotNull;
+public record ProviderDto(Integer id, @NotNull String name, @NotNull String rfc) {
     public ProviderDto(String name, String rfc) {
         this(null, name, rfc);
     }

@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.ExpenseTypeDto;
 import com.jiltsa.admin.cashproof.domain.service.ExpenseTypeService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class ExpenseTypeController {
     }
 
     @PostMapping
-    public ExpenseTypeDto createExpenseType(@RequestBody ExpenseTypeDto expenseTypeDto){
+    public ExpenseTypeDto createExpenseType(@Valid @RequestBody ExpenseTypeDto expenseTypeDto){
         return service.createExpenseType(expenseTypeDto);
     }
 

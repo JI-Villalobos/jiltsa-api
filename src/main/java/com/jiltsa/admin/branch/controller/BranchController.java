@@ -1,5 +1,6 @@
 package com.jiltsa.admin.branch.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.domain.service.BranchDService;
@@ -24,7 +25,7 @@ public class BranchController{
                 .orElseThrow(() -> new ResourceNotFoundException("Branch", branchId));
     }
     @PostMapping
-    public BranchDto createBranch(@RequestBody BranchDto branchDto){
+    public BranchDto createBranch(@Valid @RequestBody BranchDto branchDto){
         return service.createBranch(branchDto);
     }
 

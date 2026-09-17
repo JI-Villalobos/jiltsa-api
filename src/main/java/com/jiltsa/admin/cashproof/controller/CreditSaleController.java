@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleBalanceDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.domain.service.CreditSaleService;
@@ -38,12 +39,12 @@ public class CreditSaleController {
     }
 
     @PostMapping
-    public CreditSaleDto createCreditSale(@RequestBody CreditSaleDto creditSaleDto){
+    public CreditSaleDto createCreditSale(@Valid @RequestBody CreditSaleDto creditSaleDto){
         return service.createCreditSale(creditSaleDto);
     }
 
     @PutMapping
-    public CreditSaleDto updateCreditSale(@RequestBody CreditSaleDto creditSaleDto){
+    public CreditSaleDto updateCreditSale(@Valid @RequestBody CreditSaleDto creditSaleDto){
         return service.updateCreditSale(creditSaleDto);
     }
 
