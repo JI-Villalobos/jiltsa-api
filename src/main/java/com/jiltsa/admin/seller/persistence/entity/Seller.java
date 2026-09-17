@@ -1,15 +1,12 @@
 package com.jiltsa.admin.seller.persistence.entity;
 
 import com.jiltsa.admin.branch.persistence.entity.Branch;
-import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -35,9 +32,6 @@ public class Seller {
     @ManyToOne
     @JoinColumn(name = "branch_id", insertable = false, updatable = false)
     private Branch branch;
-
-    @OneToMany(mappedBy = "seller")
-    private List<Accounting> accounting;
 
     public Seller(String fullName, Integer branchId, String password, Boolean isActive) {
         this.fullName = fullName;

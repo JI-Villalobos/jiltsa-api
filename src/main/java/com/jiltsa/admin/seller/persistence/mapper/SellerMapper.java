@@ -17,8 +17,7 @@ public interface SellerMapper {
     @InheritInverseConfiguration
     @Mappings({
             @Mapping(target = "branch", ignore = true),
-            @Mapping(target = "password", ignore = true),
-            @Mapping(target = "accounting", ignore = true)
+            @Mapping(target = "password", ignore = true)
     })
     Seller toSeller(SellerDto sellerDto);
 }
