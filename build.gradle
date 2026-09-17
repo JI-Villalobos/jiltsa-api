@@ -1,12 +1,21 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.5.1'
+	id 'org.springframework.boot' version '3.5.16'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.jiltsa'
 version = '1.1.0'
-sourceCompatibility = '21'
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+// Patch-level overrides of Boot-managed versions with open CVEs (drop once Boot manages a fixed version)
+ext['tomcat.version'] = '10.1.60'
+ext['log4j2.version'] = '2.25.5'
+ext['jackson-bom.version'] = '2.21.5'
 
 configurations {
 	compileOnly {
@@ -24,7 +33,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+	implementation 'org.mapstruct:mapstruct:1.6.3'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 
 
@@ -40,15 +49,18 @@ dependencies {
 	//testRuntimeOnly 'com.h2database:h2'
 
 	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation "org.junit.jupiter:junit-jupiter:5.8.1"
-	testImplementation "org.testcontainers:testcontainers:1.19.8"
-	testImplementation "org.testcontainers:junit-jupiter:1.18.3"
-	testImplementation "org.testcontainers:mysql:1.18.3"
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:mysql'
+
+	constraints {
+		// Testcontainers 1.21.x still ships commons-compress 1.24.0 (CVE-2024-25710, CVE-2024-26308)
+		testImplementation 'org.apache.commons:commons-compress:1.28.0'
+	}
 }
 
 tasks.named('test') {
