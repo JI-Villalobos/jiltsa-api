@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AccountingControllerTest {
-    // seeded by init_mysql.sql and not used by the other tests
+    // seeded by db/testdata and not used by the other tests
     private static final int BRANCH_ID = 3;
     private static final int SELLER_ID = 3;
     private static final int ACCOUNTINGS = 3;
