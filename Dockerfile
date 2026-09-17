@@ -1,23 +1,22 @@
-FROM gradle:8.14-jdk-21-and-24 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-ARG PORT
-ARG JLTS_DATASOURCE_URL
-ARG JLTS_DATASOURCE_USERNAME
-ARG JLTS_DATASOURCE_PASSWORD
-ARG JWT_KEY
-
-ENV JLTS_DATASOURCE_URL=$JLTS_DATASOURCE_URL
-ENV JLTS_DATASOURCE_USERNAME=$JLTS_DATASOURCE_USERNAME
-ENV JLTS_DATASOURCE_PASSWORD=$JLTS_DATASOURCE_PASSWORD
-ENV JWT_KEY=$JWT_KEY
-ENV PORT=$PORT
-
+# Build stage: no secrets here. Configuration is injected at run time only.
+FROM gradle:8.14-jdk21 AS build
 WORKDIR /home/gradle/src
-RUN gradle build -x test 
 
-FROM eclipse-temurin:21-jdk-alpine
-EXPOSE $PORT
-RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*1.1.0.jar /app/jiltsa-admin.jar
+# Resolve dependencies in their own layer so source changes don't re-download them
+COPY --chown=gradle:gradle build.gradle settings.gradle ./
+RUN gradle dependencies --no-daemon -q > /dev/null || true
 
-ENTRYPOINT ["java","-jar","/app/jiltsa-admin.jar"]
+COPY --chown=gradle:gradle src ./src
+RUN gradle bootJar --no-daemon
+
+# Runtime stage: JRE only, unprivileged user
+FROM eclipse-temurin:21-jre-alpine
+RUN addgroup -S app && adduser -S app -G app
+WORKDIR /app
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/jiltsa-admin.jar
+USER app
+
+# The app listens on $PORT (default 8080). Required at run time:
+#   JLTS_DATASOURCE_URL, JLTS_DATASOURCE_USERNAME, JLTS_DATASOURCE_PASSWORD, JWT_KEY
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/jiltsa-admin.jar"]

@@ -68,3 +68,13 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Only the executable jar is wanted, so build/libs/*.jar is unambiguous for the Dockerfile
+tasks.named('jar') {
+	enabled = false
+}
+
+// The dev profile holds local credentials and is gitignored; it must never end up in the artifact
+tasks.named('bootJar') {
+	exclude '**/application-dev.properties'
+}

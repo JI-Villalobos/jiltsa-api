@@ -1,0 +1,15 @@
+# Never ship secrets or local-only config into the build context / image
+.env
+jwt.properties
+src/main/resources/application-dev.properties
+run.sh
+docker-compose.override.yml
+
+# Build outputs and tooling state
+build/
+.gradle/
+.idea/
+*.iml
+.git/
+.claude/
+.mcp.json
