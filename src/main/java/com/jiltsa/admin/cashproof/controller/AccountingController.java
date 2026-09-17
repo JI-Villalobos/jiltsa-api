@@ -4,13 +4,13 @@ import com.jiltsa.admin.cashproof.domain.dto.AccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
 import com.jiltsa.admin.cashproof.domain.service.AccountingDService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/accounts")
@@ -45,8 +45,9 @@ public class AccountingController {
     }
 
     @GetMapping("/account/{accountingId}")
-    public Optional<AccountingDto> getAccounting(@PathVariable("accountingId") Integer id){
-        return service.getAccounting(id);
+    public AccountingDto getAccounting(@PathVariable("accountingId") Integer id){
+        return service.getAccounting(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Accounting", id));
     }
 
     @GetMapping("/range")

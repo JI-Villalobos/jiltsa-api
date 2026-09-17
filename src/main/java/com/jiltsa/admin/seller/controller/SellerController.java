@@ -2,11 +2,11 @@ package com.jiltsa.admin.seller.controller;
 
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
 import com.jiltsa.admin.seller.domain.service.SellerDService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/sellers")
@@ -34,8 +34,9 @@ public class SellerController {
     }
 
     @GetMapping("/{sellerId}")
-    public Optional<SellerDto> getSeller(@PathVariable("sellerId") Integer id){
-        return service.getSeller(id);
+    public SellerDto getSeller(@PathVariable("sellerId") Integer id){
+        return service.getSeller(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Seller", id));
     }
 
 }

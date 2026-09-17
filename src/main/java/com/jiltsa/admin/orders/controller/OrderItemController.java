@@ -2,11 +2,11 @@ package com.jiltsa.admin.orders.controller;
 
 import com.jiltsa.admin.orders.domain.dto.OrderItemDto;
 import com.jiltsa.admin.orders.domain.service.OrderItemService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/order-items")
@@ -15,8 +15,9 @@ public class OrderItemController {
     private final OrderItemService service;
 
     @GetMapping("/{itemId}")
-    public Optional<OrderItemDto> getItem(@PathVariable("itemId") Integer itemId){
-        return service.getOrderItem(itemId);
+    public OrderItemDto getItem(@PathVariable("itemId") Integer itemId){
+        return service.getOrderItem(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("OrderItem", itemId));
     }
 
     @PostMapping

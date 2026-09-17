@@ -1,5 +1,6 @@
 package com.jiltsa.admin.seller.persistence.repository;
 
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
 import com.jiltsa.admin.seller.domain.repository.SellerDRepository;
 import com.jiltsa.admin.seller.persistence.entity.Seller;
@@ -41,6 +42,6 @@ public class SellerRepositoryImplementation implements SellerDRepository {
         return mapper.toSellerDto(repository.findById(sellerId).map(seller -> {
             seller.setIsActive(false);
             return repository.save(seller);
-        }).orElseThrow());
+        }).orElseThrow(() -> new ResourceNotFoundException("Seller", sellerId)));
     }
 }

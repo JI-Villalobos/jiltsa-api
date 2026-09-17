@@ -3,13 +3,13 @@ package com.jiltsa.admin.cashproof.controller;
 import com.jiltsa.admin.cashproof.domain.dto.CashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateCashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.service.CashWithdrawalService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/withdrawals")
@@ -68,8 +68,9 @@ public class CashWithdrawalController {
     }
 
     @GetMapping("/{cashId}")
-    public Optional<CashWithdrawalDto> getCashWithdrawal(@PathVariable("cashId") Integer cashId){
-        return service.getCashWithdrawal(cashId);
+    public CashWithdrawalDto getCashWithdrawal(@PathVariable("cashId") Integer cashId){
+        return service.getCashWithdrawal(cashId)
+                .orElseThrow(() -> new ResourceNotFoundException("CashWithdrawal", cashId));
     }
 
     @PutMapping

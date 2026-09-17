@@ -2,13 +2,13 @@ package com.jiltsa.admin.billing.controller;
 
 import com.jiltsa.admin.billing.domain.dto.BillDto;
 import com.jiltsa.admin.billing.domain.service.BillService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/bills")
@@ -52,8 +52,9 @@ public class BillController {
     }
 
     @GetMapping("/{id}")
-    public Optional<BillDto> getBill(@PathVariable("id") Integer id){
-        return service.getBill(id);
+    public BillDto getBill(@PathVariable("id") Integer id){
+        return service.getBill(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bill", id));
     }
 
     @PostMapping

@@ -3,11 +3,11 @@ package com.jiltsa.admin.branch.controller;
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.service.BranchConfigurationService;
 import com.jiltsa.admin.branch.persistence.entity.Profile;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/branch-configuration")
@@ -31,8 +31,9 @@ public class BranchConfigurationController {
     }
 
     @GetMapping("/get/{branchId}")
-    public Optional<BranchConfigurationDto> getBranchConfiguration(@PathVariable("branchId") Integer branchId){
-        return service.getBranchConfiguration(branchId);
+    public BranchConfigurationDto getBranchConfiguration(@PathVariable("branchId") Integer branchId){
+        return service.getBranchConfiguration(branchId)
+                .orElseThrow(() -> new ResourceNotFoundException("BranchConfiguration", branchId));
     }
 
     @GetMapping("/profile/{profile}")

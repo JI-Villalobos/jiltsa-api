@@ -2,10 +2,10 @@ package com.jiltsa.admin.cashproof.controller;
 
 import com.jiltsa.admin.cashproof.domain.dto.ActiveAccountingDto;
 import com.jiltsa.admin.cashproof.domain.service.ActiveAccountingService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/active-accounting")
@@ -19,8 +19,9 @@ public class ActiveAccountingController {
     }
 
     @GetMapping("/branch/{branchId}")
-    public Optional<ActiveAccountingDto> getCurrentAccounting(@PathVariable("branchId") Integer branchId){
-        return service.getCurrentAccounting(branchId);
+    public ActiveAccountingDto getCurrentAccounting(@PathVariable("branchId") Integer branchId){
+        return service.getCurrentAccounting(branchId)
+                .orElseThrow(() -> new ResourceNotFoundException("ActiveAccounting", branchId));
     }
 
     @PatchMapping("/{accountingId}")
