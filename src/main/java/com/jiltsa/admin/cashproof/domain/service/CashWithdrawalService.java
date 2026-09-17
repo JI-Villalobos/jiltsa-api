@@ -6,12 +6,14 @@ import com.jiltsa.admin.cashproof.domain.repository.CashWithdrawalDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CashWithdrawalService {
     private final CashWithdrawalDRepository cashWithdrawalDRepository;
@@ -20,6 +22,7 @@ public class CashWithdrawalService {
         return cashWithdrawalDRepository.getWithdrawalDtoList(branch);
     }
 
+    @Transactional
     public CreateCashWithdrawalDto createCashWithdrawal(CreateCashWithdrawalDto createCashWithdrawalDto){
         return cashWithdrawalDRepository.createCashWithdrawal(createCashWithdrawalDto);
     }
@@ -51,10 +54,12 @@ public class CashWithdrawalService {
         return cashWithdrawalDRepository.getCashWithdrawal(cashWithdrawalId);
     }
 
+    @Transactional
     public CashWithdrawalDto updateCashWithdrawal(CashWithdrawalDto cashWithdrawalDto){
         return cashWithdrawalDRepository.updateCashWithdrawal(cashWithdrawalDto);
     }
 
+    @Transactional
     public void deleteCashWithdrawal(Integer cashWithdrawalId){
         cashWithdrawalDRepository.deleteCashWithdrawal(cashWithdrawalId);
     }

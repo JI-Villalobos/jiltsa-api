@@ -37,11 +37,11 @@ public class ExpenseRegistry {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="accountingId", insertable = false, updatable = false)
     private Accounting accounting;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expense_type_id", insertable = false, updatable = false)
     private ExpenseType expenseType;
 

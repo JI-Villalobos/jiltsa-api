@@ -4,10 +4,12 @@ import com.jiltsa.admin.cashproof.domain.dto.CashSortingDto;
 import com.jiltsa.admin.cashproof.domain.repository.CashSortingDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CashSortingService {
     private final CashSortingDRepository repository;
@@ -16,6 +18,7 @@ public class CashSortingService {
         return repository.getCashSorting(accountingDto);
     }
 
+    @Transactional
     public CashSortingDto saveCashSorting(CashSortingDto cashSortingDto){
         return repository.saveCashSorting(cashSortingDto);
     }

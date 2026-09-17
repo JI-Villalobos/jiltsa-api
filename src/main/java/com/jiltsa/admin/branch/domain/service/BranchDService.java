@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BranchDService {
     private final BranchDRepository branchDRepository;
@@ -21,10 +22,10 @@ public class BranchDService {
     public Optional<BranchDto> getById (Integer branchId){
         return  branchDRepository.getById(branchId);
     }
+    @Transactional
     public BranchDto createBranch(BranchDto branchDto){
         return branchDRepository.createBranch(branchDto);
     }
-    @Transactional
     public TotalBalanceDto getTotalBalance(Integer branchId){
         return branchDRepository.getTotalBalance(branchId);
     }

@@ -6,15 +6,18 @@ import com.jiltsa.admin.operativity.persistence.mapper.BreakEventPointMapper;
 import com.jiltsa.admin.operativity.persistence.repository.BreakEventPointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BreakEventPointService {
     private final BreakEventPointRepository breakEventPointRepository;
     private final BreakEventPointMapper mapper;
 
+    @Transactional
     public BreakEvenPointDto saveBEP(BreakEvenPointDto breakEvenPointDto){
         BreakEvenPoint breakEvenPoint = mapper.toBreakEvenPoint(breakEvenPointDto);
 

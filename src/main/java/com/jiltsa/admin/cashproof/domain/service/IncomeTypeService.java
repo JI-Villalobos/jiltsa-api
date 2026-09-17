@@ -4,10 +4,12 @@ import com.jiltsa.admin.cashproof.domain.dto.IncomeTypeDto;
 import com.jiltsa.admin.cashproof.domain.repository.IncomeTypeDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class IncomeTypeService {
     private final IncomeTypeDRepository incomeTypeDRepository;
@@ -16,6 +18,7 @@ public class IncomeTypeService {
         return incomeTypeDRepository.getIncomeTypes();
     }
 
+    @Transactional
     public IncomeTypeDto createIncomeType(IncomeTypeDto incomeTypeDto){
         return incomeTypeDRepository.createIncomeType(incomeTypeDto);
     }

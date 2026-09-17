@@ -5,11 +5,13 @@ import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.domain.repository.CreditSaleDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CreditSaleService {
     private final CreditSaleDRepository creditSaleDRepository;
@@ -22,10 +24,12 @@ public class CreditSaleService {
         return creditSaleDRepository.getCreditSales(branchId);
     }
 
+    @Transactional
     public CreditSaleDto createCreditSale(CreditSaleDto creditSaleDto){
         return creditSaleDRepository.createCreditSale(creditSaleDto);
     }
 
+    @Transactional
     public CreditSaleDto updateCreditSale(CreditSaleDto creditSaleDto){
         return creditSaleDRepository.updateCreditSale(creditSaleDto);
     }

@@ -9,6 +9,7 @@ import com.jiltsa.admin.operativity.persistence.entity.OperativeExpense;
 import com.jiltsa.admin.operativity.persistence.repository.OperativeExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class OperativeExpensesProjectionService {
     public final List<String> expenseCategories = Arrays.asList(

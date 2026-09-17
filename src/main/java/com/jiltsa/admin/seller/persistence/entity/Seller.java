@@ -29,7 +29,7 @@ public class Seller {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", insertable = false, updatable = false)
     private Branch branch;
 

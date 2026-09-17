@@ -7,12 +7,14 @@ import com.jiltsa.admin.cashproof.domain.repository.AccountingDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountingDService {
     private final AccountingDRepository accountingDRepository;
@@ -41,14 +43,17 @@ public class AccountingDService {
         return accountingDRepository.getLastAccountingRegistriesByPage(page, elements, sortBy, sortDirection, branchId);
     }
 
+    @Transactional
     public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto){
         return accountingDRepository.createAccounting(createAccountingDto);
     }
 
+    @Transactional
     public CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto){
         return accountingDRepository.createOutOfDateAccounting(customAccountingDto);
     }
 
+    @Transactional
     public void deleteAccounting(Integer accountingId){
         accountingDRepository.deleteAccounting(accountingId);
     }

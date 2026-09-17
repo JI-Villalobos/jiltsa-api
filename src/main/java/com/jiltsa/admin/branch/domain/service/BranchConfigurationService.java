@@ -5,11 +5,13 @@ import com.jiltsa.admin.branch.domain.repository.BranchConfigurationDRepository;
 import com.jiltsa.admin.branch.persistence.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BranchConfigurationService {
     private final BranchConfigurationDRepository branchConfigurationDRepository;
@@ -18,10 +20,12 @@ public class BranchConfigurationService {
         return branchConfigurationDRepository.getAllConfigurations();
     }
 
+    @Transactional
     public BranchConfigurationDto createBranchConfiguration(BranchConfigurationDto branchConfigurationDto){
         return branchConfigurationDRepository.createBranchConfiguration(branchConfigurationDto);
     }
 
+    @Transactional
     public BranchConfigurationDto updateBranchConfiguration(BranchConfigurationDto branchConfigurationDto){
         return branchConfigurationDRepository.updateBranchConfiguration(branchConfigurationDto);
     }

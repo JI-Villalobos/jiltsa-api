@@ -3,16 +3,17 @@ package com.jiltsa.admin.billing.domain.service;
 import com.jiltsa.admin.billing.domain.dto.BillDto;
 import com.jiltsa.admin.billing.domain.repository.BillDRepository;
 import com.jiltsa.admin.billing.persistence.entity.Bill;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BillService {
     private final BillDRepository billDRepository;
@@ -36,19 +37,19 @@ public class BillService {
         return  billDRepository.getBill(id);
     }
 
+    @Transactional
     public BillDto createBill(BillDto billDto){
         return billDRepository.createBill(billDto);
     }
 
+    @Transactional
     public BillDto updateBill(BillDto billDto){
         return billDRepository.updateBill(billDto);
     }
-
     @Transactional
     public List<BillDto> updateBills(List<BillDto> billDtoList){
         return billDRepository.updateBills(billDtoList);
     }
-
     @Transactional
     public List<BillDto> createBills(List<BillDto> billDtoList){
         return billDRepository.createBills(billDtoList);
