@@ -2,10 +2,12 @@ package com.jiltsa.admin.cashproof.domain.service;
 
 import com.jiltsa.admin.cashproof.domain.dto.CreateExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.ExpenseRegistryDto;
+import com.jiltsa.admin.cashproof.domain.dto.ExpenseReportDto;
 import com.jiltsa.admin.cashproof.domain.repository.ExpenseRegistryDRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,5 +29,13 @@ public class ExpenseRegistryService {
 
     public void deleteExpenseRegistry(Integer expenseRegistryId){
         expenseRegistryDRepository.deleteExpenseRegistry(expenseRegistryId);
+    }
+
+    public List<ExpenseReportDto> getExpenseReport(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
+        return expenseRegistryDRepository.getExpenseReport(branchId, initialDate, finalDate);
+    }
+
+    public List<ExpenseReportDto> getPharmacyExpenseReport(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
+        return expenseRegistryDRepository.getPharmacyExpenseReport(branchId, initialDate, finalDate);
     }
 }

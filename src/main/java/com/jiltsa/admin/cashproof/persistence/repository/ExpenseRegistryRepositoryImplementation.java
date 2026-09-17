@@ -2,12 +2,14 @@ package com.jiltsa.admin.cashproof.persistence.repository;
 
 import com.jiltsa.admin.cashproof.domain.dto.CreateExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.ExpenseRegistryDto;
+import com.jiltsa.admin.cashproof.domain.dto.ExpenseReportDto;
 import com.jiltsa.admin.cashproof.domain.repository.ExpenseRegistryDRepository;
 import com.jiltsa.admin.cashproof.persistence.entity.ExpenseRegistry;
 import com.jiltsa.admin.cashproof.persistence.mapper.ExpenseRegistryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -37,4 +39,13 @@ public class ExpenseRegistryRepositoryImplementation implements ExpenseRegistryD
         repository.deleteById(expenseRegistryId);
     }
 
+    @Override
+    public List<ExpenseReportDto> getExpenseReport(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate) {
+        return mapper.toExpenseReportDtoList(repository.getExpenseReport(branchId, initialDate, finalDate));
+    }
+
+    @Override
+    public List<ExpenseReportDto> getPharmacyExpenseReport(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate) {
+        return mapper.toExpenseReportDtoList(repository.getPharmacyExpenseReport(branchId, initialDate, finalDate));
+    }
 }

@@ -1,7 +1,7 @@
 package com.jiltsa.admin.operativity.projection;
 
-import com.jiltsa.admin.cashproof.persistence.repository.ExpenseRegistryRepository;
-import com.jiltsa.admin.cashproof.persistence.repository.ExpenseResult;
+import com.jiltsa.admin.cashproof.domain.dto.ExpenseReportDto;
+import com.jiltsa.admin.cashproof.domain.service.ExpenseRegistryService;
 import com.jiltsa.admin.operativity.domain.dto.OperativeCostDto;
 import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseProjectionDto;
 import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseTotalsDto;
@@ -30,7 +30,7 @@ public class OperativeExpensesProjectionService {
     );
 
     private final OperativeExpenseRepository operativeExpenseRepository;
-    private final ExpenseRegistryRepository expenseRegistryRepository;
+    private final ExpenseRegistryService expenseRegistryService;
 
     public OperativeExpenseProjectionDto getExpensesProjection (Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
         List<OperativeExpense> operativeExpenses = operativeExpenseRepository.findByBranchIdAndExpenseDateBetween(branchId, initialDate, finalDate);
@@ -54,9 +54,9 @@ public class OperativeExpensesProjectionService {
 
         Double operative = pharmacyExpense.stream().reduce(0.0, (acc, curr) -> acc + curr.getAmount(), Double::sum);
 
-        List<ExpenseResult> expenseResults = expenseRegistryRepository.getPharmacyExpenseReport(branchId, initialDate, finalDate);
+        List<ExpenseReportDto> expenseResults = expenseRegistryService.getPharmacyExpenseReport(branchId, initialDate, finalDate);
 
-        Double local = expenseResults.stream().reduce(0.0, (acc, curr) -> acc + curr.getTotal(), Double::sum);
+        Double local = expenseResults.stream().reduce(0.0, (acc, curr) -> acc + curr.total(), Double::sum);
 
         var cost = operative + local;
 
