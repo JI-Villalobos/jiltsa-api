@@ -1,8 +1,10 @@
 package com.jiltsa.admin.branch.domain.service;
 
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
-import com.jiltsa.admin.branch.domain.repository.BranchConfigurationDRepository;
+import com.jiltsa.admin.branch.persistence.entity.BranchConfiguration;
 import com.jiltsa.admin.branch.persistence.entity.Profile;
+import com.jiltsa.admin.branch.persistence.mapper.BranchConfigurationMapper;
+import com.jiltsa.admin.branch.persistence.repository.BranchConfigurationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,27 +16,30 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BranchConfigurationService {
-    private final BranchConfigurationDRepository branchConfigurationDRepository;
+    private final BranchConfigurationRepository repository;
+    private final BranchConfigurationMapper mapper;
 
-    public List<BranchConfigurationDto> getAllConfiguration(){
-        return branchConfigurationDRepository.getAllConfigurations();
+    public List<BranchConfigurationDto> getAllConfiguration() {
+        return mapper.toBranchConfigurationDtoList(repository.findAll());
     }
 
     @Transactional
-    public BranchConfigurationDto createBranchConfiguration(BranchConfigurationDto branchConfigurationDto){
-        return branchConfigurationDRepository.createBranchConfiguration(branchConfigurationDto);
+    public BranchConfigurationDto createBranchConfiguration(BranchConfigurationDto branchConfigurationDto) {
+        BranchConfiguration branchConfiguration = mapper.toBranchConfiguration(branchConfigurationDto);
+        return mapper.toBranchConfigurationDto(repository.save(branchConfiguration));
     }
 
     @Transactional
-    public BranchConfigurationDto updateBranchConfiguration(BranchConfigurationDto branchConfigurationDto){
-        return branchConfigurationDRepository.updateBranchConfiguration(branchConfigurationDto);
+    public BranchConfigurationDto updateBranchConfiguration(BranchConfigurationDto branchConfigurationDto) {
+        BranchConfiguration branchConfiguration = mapper.toBranchConfiguration(branchConfigurationDto);
+        return mapper.toBranchConfigurationDto(repository.save(branchConfiguration));
     }
 
-    public Optional<BranchConfigurationDto> getBranchConfiguration(Integer branchId){
-        return branchConfigurationDRepository.getBranchConfiguration(branchId);
+    public Optional<BranchConfigurationDto> getBranchConfiguration(Integer branchId) {
+        return repository.findByBranchId(branchId).map(mapper::toBranchConfigurationDto);
     }
 
-    public List<BranchConfigurationDto> getBranchConfigurationsByProfile(Profile profile){
-        return branchConfigurationDRepository.getConfigurationsByProfile(profile);
+    public List<BranchConfigurationDto> getBranchConfigurationsByProfile(Profile profile) {
+        return mapper.toBranchConfigurationDtoList(repository.findByProfile(profile));
     }
 }

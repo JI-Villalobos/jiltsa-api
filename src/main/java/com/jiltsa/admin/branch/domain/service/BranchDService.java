@@ -2,7 +2,9 @@ package com.jiltsa.admin.branch.domain.service;
 
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
-import com.jiltsa.admin.branch.domain.repository.BranchDRepository;
+import com.jiltsa.admin.branch.persistence.entity.Branch;
+import com.jiltsa.admin.branch.persistence.mapper.BranchMapper;
+import com.jiltsa.admin.branch.persistence.repository.BranchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,19 +16,27 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BranchDService {
-    private final BranchDRepository branchDRepository;
+    private final BranchRepository repository;
+    private final BranchMapper mapper;
 
-    public List<BranchDto> getAll(){
-        return branchDRepository.getAll();
+    public List<BranchDto> getAll() {
+        return mapper.toBranchesDto(repository.findAll());
     }
-    public Optional<BranchDto> getById (Integer branchId){
-        return  branchDRepository.getById(branchId);
+
+    public Optional<BranchDto> getById(Integer branchId) {
+        return repository.findById(branchId).map(mapper::toBranchDto);
     }
+
     @Transactional
-    public BranchDto createBranch(BranchDto branchDto){
-        return branchDRepository.createBranch(branchDto);
+    public BranchDto createBranch(BranchDto branchDto) {
+        Branch branch = mapper.toBranch(branchDto);
+        return mapper.toBranchDto(repository.save(branch));
     }
-    public TotalBalanceDto getTotalBalance(Integer branchId){
-        return branchDRepository.getTotalBalance(branchId);
+
+    public TotalBalanceDto getTotalBalance(Integer branchId) {
+        String branch = repository.findById(branchId).get().getName();
+        Double total = repository.getTotalBalance(branchId, branch);
+
+        return  new TotalBalanceDto(total);
     }
 }

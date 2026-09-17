@@ -1,7 +1,10 @@
 package com.jiltsa.admin.seller.domain.service;
 
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
-import com.jiltsa.admin.seller.domain.repository.SellerDRepository;
+import com.jiltsa.admin.seller.persistence.entity.Seller;
+import com.jiltsa.admin.seller.persistence.mapper.SellerMapper;
+import com.jiltsa.admin.seller.persistence.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,26 +16,32 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class SellerDService {
-    private final SellerDRepository sellerDRepository;
+    private final SellerRepository repository;
+    private final SellerMapper mapper;
 
-    public List<SellerDto> getAllSellers(){
-        return  sellerDRepository.getAllSellers();
-    }
-    public List<SellerDto> getSellersByBranch(Integer branchId){
-        return sellerDRepository.getSellersByBranch(branchId);
+    public List<SellerDto> getAllSellers() {
+        return mapper.toSellersDto(repository.findByIsActiveTrue());
     }
 
-    @Transactional
-    public SellerDto newSeller(SellerDto sellerDto){
-        return sellerDRepository.newSeller(sellerDto);
+    public List<SellerDto> getSellersByBranch(Integer branchId) {
+        return mapper.toSellersDto(repository.findByBranchIdAndIsActiveTrue(branchId));
     }
 
     @Transactional
-    public SellerDto disableSeller(Integer sellerId){
-        return sellerDRepository.disableSeller(sellerId);
+    public SellerDto newSeller(SellerDto sellerDto) {
+        Seller seller = mapper.toSeller(sellerDto);
+        return mapper.toSellerDto(repository.save(seller));
     }
 
-    public Optional<SellerDto> getSeller(Integer sellerId){
-        return sellerDRepository.getSeller(sellerId);
+    @Transactional
+    public SellerDto disableSeller(Integer sellerId) {
+        return mapper.toSellerDto(repository.findById(sellerId).map(seller -> {
+            seller.setIsActive(false);
+            return repository.save(seller);
+        }).orElseThrow(() -> new ResourceNotFoundException("Seller", sellerId)));
+    }
+
+    public Optional<SellerDto> getSeller(Integer sellerId) {
+        return repository.findById(sellerId).map(mapper::toSellerDto);
     }
 }

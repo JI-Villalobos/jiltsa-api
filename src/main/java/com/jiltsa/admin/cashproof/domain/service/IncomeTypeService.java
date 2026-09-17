@@ -1,7 +1,9 @@
 package com.jiltsa.admin.cashproof.domain.service;
 
 import com.jiltsa.admin.cashproof.domain.dto.IncomeTypeDto;
-import com.jiltsa.admin.cashproof.domain.repository.IncomeTypeDRepository;
+import com.jiltsa.admin.cashproof.persistence.entity.IncomeType;
+import com.jiltsa.admin.cashproof.persistence.mapper.IncomeTypeMapper;
+import com.jiltsa.admin.cashproof.persistence.repository.IncomeTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +14,16 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class IncomeTypeService {
-    private final IncomeTypeDRepository incomeTypeDRepository;
+    private final IncomeTypeRepository repository;
+    private final IncomeTypeMapper mapper;
 
-    public List<IncomeTypeDto> getIncomeTypes(){
-        return incomeTypeDRepository.getIncomeTypes();
+    public List<IncomeTypeDto> getIncomeTypes() {
+        return mapper.incomeTypeDtoList(repository.findAll());
     }
 
     @Transactional
-    public IncomeTypeDto createIncomeType(IncomeTypeDto incomeTypeDto){
-        return incomeTypeDRepository.createIncomeType(incomeTypeDto);
+    public IncomeTypeDto createIncomeType(IncomeTypeDto incomeTypeDto) {
+        IncomeType incomeType = mapper.toIncomeType(incomeTypeDto);
+        return mapper.toIncomeTypeDto(repository.save(incomeType));
     }
 }

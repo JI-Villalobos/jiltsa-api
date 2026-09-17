@@ -1,74 +1,78 @@
 package com.jiltsa.admin.cashproof.domain.service;
 
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
-import com.jiltsa.admin.cashproof.domain.repository.AccountingDRepository;
-import com.jiltsa.admin.seller.domain.dto.SellerDto;
-import org.assertj.core.api.AssertionsForClassTypes;
-import org.junit.jupiter.api.AfterEach;
+import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
+import com.jiltsa.admin.cashproof.persistence.mapper.AccountingMapper;
+import com.jiltsa.admin.cashproof.persistence.repository.AccountingRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AccountingDServiceTest {
     @Mock
-    AccountingDRepository repository;
-    @InjectMocks
+    private AccountingRepository repository;
     private AccountingDService serviceUnderTest;
+
     @BeforeEach
     void setUp() {
-        serviceUnderTest = new AccountingDService(repository);
+        serviceUnderTest = new AccountingDService(repository, Mappers.getMapper(AccountingMapper.class));
     }
 
     @Test
-    void shouldGetLastAccountingRegistries() {
-        //when
+    void lastRegistriesCoverTheLastSevenDaysOfTheBranch() {
         serviceUnderTest.getLastAccountingRegistries(1);
 
-        //then
-        verify(repository).getLastAccountingRegistries(1);
+        ArgumentCaptor<LocalDateTime> since = ArgumentCaptor.forClass(LocalDateTime.class);
+        verify(repository).findByBranchIdAndDateAfterOrderByDateAsc(eq(1), since.capture());
+        assertThat(since.getValue()).isCloseTo(LocalDateTime.now().minusDays(7), within(1, ChronoUnit.MINUTES));
     }
 
     @Test
-    void shouldGetAccountingRegistriesBetweenTwoDates() {
-        //given
+    void rangeQueryBuildsThePageRequestFromTheParameters() {
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
         LocalDateTime end = LocalDateTime.now();
+        when(repository.findByDateBetweenAndBranchIdOrderByDateAsc(any(), eq(start), eq(end), eq(1))).thenReturn(Page.empty());
 
-        //when
-        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(0, 10, "date", "ASC", start, end, 1);
+        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(2, 5, "date", "ASC", start, end, 1);
 
-        //then
-        verify(repository).getAccountingRegistriesBetweenTwoDates(0, 10, "date", "ASC", start, end, 1);
+        ArgumentCaptor<Pageable> pageable = ArgumentCaptor.forClass(Pageable.class);
+        verify(repository).findByDateBetweenAndBranchIdOrderByDateAsc(pageable.capture(), eq(start), eq(end), eq(1));
+        assertThat(pageable.getValue().getPageNumber()).isEqualTo(2);
+        assertThat(pageable.getValue().getPageSize()).isEqualTo(5);
+        assertThat(pageable.getValue().getSort().getOrderFor("date")).isNotNull()
+                .extracting(Sort.Order::getDirection).isEqualTo(Sort.Direction.ASC);
     }
 
     @Test
-    void shouldCreateAccounting() {
-        //given
-        CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1, LocalDateTime.now());
+    void createMapsTheDtoOntoTheEntity() {
+        LocalDateTime date = LocalDateTime.now();
+        when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        //when
-        serviceUnderTest.createAccounting(createAccountingDto);
+        CreateAccountingDto created = serviceUnderTest.createAccounting(new CreateAccountingDto(null, 2, 1, date));
 
-        //then
-        ArgumentCaptor<CreateAccountingDto> accountingDtoArgumentCaptor =
-                ArgumentCaptor.forClass(CreateAccountingDto.class);
-        verify(repository).createAccounting(accountingDtoArgumentCaptor.capture());
-
-        CreateAccountingDto captureCreateAccountingDto = accountingDtoArgumentCaptor.getValue();
-
-        assertThat(captureCreateAccountingDto).isEqualTo(createAccountingDto);
+        ArgumentCaptor<Accounting> saved = ArgumentCaptor.forClass(Accounting.class);
+        verify(repository).save(saved.capture());
+        assertThat(saved.getValue().getSellerId()).isEqualTo(2);
+        assertThat(saved.getValue().getBranchId()).isEqualTo(1);
+        assertThat(saved.getValue().getDate()).isEqualTo(date);
+        assertThat(created.getSellerId()).isEqualTo(2);
     }
 }

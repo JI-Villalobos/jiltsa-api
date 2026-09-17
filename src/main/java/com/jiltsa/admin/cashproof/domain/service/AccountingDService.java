@@ -3,9 +3,14 @@ package com.jiltsa.admin.cashproof.domain.service;
 import com.jiltsa.admin.cashproof.domain.dto.AccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
-import com.jiltsa.admin.cashproof.domain.repository.AccountingDRepository;
+import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
+import com.jiltsa.admin.cashproof.persistence.mapper.AccountingMapper;
+import com.jiltsa.admin.cashproof.persistence.repository.AccountingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,44 +22,55 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountingDService {
-    private final AccountingDRepository accountingDRepository;
+    private final AccountingRepository repository;
+    private final AccountingMapper mapper;
 
-    public List<AccountingDto> getLastAccountingRegistries(Integer branchId){
-        return accountingDRepository.getLastAccountingRegistries(branchId);
+    public List<AccountingDto> getLastAccountingRegistries(Integer branchId) {
+        LocalDateTime date = LocalDateTime.now().minusDays(7);
+        return mapper.toAccountingDtoList(repository.findByBranchIdAndDateAfterOrderByDateAsc(branchId, date));
     }
 
-    public Page<AccountingDto> getLastAccountingRegistriesAllBranches(int page, int elements, String sortBy, String sortDirection){
-        return accountingDRepository.getLastAccountingRegistriesAllBranches(page, elements, sortBy, sortDirection);
+    public Page<AccountingDto> getLastAccountingRegistriesAllBranches( int page, int elements, String sortBy, String sortDirection) {
+        LocalDateTime date = LocalDateTime.now().minusDays(4);
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+        return mapper.toAccountingDtoPage(repository.findByDateAfterOrderByDateAsc(pageRequest, date));
     }
 
-    public Optional<AccountingDto> getAccounting(Integer accountingId){
-        return accountingDRepository.getAccounting(accountingId);
+    public Optional<AccountingDto> getAccounting(Integer accountingId) {
+        return repository.findById(accountingId).map(mapper::toAccountingDto);
     }
 
     public Page<AccountingDto> getAccountingRegistriesBetweenTwoDates(
             int page, int elements, String sortBy, String sortDirection,
             LocalDateTime start, LocalDateTime end, Integer branchId
-            ){
-        return accountingDRepository.getAccountingRegistriesBetweenTwoDates(page, elements, sortBy,
-                sortDirection, start, end, branchId);
+    ) {
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+        return mapper.toAccountingDtoPage(repository.findByDateBetweenAndBranchIdOrderByDateAsc(pageRequest, start, end, branchId));
     }
 
-    public Page<AccountingDto> getLastAccountingRegistriesByPage(int page, int elements, String sortBy, String sortDirection, Integer branchId){
-        return accountingDRepository.getLastAccountingRegistriesByPage(page, elements, sortBy, sortDirection, branchId);
-    }
-
-    @Transactional
-    public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto){
-        return accountingDRepository.createAccounting(createAccountingDto);
-    }
-
-    @Transactional
-    public CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto){
-        return accountingDRepository.createOutOfDateAccounting(customAccountingDto);
+    public Page<AccountingDto> getLastAccountingRegistriesByPage(int page, int elements, String sortBy, String sortDirection, Integer branchId) {
+        LocalDateTime date = LocalDateTime.now().minusDays(4);
+        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+        return mapper.toAccountingDtoPage(repository.findByBranchIdAndDateAfterOrderByDateDesc(pageRequest, branchId, date));
     }
 
     @Transactional
-    public void deleteAccounting(Integer accountingId){
-        accountingDRepository.deleteAccounting(accountingId);
+    public CreateAccountingDto createAccounting(CreateAccountingDto createAccountingDto) {
+        Accounting accounting = mapper.toAccounting(createAccountingDto);
+        return mapper.toCreateAccountingDto(repository.save(accounting));
+    }
+
+    @Transactional
+    public CustomAccountingDto createOutOfDateAccounting(CustomAccountingDto customAccountingDto) {
+        Accounting accounting = mapper.toAccounting(customAccountingDto);
+        return mapper.toCustomAccountingDto(repository.save(accounting));
+    }
+
+    @Transactional
+    public void deleteAccounting(Integer accountingId) {
+        repository.deleteById(accountingId);
     }
 }

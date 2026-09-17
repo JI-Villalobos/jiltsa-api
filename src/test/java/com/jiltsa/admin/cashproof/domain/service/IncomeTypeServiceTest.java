@@ -1,53 +1,51 @@
 package com.jiltsa.admin.cashproof.domain.service;
 
 import com.jiltsa.admin.cashproof.domain.dto.IncomeTypeDto;
-import com.jiltsa.admin.cashproof.domain.repository.IncomeTypeDRepository;
+import com.jiltsa.admin.cashproof.persistence.entity.IncomeType;
+import com.jiltsa.admin.cashproof.persistence.mapper.IncomeTypeMapper;
+import com.jiltsa.admin.cashproof.persistence.repository.IncomeTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class IncomeTypeServiceTest {
     @Mock
-    IncomeTypeDRepository repository;
-    @InjectMocks
+    private IncomeTypeRepository repository;
     private IncomeTypeService serviceUnderTest;
 
     @BeforeEach
     void setUp() {
-        serviceUnderTest = new IncomeTypeService(repository);
+        serviceUnderTest = new IncomeTypeService(repository, Mappers.getMapper(IncomeTypeMapper.class));
     }
 
     @Test
-    void shouldGetIncomeTypes() {
-        //when
-        serviceUnderTest.getIncomeTypes();
+    void typesAreMappedFromTheRepository() {
+        when(repository.findAll()).thenReturn(List.of(new IncomeType("PRONTIPAGOS"), new IncomeType("MEDICAMENTO")));
 
-        //then
-        Mockito.verify(repository).getIncomeTypes();
+        assertThat(serviceUnderTest.getIncomeTypes()).extracting(IncomeTypeDto::getType).containsExactly("PRONTIPAGOS", "MEDICAMENTO");
     }
 
     @Test
-    void shouldCreateIncomeType() {
-        //given
-        IncomeTypeDto incomeTypeDto = new IncomeTypeDto(1, "other");
+    void createSavesTheType() {
+        when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        //when
-        serviceUnderTest.createIncomeType(incomeTypeDto);
+        IncomeTypeDto created = serviceUnderTest.createIncomeType(new IncomeTypeDto(null, "other"));
 
-        //then
-        ArgumentCaptor<IncomeTypeDto> incomeTypeDtoArgumentCaptor =
-                ArgumentCaptor.forClass(IncomeTypeDto.class);
-        Mockito.verify(repository).createIncomeType(incomeTypeDtoArgumentCaptor.capture());
-
-        IncomeTypeDto captureIncomeTypeDto = incomeTypeDtoArgumentCaptor.getValue();
-        assertThat(captureIncomeTypeDto).isEqualTo(incomeTypeDto);
+        ArgumentCaptor<IncomeType> saved = ArgumentCaptor.forClass(IncomeType.class);
+        verify(repository).save(saved.capture());
+        assertThat(saved.getValue().getType()).isEqualTo("other");
+        assertThat(created.getType()).isEqualTo("other");
     }
 }
