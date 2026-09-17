@@ -48,16 +48,16 @@ class AccountingDServiceTest {
         LocalDateTime end = LocalDateTime.now();
 
         //when
-        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(start, end, 1);
+        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(0, 10, "date", "ASC", start, end, 1);
 
         //then
-        verify(repository).getAccountingRegistriesBetweenTwoDates(start, end, 1);
+        verify(repository).getAccountingRegistriesBetweenTwoDates(0, 10, "date", "ASC", start, end, 1);
     }
 
     @Test
     void shouldCreateAccounting() {
         //given
-        CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1);
+        CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1, LocalDateTime.now());
 
         //when
         serviceUnderTest.createAccounting(createAccountingDto);

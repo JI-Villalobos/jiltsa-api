@@ -26,7 +26,7 @@ class BillMapperTest {
     void shouldMapToBillDto() {
         //given
         BillMapper mapper = Mappers.getMapper(BillMapper.class);
-        Bill bill = new Bill(1, LocalDateTime.now(), UUID.randomUUID().toString(), "NAZAS", 1, 245.00, LocalDateTime.now().plusMonths(1),  false, null, 1, true);
+        Bill bill = new Bill(1, LocalDateTime.now(), UUID.randomUUID().toString(), "NAZAS", 1, 245.00, LocalDateTime.now().plusMonths(1),  false, null, 1, true, null);
 
         //when
         BillDto billDto = mapper.toBillDto(bill);
@@ -43,8 +43,8 @@ class BillMapperTest {
         BillMapper mapper = Mappers.getMapper(BillMapper.class);
         Pageable pageReq = PageRequest.of(1, 2);
 
-        Bill bill = new Bill(1, LocalDateTime.now(), UUID.randomUUID().toString(), "NAZAS", 1, 245.00, LocalDateTime.now().plusMonths(1),  false, null, 1, true);
-        Bill bill2 = new Bill(1, LocalDateTime.now(), UUID.randomUUID().toString(), "NAZAS", 1, 245.00, LocalDateTime.now().plusMonths(1),  false, null, 1, true);
+        Bill bill = new Bill(1, LocalDateTime.now(), UUID.randomUUID().toString(), "NAZAS", 1, 245.00, LocalDateTime.now().plusMonths(1),  false, null, 1, true, null);
+        Bill bill2 = new Bill(1, LocalDateTime.now(), UUID.randomUUID().toString(), "NAZAS", 1, 245.00, LocalDateTime.now().plusMonths(1),  false, null, 1, true, null);
 
 
         //when

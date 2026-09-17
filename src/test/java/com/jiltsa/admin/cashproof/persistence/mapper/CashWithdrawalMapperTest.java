@@ -107,6 +107,7 @@ class CashWithdrawalMapperTest {
 
         //then
         assertThat(cashWithdrawal).isNotNull();
-        assertThat(cashWithdrawal.getDate()).isNotNull();
+        // date is ignored by the mapper; CashWithdrawalRepositoryImplementation sets it on save
+        assertThat(cashWithdrawal.getDate()).isNull();
     }
 }

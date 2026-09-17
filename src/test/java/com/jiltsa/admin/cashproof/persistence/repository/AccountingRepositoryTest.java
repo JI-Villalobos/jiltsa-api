@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -98,13 +100,13 @@ class AccountingRepositoryTest {
         LocalDateTime end = LocalDateTime.now().plusMonths(1);
 
         //when
-        List<Accounting> accountingList =
+        Page<Accounting> accountingPage =
                 accountingRepositoryUnderTest.findByDateBetweenAndBranchIdOrderByDateAsc(
-                        start, end, 1
+                        PageRequest.of(0, 20), start, end, 1
                 );
 
         //then
-        assertThat(accountingList).isInstanceOf(ArrayList.class);
-        assertThat(accountingList.size()).isEqualTo(12);
+        assertThat(accountingPage.getTotalElements()).isEqualTo(12L);
+        assertThat(accountingPage.getContent().size()).isEqualTo(12);
     }
 }

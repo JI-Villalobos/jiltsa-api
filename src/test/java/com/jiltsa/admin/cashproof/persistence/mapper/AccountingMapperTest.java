@@ -81,9 +81,9 @@ class AccountingMapperTest {
     @Test
     void shouldMapperToAccounting() {
         //given
-        CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1);
-        AccountingMapper mapper = Mappers.getMapper(AccountingMapper.class);
         LocalDateTime dateTime = LocalDateTime.now();
+        CreateAccountingDto createAccountingDto = new CreateAccountingDto(1, 1, 1, dateTime);
+        AccountingMapper mapper = Mappers.getMapper(AccountingMapper.class);
         Month month = dateTime.getMonth();
 
         //when
