@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 
 public record BillDto(Integer id, @NotNull LocalDateTime date, @NotNull String invoice,
                       @NotNull String branch, @NotNull Integer branchId, @NotNull Double amount,
-                      @NotNull LocalDateTime limitPaymentDate, @NotNull Boolean isPaid,
+                      LocalDateTime limitPaymentDate, Boolean isPaid,
                       String paymentTicket, @NotNull Integer providerId,
-                      @NotNull Boolean isActive, LocalDateTime receptionDate) {
+                      Boolean isActive, LocalDateTime receptionDate) {
     public BillDto(LocalDateTime date, String invoice, String branch, Integer branchId, Double amount) {
         this(null, date, invoice, branch, branchId, amount,
                 null, null, null, null, null, null);
