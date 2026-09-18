@@ -1,13 +1,14 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleBalanceDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreditSaleDto;
 import com.jiltsa.admin.cashproof.domain.service.CreditSaleService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/credit-sale")
@@ -16,8 +17,9 @@ public class CreditSaleController {
     private final CreditSaleService service;
 
     @GetMapping("/get/{creditSaleId}")
-    public Optional<CreditSaleDto> getCreditSale(@PathVariable("creditSaleId") Integer creditSaleId){
-        return service.getCreditSale(creditSaleId);
+    public CreditSaleDto getCreditSale(@PathVariable("creditSaleId") Integer creditSaleId){
+        return service.getCreditSale(creditSaleId)
+                .orElseThrow(() -> new ResourceNotFoundException("CreditSale", creditSaleId));
     }
 
     @GetMapping("/get-all/{branchId}")
@@ -31,17 +33,18 @@ public class CreditSaleController {
     }
 
     @GetMapping("/balance/{creditSaleId}")
-    public Optional<CreditSaleBalanceDto> getCreditSaleBalance(@PathVariable("creditSaleId") Integer creditSaleId){
-        return service.getCreditSaleBalance(creditSaleId);
+    public CreditSaleBalanceDto getCreditSaleBalance(@PathVariable("creditSaleId") Integer creditSaleId){
+        return service.getCreditSaleBalance(creditSaleId)
+                .orElseThrow(() -> new ResourceNotFoundException("CreditSaleBalance", creditSaleId));
     }
 
     @PostMapping
-    public CreditSaleDto createCreditSale(@RequestBody CreditSaleDto creditSaleDto){
+    public CreditSaleDto createCreditSale(@Valid @RequestBody CreditSaleDto creditSaleDto){
         return service.createCreditSale(creditSaleDto);
     }
 
     @PutMapping
-    public CreditSaleDto updateCreditSale(@RequestBody CreditSaleDto creditSaleDto){
+    public CreditSaleDto updateCreditSale(@Valid @RequestBody CreditSaleDto creditSaleDto){
         return service.updateCreditSale(creditSaleDto);
     }
 

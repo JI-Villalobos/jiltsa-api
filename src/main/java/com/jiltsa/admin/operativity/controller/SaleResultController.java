@@ -1,5 +1,6 @@
 package com.jiltsa.admin.operativity.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.operativity.domain.dto.AverageSalesResultDto;
 import com.jiltsa.admin.operativity.domain.dto.SaleResultDto;
 import com.jiltsa.admin.operativity.domain.service.SaleResultService;
@@ -30,7 +31,7 @@ public class SaleResultController {
     }
 
     @PostMapping
-    public SaleResultDto saveResult(@RequestBody SaleResultDto saleResultDto){
+    public SaleResultDto saveResult(@Valid @RequestBody SaleResultDto saleResultDto){
         return service.saveResult(saleResultDto);
     }
 }

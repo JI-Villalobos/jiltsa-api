@@ -1,55 +1,51 @@
 package com.jiltsa.admin.cashproof.domain.service;
 
 import com.jiltsa.admin.cashproof.domain.dto.ExpenseTypeDto;
-import com.jiltsa.admin.cashproof.domain.repository.ExpenseTypeDRepository;
+import com.jiltsa.admin.cashproof.persistence.entity.ExpenseType;
+import com.jiltsa.admin.cashproof.persistence.mapper.ExpenseTypeMapper;
+import com.jiltsa.admin.cashproof.persistence.repository.ExpenseTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.mockito.Mockito.*;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ExpenseTypeServiceTest {
-
     @Mock
-    ExpenseTypeDRepository expenseTypeDRepository;
-    @InjectMocks
+    private ExpenseTypeRepository repository;
     private ExpenseTypeService serviceUnderTest;
 
     @BeforeEach
     void setUp() {
-        serviceUnderTest = new ExpenseTypeService(expenseTypeDRepository);
+        serviceUnderTest = new ExpenseTypeService(repository, Mappers.getMapper(ExpenseTypeMapper.class));
     }
 
     @Test
-    void shouldGetExpenseTypes() {
-        //when
-        serviceUnderTest.getExpenseTypes();
+    void typesAreMappedFromTheRepository() {
+        when(repository.findAll()).thenReturn(List.of(new ExpenseType("SUELDOS"), new ExpenseType("RENTA")));
 
-        //then
-        verify(expenseTypeDRepository).getExpenseTypes();
+        assertThat(serviceUnderTest.getExpenseTypes()).extracting(ExpenseTypeDto::getType).containsExactly("SUELDOS", "RENTA");
     }
 
     @Test
-    void shouldCreateExpenseType() {
-        //given
-        ExpenseTypeDto expenseTypeDto = new ExpenseTypeDto(1, "other");
+    void createSavesTheType() {
+        when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        //when
-        serviceUnderTest.createExpenseType(expenseTypeDto);
+        ExpenseTypeDto created = serviceUnderTest.createExpenseType(new ExpenseTypeDto(null, "other"));
 
-        //then
-        ArgumentCaptor<ExpenseTypeDto> expenseTypeDtoArgumentCaptor =
-                ArgumentCaptor.forClass(ExpenseTypeDto.class);
-        verify(expenseTypeDRepository).createExpenseType(expenseTypeDtoArgumentCaptor.capture());
-
-        ExpenseTypeDto captureExpenseTypeDto = expenseTypeDtoArgumentCaptor.getValue();
-
-        assertThat(captureExpenseTypeDto).isEqualTo(expenseTypeDto);
+        ArgumentCaptor<ExpenseType> saved = ArgumentCaptor.forClass(ExpenseType.class);
+        verify(repository).save(saved.capture());
+        assertThat(saved.getValue().getType()).isEqualTo("other");
+        assertThat(created.getType()).isEqualTo("other");
     }
 }

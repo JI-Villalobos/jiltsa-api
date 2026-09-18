@@ -1,12 +1,14 @@
 package com.jiltsa.admin.orders.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.orders.domain.dto.OrderDto;
 import com.jiltsa.admin.orders.domain.service.OrderService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/orders")
@@ -20,20 +22,22 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderDto saveOrder(@RequestBody OrderDto orderDto){
+    public OrderDto saveOrder(@Valid @RequestBody OrderDto orderDto){
         return service.saveOrder(orderDto);
     }
 
     @GetMapping("/{orderId}")
-    public Optional<OrderDto> getOrder(@PathVariable("orderId") Integer orderId){
-        return service.getOrder(orderId);
+    public OrderDto getOrder(@PathVariable("orderId") Integer orderId){
+        return service.getOrder(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
     }
 
     @PutMapping
-    public OrderDto updateOrder(@RequestBody OrderDto orderDto){
+    public OrderDto updateOrder(@Valid @RequestBody OrderDto orderDto){
         return service.saveOrder(orderDto);
     }
 
+    @AdminOnly
     @DeleteMapping("/{orderId}")
     public void deleteOrder(@PathVariable("orderId") Integer orderId){
         service.deleteOrder(orderId);

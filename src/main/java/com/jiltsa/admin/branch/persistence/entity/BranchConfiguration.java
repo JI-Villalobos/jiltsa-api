@@ -1,5 +1,6 @@
 package com.jiltsa.admin.branch.persistence.entity;
 
+import com.jiltsa.admin.branch.domain.Profile;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class BranchConfiguration {
 
     @NotNull
     @Column(name = "profile")
+    @Enumerated(EnumType.STRING)
     private Profile profile;
 
     @Column(name = "modified_date")

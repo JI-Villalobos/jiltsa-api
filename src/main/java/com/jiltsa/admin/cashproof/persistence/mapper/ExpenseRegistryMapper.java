@@ -3,7 +3,9 @@ package com.jiltsa.admin.cashproof.persistence.mapper;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateExpenseRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.ExpenseRegistryDto;
+import com.jiltsa.admin.cashproof.domain.dto.ExpenseReportDto;
 import com.jiltsa.admin.cashproof.persistence.entity.ExpenseRegistry;
+import com.jiltsa.admin.cashproof.persistence.repository.ExpenseResult;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +18,8 @@ public interface ExpenseRegistryMapper {
     ExpenseRegistryDto toExpenseRegistryDto(ExpenseRegistry expenseRegistry);
     List<ExpenseRegistryDto> toExpenseRegistryDtoList(List<ExpenseRegistry> expenseRegistryList);
     CreateExpenseRegistryDto toCreateExpenseRegistryDto(ExpenseRegistry expenseRegistry);
+    ExpenseReportDto toExpenseReportDto(ExpenseResult expenseResult);
+    List<ExpenseReportDto> toExpenseReportDtoList(List<ExpenseResult> expenseResults);
 
     @InheritInverseConfiguration
     @Mappings({

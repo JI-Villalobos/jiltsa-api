@@ -1,6 +1,6 @@
 package com.jiltsa.admin.operativity.controller;
 
-import com.jiltsa.admin.cashproof.persistence.repository.ExpenseResult;
+import com.jiltsa.admin.cashproof.domain.dto.ExpenseReportDto;
 import com.jiltsa.admin.operativity.projection.LocalExpensesProjectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +19,7 @@ public class LocalExpenseReportController {
     private final LocalExpensesProjectionService localExpensesProjectionService;
 
     @GetMapping
-    public List<ExpenseResult> getReport(
+    public List<ExpenseReportDto> getReport(
             @RequestParam Integer branchId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime initialDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime finalDate

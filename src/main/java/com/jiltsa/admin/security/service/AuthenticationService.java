@@ -9,6 +9,7 @@ import com.jiltsa.admin.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class AuthenticationService {
           )
         );
         AppUser user = repository.findByEmail(request.email())
-                .orElseThrow();
+                .orElseThrow(() -> new UsernameNotFoundException("USER NOT FOUND"));
         return getAuthenticationResponse(user);
     }
 }

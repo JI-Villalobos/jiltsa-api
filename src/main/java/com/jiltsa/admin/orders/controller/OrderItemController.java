@@ -1,12 +1,14 @@
 package com.jiltsa.admin.orders.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.orders.domain.dto.OrderItemDto;
 import com.jiltsa.admin.orders.domain.service.OrderItemService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/order-items")
@@ -15,33 +17,35 @@ public class OrderItemController {
     private final OrderItemService service;
 
     @GetMapping("/{itemId}")
-    public Optional<OrderItemDto> getItem(@PathVariable("itemId") Integer itemId){
-        return service.getOrderItem(itemId);
+    public OrderItemDto getItem(@PathVariable("itemId") Integer itemId){
+        return service.getOrderItem(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("OrderItem", itemId));
     }
 
     @PostMapping
-    public OrderItemDto saveItem(@RequestBody OrderItemDto itemDto){
+    public OrderItemDto saveItem(@Valid @RequestBody OrderItemDto itemDto){
         return service.saveOrderItem(itemDto);
     }
 
     @PostMapping("/save-all")
-    public List<OrderItemDto> saveAll(@RequestBody List<OrderItemDto> itemDtoList){
-        return service.saveOrderItemDtoList(itemDtoList);
+    public List<OrderItemDto> saveAll(@RequestBody List<@Valid OrderItemDto> itemDtoList){
+        return service.saveOrderItems(itemDtoList);
     }
 
+    @AdminOnly
     @DeleteMapping("/{itemId}")
     public void deleteItem(@PathVariable("itemId") Integer itemId){
         service.deleteOrderItem(itemId);
     }
 
     @PutMapping
-    public OrderItemDto updateItem(@RequestBody OrderItemDto itemDto){
+    public OrderItemDto updateItem(@Valid @RequestBody OrderItemDto itemDto){
         return service.saveOrderItem(itemDto);
     }
 
     @PutMapping("/update-all")
-    public List<OrderItemDto> updateAll(@RequestBody List<OrderItemDto> itemDtoList){
-        return service.saveOrderItemDtoList(itemDtoList);
+    public List<OrderItemDto> updateAll(@RequestBody List<@Valid OrderItemDto> itemDtoList){
+        return service.saveOrderItems(itemDtoList);
     }
 
     @PutMapping("/disable/{orderId}")

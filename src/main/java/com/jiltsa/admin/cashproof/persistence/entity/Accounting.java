@@ -27,11 +27,11 @@ public class Accounting {
     private Integer branchId;
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", updatable = false, insertable = false)
     private Branch branch;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", updatable = false, insertable = false)
     private Seller seller;
 

@@ -1,30 +1,32 @@
 package com.jiltsa.admin.operativity.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.operativity.domain.dto.BreakEvenPointDto;
-import com.jiltsa.admin.operativity.domain.service.BreakEventPointService;
+import com.jiltsa.admin.operativity.domain.service.BreakEvenPointService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/bep")
 @RequiredArgsConstructor
 public class BreakEvenPointController {
-    private final BreakEventPointService service;
+    private final BreakEvenPointService service;
 
     @PostMapping
-    public BreakEvenPointDto saveBEP(@RequestBody BreakEvenPointDto breakEvenPointDto){
+    public BreakEvenPointDto saveBEP(@Valid @RequestBody BreakEvenPointDto breakEvenPointDto){
         return service.saveBEP(breakEvenPointDto);
     }
 
     @PutMapping
-    public BreakEvenPointDto updateBEP(@RequestBody BreakEvenPointDto breakEvenPointDto){
+    public BreakEvenPointDto updateBEP(@Valid @RequestBody BreakEvenPointDto breakEvenPointDto){
         return service.saveBEP(breakEvenPointDto);
     }
 
     @GetMapping("/branch/{branchId}")
-    public Optional<BreakEvenPointDto> getBEP(@PathVariable("branchId") Integer branchId){
-        return service.getBreakEvenPointDto(branchId);
+    public BreakEvenPointDto getBEP(@PathVariable("branchId") Integer branchId){
+        return service.getBreakEvenPoint(branchId)
+                .orElseThrow(() -> new ResourceNotFoundException("BreakEvenPoint", branchId));
     }
 }

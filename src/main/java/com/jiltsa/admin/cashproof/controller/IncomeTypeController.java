@@ -1,7 +1,9 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.IncomeTypeDto;
 import com.jiltsa.admin.cashproof.domain.service.IncomeTypeService;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +19,9 @@ public class IncomeTypeController {
         return service.getIncomeTypes();
     }
 
+    @AdminOnly
     @PostMapping
-    public IncomeTypeDto createIncomeType(@RequestBody IncomeTypeDto incomeTypeDto){
+    public IncomeTypeDto createIncomeType(@Valid @RequestBody IncomeTypeDto incomeTypeDto){
         return service.createIncomeType(incomeTypeDto);
     }
 

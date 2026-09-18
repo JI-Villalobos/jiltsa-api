@@ -58,7 +58,7 @@ public class Bill {
     @Column(name = "reception_date")
     private LocalDateTime receptionDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id", insertable = false, updatable = false)
     private Provider provider;
 

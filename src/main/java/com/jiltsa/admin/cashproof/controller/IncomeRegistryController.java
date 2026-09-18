@@ -1,8 +1,10 @@
 package com.jiltsa.admin.cashproof.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CreateIncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.IncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.service.IncomeRegistryService;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,21 +22,22 @@ public class IncomeRegistryController {
     }
 
     @PostMapping
-    public CreateIncomeRegistryDto createIncomeRegistry(@RequestBody CreateIncomeRegistryDto createIncomeRegistryDto){
+    public CreateIncomeRegistryDto createIncomeRegistry(@Valid @RequestBody CreateIncomeRegistryDto createIncomeRegistryDto){
         return service.createIncomeRegistry(createIncomeRegistryDto);
     }
 
     @PutMapping()
     public IncomeRegistryDto updateIncomeRegistry(
-            @RequestBody IncomeRegistryDto incomeRegistryDto){
+            @Valid @RequestBody IncomeRegistryDto incomeRegistryDto){
         return service.updateIncomeRegistry(incomeRegistryDto);
     }
 
     @PostMapping("/all")
-    public List<IncomeRegistryDto> createIncomes(@RequestBody List<CreateIncomeRegistryDto> incomes){
+    public List<IncomeRegistryDto> createIncomes(@RequestBody List<@Valid CreateIncomeRegistryDto> incomes){
         return service.createIncomesRegistry(incomes);
     }
 
+    @AdminOnly
     @DeleteMapping("/{incomeRegistryId}")
     public void deleteIncomeRegistry(@PathVariable Integer incomeRegistryId){
         service.deleteIncomeRegistry(incomeRegistryId);

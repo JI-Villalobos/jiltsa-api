@@ -1,13 +1,14 @@
 package com.jiltsa.admin.billing.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.billing.domain.dto.PaymentDto;
 import com.jiltsa.admin.billing.domain.service.PaymentService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/payments")
@@ -25,17 +26,19 @@ public class PaymentController {
     }
 
     @GetMapping("/uuid/{uuid}")
-    public Optional<PaymentDto> getPaymentByTicket(@PathVariable("uuid") String uuid){
-        return service.getPaymentByTicket(uuid);
+    public PaymentDto getPaymentByTicket(@PathVariable("uuid") String uuid){
+        return service.getPaymentByTicket(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Payment", uuid));
     }
 
     @GetMapping("/{id}")
-    public Optional<PaymentDto> getPayment(@PathVariable("id") Integer id){
-        return service.getPayment(id);
+    public PaymentDto getPayment(@PathVariable("id") Integer id){
+        return service.getPayment(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Payment", id));
     }
 
     @PostMapping
-    public PaymentDto createPayment(@RequestBody PaymentDto paymentDto){
+    public PaymentDto createPayment(@Valid @RequestBody PaymentDto paymentDto){
         return service.createPayment(paymentDto);
     }
 

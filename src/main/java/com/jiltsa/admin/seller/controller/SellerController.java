@@ -1,19 +1,21 @@
 package com.jiltsa.admin.seller.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
-import com.jiltsa.admin.seller.domain.service.SellerDService;
+import com.jiltsa.admin.seller.domain.service.SellerService;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("jiltsa/api/v1/sellers")
 @RequiredArgsConstructor
 @CrossOrigin
 public class SellerController {
-    private final SellerDService service;
+    private final SellerService service;
 
     @GetMapping
     public List<SellerDto> getSellers(){
@@ -23,19 +25,22 @@ public class SellerController {
     public List<SellerDto> getSellersByBranch(@PathVariable("branchId") Integer id){
         return service.getSellersByBranch(id);
     }
+    @AdminOnly
     @PostMapping
-    public SellerDto newSeller(@RequestBody SellerDto sellerDto){
-        return service.newSeller(sellerDto);
+    public SellerDto createSeller(@Valid @RequestBody SellerDto sellerDto){
+        return service.createSeller(sellerDto);
     }
 
+    @AdminOnly
     @PatchMapping("/{sellerId}")
     public SellerDto disableSeller(@PathVariable("sellerId") Integer id){
         return service.disableSeller(id);
     }
 
     @GetMapping("/{sellerId}")
-    public Optional<SellerDto> getSeller(@PathVariable("sellerId") Integer id){
-        return service.getSeller(id);
+    public SellerDto getSeller(@PathVariable("sellerId") Integer id){
+        return service.getSeller(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Seller", id));
     }
 
 }

@@ -1,7 +1,9 @@
 package com.jiltsa.admin.operativity.controller;
 
+import jakarta.validation.Valid;
 import com.jiltsa.admin.operativity.domain.dto.OperativeExpenseDto;
 import com.jiltsa.admin.operativity.domain.service.OperativeExpenseService;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,11 @@ public class OperativeExpenseController {
     }
 
     @PostMapping
-    public OperativeExpenseDto saveOperativeExpense(@RequestBody OperativeExpenseDto operativeExpenseDto){
+    public OperativeExpenseDto saveOperativeExpense(@Valid @RequestBody OperativeExpenseDto operativeExpenseDto){
         return service.saveOperativeExpense(operativeExpenseDto);
     }
 
+    @AdminOnly
     @DeleteMapping
     public void deleteOperativeExpense(@RequestBody OperativeExpenseDto operativeExpenseDto){
         service.deleteOperativeExpense(operativeExpenseDto);
