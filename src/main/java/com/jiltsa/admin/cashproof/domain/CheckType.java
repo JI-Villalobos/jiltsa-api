@@ -1,4 +1,4 @@
-package com.jiltsa.admin.cashproof.persistence.entity;
+package com.jiltsa.admin.cashproof.domain;
 
 public enum CheckType {
     CHECK_IN,

@@ -1,5 +1,6 @@
 package com.jiltsa.admin.cashproof.persistence.entity;
 
+import com.jiltsa.admin.cashproof.domain.CheckType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

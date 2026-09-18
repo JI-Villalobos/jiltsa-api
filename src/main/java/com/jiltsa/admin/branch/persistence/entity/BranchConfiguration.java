@@ -1,5 +1,6 @@
 package com.jiltsa.admin.branch.persistence.entity;
 
+import com.jiltsa.admin.branch.domain.Profile;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

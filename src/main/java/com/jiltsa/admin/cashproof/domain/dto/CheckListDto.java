@@ -1,6 +1,6 @@
 package com.jiltsa.admin.cashproof.domain.dto;
 
-import com.jiltsa.admin.cashproof.persistence.entity.CheckType;
+import com.jiltsa.admin.cashproof.domain.CheckType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 

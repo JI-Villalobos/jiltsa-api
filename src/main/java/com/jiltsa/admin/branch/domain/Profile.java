@@ -1,4 +1,4 @@
-package com.jiltsa.admin.branch.persistence.entity;
+package com.jiltsa.admin.branch.domain;
 
 public enum Profile {
     PHARMACY,

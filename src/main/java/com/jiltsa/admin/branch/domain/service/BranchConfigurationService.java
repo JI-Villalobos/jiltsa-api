@@ -2,7 +2,7 @@ package com.jiltsa.admin.branch.domain.service;
 
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.persistence.entity.BranchConfiguration;
-import com.jiltsa.admin.branch.persistence.entity.Profile;
+import com.jiltsa.admin.branch.domain.Profile;
 import com.jiltsa.admin.branch.persistence.mapper.BranchConfigurationMapper;
 import com.jiltsa.admin.branch.persistence.repository.BranchConfigurationRepository;
 import lombok.RequiredArgsConstructor;

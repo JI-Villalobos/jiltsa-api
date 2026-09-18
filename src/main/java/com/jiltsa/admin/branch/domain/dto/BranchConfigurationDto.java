@@ -1,6 +1,6 @@
 package com.jiltsa.admin.branch.domain.dto;
 
-import com.jiltsa.admin.branch.persistence.entity.Profile;
+import com.jiltsa.admin.branch.domain.Profile;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;

@@ -3,7 +3,7 @@ package com.jiltsa.admin.branch.controller;
 import jakarta.validation.Valid;
 import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.service.BranchConfigurationService;
-import com.jiltsa.admin.branch.persistence.entity.Profile;
+import com.jiltsa.admin.branch.domain.Profile;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
