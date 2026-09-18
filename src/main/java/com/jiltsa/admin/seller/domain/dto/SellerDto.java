@@ -1,5 +1,6 @@
 package com.jiltsa.admin.seller.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SellerDto {
     private Integer id;
-    @NotNull
+    @NotBlank
     private String fullName;
     @NotNull
     private Integer branchId;

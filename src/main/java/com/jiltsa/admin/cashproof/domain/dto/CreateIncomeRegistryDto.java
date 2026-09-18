@@ -1,6 +1,8 @@
 package com.jiltsa.admin.cashproof.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +18,8 @@ public class CreateIncomeRegistryDto {
     private Integer accountingId;
     @NotNull
     private Integer incomeTypeId;
-    @NotNull
+    @NotNull @Positive
     private Double amount;
-    @NotNull
+    @NotBlank
     private String tag;
 }

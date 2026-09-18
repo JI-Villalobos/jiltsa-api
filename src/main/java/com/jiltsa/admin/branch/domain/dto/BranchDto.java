@@ -1,5 +1,6 @@
 package com.jiltsa.admin.branch.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BranchDto {
     private Integer id;
-    @NotNull
+    @NotBlank
     private String name;
     @NotNull
     private Boolean isActive;

@@ -1,13 +1,14 @@
 package com.jiltsa.admin.orders.domain.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public record OrderDto(
         Integer id, @NotNull Integer providerId, @NotNull Integer branchId, @NotNull LocalDate creationDate,
-        @NotNull Double estimatedCost, @NotNull Double realCost,@NotNull Integer status, @NotNull Boolean isOpen, List<OrderItemDto> items
+        @NotNull @PositiveOrZero Double estimatedCost, @NotNull @PositiveOrZero Double realCost,@NotNull Integer status, @NotNull Boolean isOpen, List<OrderItemDto> items
 ) {
 
     public OrderDto(

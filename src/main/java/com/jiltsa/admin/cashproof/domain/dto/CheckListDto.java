@@ -2,13 +2,14 @@ package com.jiltsa.admin.cashproof.domain.dto;
 
 import com.jiltsa.admin.cashproof.persistence.entity.CheckType;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDate;
 
 public record CheckListDto(
         Integer id, @NotNull CheckType checkType,
-        @NotNull LocalDate date, @NotNull Double cashBalance,
-        @NotNull Double tranboxBalance, @NotNull Integer cellphoneCharge,
+        @NotNull LocalDate date, @NotNull @PositiveOrZero Double cashBalance,
+        @NotNull @PositiveOrZero Double tranboxBalance, @NotNull @PositiveOrZero Integer cellphoneCharge,
         @NotNull Boolean cellphoneCondition, String cellphoneObservation,
         @NotNull Byte furnitureCleanConditions,
         @NotNull Boolean installationState,

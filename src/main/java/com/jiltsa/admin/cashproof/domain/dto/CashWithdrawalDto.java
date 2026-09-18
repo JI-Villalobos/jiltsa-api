@@ -1,6 +1,8 @@
 package com.jiltsa.admin.cashproof.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,12 +15,12 @@ import java.time.LocalDateTime;
 public class CashWithdrawalDto {
     private Integer id;
     private LocalDateTime date;
-    @NotNull
+    @NotNull @Positive
     private Double amount;
-    @NotNull
+    @NotBlank
     private String concept;
-    @NotNull
+    @NotBlank
     private String sellerName;
-    @NotNull
+    @NotBlank
     private String branch;
 }

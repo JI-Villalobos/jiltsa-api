@@ -1,11 +1,13 @@
 package com.jiltsa.admin.billing.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDateTime;
 
-public record BillDto(Integer id, @NotNull LocalDateTime date, @NotNull String invoice,
-                      @NotNull String branch, @NotNull Integer branchId, @NotNull Double amount,
+public record BillDto(Integer id, @NotNull LocalDateTime date, @NotBlank String invoice,
+                      @NotBlank String branch, @NotNull Integer branchId, @NotNull @Positive Double amount,
                       LocalDateTime limitPaymentDate, Boolean isPaid,
                       String paymentTicket, @NotNull Integer providerId,
                       Boolean isActive, LocalDateTime receptionDate) {
