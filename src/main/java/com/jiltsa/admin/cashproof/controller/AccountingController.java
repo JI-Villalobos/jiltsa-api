@@ -8,6 +8,9 @@ import com.jiltsa.admin.cashproof.domain.service.AccountingDService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -21,12 +24,9 @@ public class AccountingController {
 
     @GetMapping
     public Page<AccountingDto> getLastesAccountingRegitriesAllBranches(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "acs") String sortDirection
+            @PageableDefault(size = 12, sort = "date") Pageable pageable
     ){
-        return service.getLastAccountingRegistriesAllBranches(page, elements, sortBy, sortDirection);
+        return service.getLastAccountingRegistriesAllBranches(pageable);
     }
 
     @GetMapping("/{branchId}")
@@ -37,12 +37,9 @@ public class AccountingController {
     @GetMapping("/by-page")
     public Page<AccountingDto> getgetLatestAccountingRegistriesByPage(
             @RequestParam Integer branchId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "acs") String sortDirection
+            @PageableDefault(size = 12, sort = "date", direction = Sort.Direction.DESC) Pageable pageable
     ){
-        return service.getLastAccountingRegistriesByPage(page, elements, sortBy, sortDirection, branchId);
+        return service.getLastAccountingRegistriesByPage(pageable, branchId);
     }
 
     @GetMapping("/account/{accountingId}")
@@ -57,12 +54,9 @@ public class AccountingController {
             @RequestParam LocalDateTime initial,
             @RequestParam LocalDateTime end,
             @RequestParam Integer branchId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "acs") String sortDirection
+            @PageableDefault(size = 12, sort = "date") Pageable pageable
             ){
-        return service.getAccountingRegistriesBetweenTwoDates(page, elements, sortBy, sortDirection, initial, end, branchId);
+        return service.getAccountingRegistriesBetweenTwoDates(pageable, initial, end, branchId);
     }
 
     @PostMapping

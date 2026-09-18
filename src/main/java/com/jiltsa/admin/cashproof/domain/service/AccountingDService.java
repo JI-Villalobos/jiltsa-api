@@ -8,9 +8,7 @@ import com.jiltsa.admin.cashproof.persistence.mapper.AccountingMapper;
 import com.jiltsa.admin.cashproof.persistence.repository.AccountingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +28,9 @@ public class AccountingDService {
         return mapper.toAccountingDtoList(repository.findByBranchIdAndDateAfterOrderByDateAsc(branchId, date));
     }
 
-    public Page<AccountingDto> getLastAccountingRegistriesAllBranches( int page, int elements, String sortBy, String sortDirection) {
+    public Page<AccountingDto> getLastAccountingRegistriesAllBranches(Pageable pageable) {
         LocalDateTime date = LocalDateTime.now().minusDays(4);
-        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements, sort);
-        return mapper.toAccountingDtoPage(repository.findByDateAfterOrderByDateAsc(pageRequest, date));
+        return mapper.toAccountingDtoPage(repository.findByDateAfter(pageable, date));
     }
 
     public Optional<AccountingDto> getAccounting(Integer accountingId) {
@@ -42,19 +38,14 @@ public class AccountingDService {
     }
 
     public Page<AccountingDto> getAccountingRegistriesBetweenTwoDates(
-            int page, int elements, String sortBy, String sortDirection,
-            LocalDateTime start, LocalDateTime end, Integer branchId
+            Pageable pageable, LocalDateTime start, LocalDateTime end, Integer branchId
     ) {
-        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements, sort);
-        return mapper.toAccountingDtoPage(repository.findByDateBetweenAndBranchIdOrderByDateAsc(pageRequest, start, end, branchId));
+        return mapper.toAccountingDtoPage(repository.findByDateBetweenAndBranchId(pageable, start, end, branchId));
     }
 
-    public Page<AccountingDto> getLastAccountingRegistriesByPage(int page, int elements, String sortBy, String sortDirection, Integer branchId) {
+    public Page<AccountingDto> getLastAccountingRegistriesByPage(Pageable pageable, Integer branchId) {
         LocalDateTime date = LocalDateTime.now().minusDays(4);
-        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements, sort);
-        return mapper.toAccountingDtoPage(repository.findByBranchIdAndDateAfterOrderByDateDesc(pageRequest, branchId, date));
+        return mapper.toAccountingDtoPage(repository.findByBranchIdAndDateAfter(pageable, branchId, date));
     }
 
     @Transactional

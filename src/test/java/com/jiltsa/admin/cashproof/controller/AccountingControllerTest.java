@@ -24,6 +24,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,5 +78,44 @@ class AccountingControllerTest {
 
         // 1 for the accountings + 1 batched select per collection, regardless of row count
         assertThat(statistics.getPrepareStatementCount()).isLessThanOrEqualTo(3);
+    }
+
+    @Test
+    @WithMockUser
+    void legacyPagingParametersAreHonoured() throws Exception {
+        mockMvc.perform(get("/jiltsa/api/v1/accounts/range")
+                        .param("initial", LocalDateTime.now().minusDays(1).toString())
+                        .param("end", LocalDateTime.now().plusDays(1).toString())
+                        .param("branchId", String.valueOf(BRANCH_ID))
+                        .param("page", "0").param("elements", "2")
+                        .param("sortBy", "date").param("sortDirection", "desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(ACCOUNTINGS))
+                .andExpect(jsonPath("$.pageable.pageSize").value(2))
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.content[0].date").value(greaterThan(dateOf(1))));
+    }
+
+    @Test
+    @WithMockUser
+    void pagingDefaultsToTwelveAscendingByDate() throws Exception {
+        mockMvc.perform(get("/jiltsa/api/v1/accounts/range")
+                        .param("initial", LocalDateTime.now().minusDays(1).toString())
+                        .param("end", LocalDateTime.now().plusDays(1).toString())
+                        .param("branchId", String.valueOf(BRANCH_ID)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pageable.pageSize").value(12))
+                .andExpect(jsonPath("$.content[0].date").value(lessThan(dateOf(1))));
+    }
+
+    /** ISO date of the second seeded accounting; dates serialize as ISO strings so they compare lexically. */
+    private String dateOf(int index) throws Exception {
+        String body = mockMvc.perform(get("/jiltsa/api/v1/accounts/range")
+                        .param("initial", LocalDateTime.now().minusDays(1).toString())
+                        .param("end", LocalDateTime.now().plusDays(1).toString())
+                        .param("branchId", String.valueOf(BRANCH_ID))
+                        .param("elements", "10"))
+                .andReturn().getResponse().getContentAsString();
+        return com.jayway.jsonpath.JsonPath.read(body, "$.content[" + index + "].date");
     }
 }

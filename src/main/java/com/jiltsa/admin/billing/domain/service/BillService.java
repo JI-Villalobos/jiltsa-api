@@ -6,9 +6,7 @@ import com.jiltsa.admin.billing.persistence.mapper.BillMapper;
 import com.jiltsa.admin.billing.persistence.repository.BillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,29 +21,20 @@ public class BillService {
     private final BillRepository repository;
     private final BillMapper mapper;
 
-    public Page<BillDto> getAllBills(int page, int elements) {
-        Pageable pageRequest = PageRequest.of(page, elements);
-        return mapper.toBillDtoPage(repository.findAll(pageRequest));
+    public Page<BillDto> getAllBills(Pageable pageable) {
+        return mapper.toBillDtoPage(repository.findAll(pageable));
     }
 
-    public Page<BillDto> getPendingBills(int page, int elements, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements, sort);
-        return mapper.toBillDtoPage(repository.findByIsPaidFalse(pageRequest));
+    public Page<BillDto> getPendingBills(Pageable pageable) {
+        return mapper.toBillDtoPage(repository.findByIsPaidFalse(pageable));
     }
 
-    public Page<BillDto> getBillsAfterADate(int page, int elements, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements, sort);
-
-        return mapper.toBillDtoPage(repository.findByDateAfter(pageRequest, LocalDateTime.now().minusMonths(4)));
+    public Page<BillDto> getBillsAfterADate(Pageable pageable) {
+        return mapper.toBillDtoPage(repository.findByDateAfter(pageable, LocalDateTime.now().minusMonths(4)));
     }
 
-    public Page<BillDto> getBillsBetweenDates(int page, int elements, String sortBy, String sortDirection, LocalDateTime start, LocalDateTime finish) {
-        Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
-        Pageable pageRequest = PageRequest.of(page, elements, sort);
-
-        return mapper.toBillDtoPage(repository.findByDateBetween(pageRequest, start, finish));
+    public Page<BillDto> getBillsBetweenDates(Pageable pageable, LocalDateTime start, LocalDateTime finish) {
+        return mapper.toBillDtoPage(repository.findByDateBetween(pageable, start, finish));
     }
 
     public Optional<BillDto> getBill(Integer id) {

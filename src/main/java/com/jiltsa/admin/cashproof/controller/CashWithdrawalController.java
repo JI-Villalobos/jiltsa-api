@@ -7,6 +7,8 @@ import com.jiltsa.admin.cashproof.domain.service.CashWithdrawalService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,12 +32,9 @@ public class CashWithdrawalController {
 
     @GetMapping("/last-month/{branch}")
     public Page<CashWithdrawalDto> getLatestMonthRegistries(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "acs") String sortDirection,
+            @PageableDefault(size = 15, sort = "date") Pageable pageable,
             @PathVariable("branch") String branch){
-        return service.getLatestMonthRegistries(page, elements, sortBy, sortDirection, branch);
+        return service.getLatestMonthRegistries(pageable, branch);
     }
 
     @GetMapping("/current/{branch}")
@@ -45,27 +44,21 @@ public class CashWithdrawalController {
 
     @GetMapping("/latest/{branch}/{start}/to/{finish}/{tag}")
     public Page<CashWithdrawalDto> getRegistriesByTagAndDate(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "acs") String sortDirection,
+            @PageableDefault(size = 15, sort = "date") Pageable pageable,
             @PathVariable("branch") String branch,
             @PathVariable("start") LocalDateTime start,
             @PathVariable("finish") LocalDateTime finish,
             @PathVariable("tag") String concept){
-        return service.getRegistriesByTagAndDate(page, elements, sortBy, sortDirection, branch, concept, start, finish);
+        return service.getRegistriesByTagAndDate(pageable, branch, concept, start, finish);
     }
 
     @GetMapping("/{branch}/since/{start}/to/{finish}")
     public Page<CashWithdrawalDto> getRegistriesByDate(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int elements,
-            @RequestParam(defaultValue = "date") String sortBy,
-            @RequestParam(defaultValue = "acs") String sortDirection,
+            @PageableDefault(size = 15, sort = "date") Pageable pageable,
             @PathVariable("branch") String branch,
             @PathVariable("start") LocalDateTime start,
             @PathVariable("finish") LocalDateTime finish){
-        return service.getRegistriesByDateBetween(page, elements, sortBy, sortDirection, branch, start, finish);
+        return service.getRegistriesByDateBetween(pageable, branch, start, finish);
     }
 
     @GetMapping("/{cashId}")

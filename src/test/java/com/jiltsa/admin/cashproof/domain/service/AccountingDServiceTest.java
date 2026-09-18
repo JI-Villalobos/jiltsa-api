@@ -11,9 +11,6 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -43,22 +40,6 @@ class AccountingDServiceTest {
         ArgumentCaptor<LocalDateTime> since = ArgumentCaptor.forClass(LocalDateTime.class);
         verify(repository).findByBranchIdAndDateAfterOrderByDateAsc(eq(1), since.capture());
         assertThat(since.getValue()).isCloseTo(LocalDateTime.now().minusDays(7), within(1, ChronoUnit.MINUTES));
-    }
-
-    @Test
-    void rangeQueryBuildsThePageRequestFromTheParameters() {
-        LocalDateTime start = LocalDateTime.now().minusMonths(1);
-        LocalDateTime end = LocalDateTime.now();
-        when(repository.findByDateBetweenAndBranchIdOrderByDateAsc(any(), eq(start), eq(end), eq(1))).thenReturn(Page.empty());
-
-        serviceUnderTest.getAccountingRegistriesBetweenTwoDates(2, 5, "date", "ASC", start, end, 1);
-
-        ArgumentCaptor<Pageable> pageable = ArgumentCaptor.forClass(Pageable.class);
-        verify(repository).findByDateBetweenAndBranchIdOrderByDateAsc(pageable.capture(), eq(start), eq(end), eq(1));
-        assertThat(pageable.getValue().getPageNumber()).isEqualTo(2);
-        assertThat(pageable.getValue().getPageSize()).isEqualTo(5);
-        assertThat(pageable.getValue().getSort().getOrderFor("date")).isNotNull()
-                .extracting(Sort.Order::getDirection).isEqualTo(Sort.Direction.ASC);
     }
 
     @Test
