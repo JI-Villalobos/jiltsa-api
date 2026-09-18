@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 // Role rules live on the controllers (@AdminOnly); here only anonymous vs authenticated
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/jiltsa/api/v1/auth/authenticate").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                 // Missing or invalid token -> 401; role denials are 403 (see GlobalExceptionHandler)
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

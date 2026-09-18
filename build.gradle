@@ -35,6 +35,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-mysql'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 
@@ -64,6 +65,11 @@ dependencies {
 		// Testcontainers 1.21.x still ships commons-compress 1.24.0 (CVE-2024-25710, CVE-2024-26308)
 		testImplementation 'org.apache.commons:commons-compress:1.28.0'
 	}
+}
+
+// META-INF/build-info.properties, so the API docs report the artifact version
+springBoot {
+	buildInfo()
 }
 
 tasks.named('test') {
