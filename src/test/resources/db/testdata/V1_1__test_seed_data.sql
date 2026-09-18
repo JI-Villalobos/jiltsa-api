@@ -26,3 +26,11 @@ INSERT INTO `expense_type` (`id`, `type`) VALUES
 INSERT INTO `income_type` (`id`, `type`) VALUES
 (1, 'PRONTIPAGOS'),
 (2, 'MEDICAMENTO');
+
+-- Rows written while enums were still stored by ordinal (converted to names by V3):
+-- profile 2 = NURSERY, check_type 1 = CHECK_OUT
+INSERT INTO `branch_config` (`id`, `branch_id`, `initial_balance`, `can_edit_account`, `can_open_outdated_account`, `profile`) VALUES
+(1, 3, 500.0, b'1', b'0', 2);
+
+INSERT INTO `check_list` (`id`, `accounting_id`, `cash_balance`, `cellphone_charge`, `cellphone_condition`, `check_type`, `date`, `furniture_clean_conditions`, `installation_state`, `seller_id`, `tranbox_balance`) VALUES
+(1000, 1, 100.0, 80, b'1', 1, '2023-06-05', 1, b'1', 1, 50.0);

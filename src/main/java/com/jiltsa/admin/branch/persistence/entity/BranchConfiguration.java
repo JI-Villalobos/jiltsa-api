@@ -37,6 +37,7 @@ public class BranchConfiguration {
 
     @NotNull
     @Column(name = "profile")
+    @Enumerated(EnumType.STRING)
     private Profile profile;
 
     @Column(name = "modified_date")

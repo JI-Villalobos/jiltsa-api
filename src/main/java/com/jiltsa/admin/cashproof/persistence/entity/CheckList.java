@@ -23,6 +23,7 @@ public class CheckList {
     private Integer id;
 
     @Column(name = "check_type")
+    @Enumerated(EnumType.STRING)
     @NotNull
     private CheckType checkType;
 
