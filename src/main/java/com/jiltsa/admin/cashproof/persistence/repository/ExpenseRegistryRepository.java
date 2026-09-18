@@ -39,12 +39,13 @@ public interface ExpenseRegistryRepository extends JpaRepository<ExpenseRegistry
         JOIN er.accounting a
         JOIN er.expenseType et
         WHERE a.date BETWEEN :initial AND :end
-          AND er.expenseTypeId = 6
+          AND er.expenseTypeId = :expenseTypeId
           AND a.branchId = :branchId
         GROUP BY et.type, a.branchId, er.expenseTypeId
     """)
-    List<ExpenseResult> getPharmacyExpenseReport(
+    List<ExpenseResult> getExpenseReportByType(
             @Param("branchId") Integer branchId,
+            @Param("expenseTypeId") Integer expenseTypeId,
             @Param("initial") LocalDateTime initialDate,
             @Param("end")      LocalDateTime finalDate
     );

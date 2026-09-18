@@ -18,6 +18,7 @@ USER app
 
 # The app listens on $PORT (default 8080). Required at run time:
 #   JLTS_DATASOURCE_URL, JLTS_DATASOURCE_USERNAME, JLTS_DATASOURCE_PASSWORD, JWT_KEY
-# Optional: JWT_EXPIRATION (default 30d), APP_CORS_ALLOWED_ORIGINS (default *)
+# Optional: JWT_EXPIRATION (default 30d), APP_CORS_ALLOWED_ORIGINS (default *),
+#   APP_PHARMACY_EXPENSE_TYPE_ID (default 6), APP_PHARMACY_OPERATIVE_EXPENSE_CATEGORY
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/jiltsa-admin.jar"]

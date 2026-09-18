@@ -45,7 +45,7 @@ public class ExpenseRegistryService {
         return mapper.toExpenseReportDtoList(repository.getExpenseReport(branchId, initialDate, finalDate));
     }
 
-    public List<ExpenseReportDto> getPharmacyExpenseReport(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate) {
-        return mapper.toExpenseReportDtoList(repository.getPharmacyExpenseReport(branchId, initialDate, finalDate));
+    public List<ExpenseReportDto> getExpenseReportByType(Integer branchId, Integer expenseTypeId, LocalDateTime initialDate, LocalDateTime finalDate) {
+        return mapper.toExpenseReportDtoList(repository.getExpenseReportByType(branchId, expenseTypeId, initialDate, finalDate));
     }
 }
