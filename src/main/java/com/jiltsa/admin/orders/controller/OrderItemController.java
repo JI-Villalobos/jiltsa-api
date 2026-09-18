@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import com.jiltsa.admin.orders.domain.dto.OrderItemDto;
 import com.jiltsa.admin.orders.domain.service.OrderItemService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class OrderItemController {
         return service.saveOrderItemDtoList(itemDtoList);
     }
 
+    @AdminOnly
     @DeleteMapping("/{itemId}")
     public void deleteItem(@PathVariable("itemId") Integer itemId){
         service.deleteOrderItem(itemId);

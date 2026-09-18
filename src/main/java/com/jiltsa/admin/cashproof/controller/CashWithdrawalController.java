@@ -5,6 +5,7 @@ import com.jiltsa.admin.cashproof.domain.dto.CashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateCashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.service.CashWithdrawalService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,6 +73,7 @@ public class CashWithdrawalController {
         return service.updateCashWithdrawal(cashWithdrawalDto);
     }
 
+    @AdminOnly
     @DeleteMapping("/{cashId}")
     public void deleteCashWithdrawal(@PathVariable("cashId") Integer cashId){
         service.deleteCashWithdrawal(cashId);

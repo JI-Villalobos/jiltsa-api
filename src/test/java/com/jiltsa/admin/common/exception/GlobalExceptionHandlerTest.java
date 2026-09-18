@@ -42,10 +42,16 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void malformedBearerTokenIsRejectedWithoutServerError() throws Exception {
+    void malformedBearerTokenIsUnauthorized() throws Exception {
         mockMvc.perform(get("/jiltsa/api/v1/branches")
                         .header("Authorization", "Bearer not.a.jwt"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void missingTokenIsUnauthorized() throws Exception {
+        mockMvc.perform(get("/jiltsa/api/v1/branches"))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test

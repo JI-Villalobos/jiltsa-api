@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.CreateIncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.dto.IncomeRegistryDto;
 import com.jiltsa.admin.cashproof.domain.service.IncomeRegistryService;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class IncomeRegistryController {
         return service.createIncomesRegistry(incomes);
     }
 
+    @AdminOnly
     @DeleteMapping("/{incomeRegistryId}")
     public void deleteIncomeRegistry(@PathVariable Integer incomeRegistryId){
         service.deleteIncomeRegistry(incomeRegistryId);

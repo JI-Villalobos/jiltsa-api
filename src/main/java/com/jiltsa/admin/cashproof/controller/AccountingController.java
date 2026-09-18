@@ -6,6 +6,7 @@ import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
 import com.jiltsa.admin.cashproof.domain.service.AccountingDService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,6 +70,7 @@ public class AccountingController {
         return service.createOutOfDateAccounting(customAccountingDto);
     }
 
+    @AdminOnly
     @DeleteMapping("/account/{accountingId}")
     public void deleteAccounting(@PathVariable("accountingId") Integer accountingId){
         service.deleteAccounting(accountingId);

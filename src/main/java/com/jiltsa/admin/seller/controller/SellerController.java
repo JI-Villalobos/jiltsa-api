@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
 import com.jiltsa.admin.seller.domain.service.SellerDService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,13 @@ public class SellerController {
     public List<SellerDto> getSellersByBranch(@PathVariable("branchId") Integer id){
         return service.getSellersByBranch(id);
     }
+    @AdminOnly
     @PostMapping
     public SellerDto newSeller(@Valid @RequestBody SellerDto sellerDto){
         return service.newSeller(sellerDto);
     }
 
+    @AdminOnly
     @PatchMapping("/{sellerId}")
     public SellerDto disableSeller(@PathVariable("sellerId") Integer id){
         return service.disableSeller(id);

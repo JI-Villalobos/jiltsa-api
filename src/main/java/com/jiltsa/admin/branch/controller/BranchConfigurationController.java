@@ -5,6 +5,7 @@ import com.jiltsa.admin.branch.domain.dto.BranchConfigurationDto;
 import com.jiltsa.admin.branch.domain.service.BranchConfigurationService;
 import com.jiltsa.admin.branch.persistence.entity.Profile;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +22,13 @@ public class BranchConfigurationController {
         return service.getAllConfiguration();
     }
 
+    @AdminOnly
     @PostMapping
     public BranchConfigurationDto createBranchConfiguration(@Valid @RequestBody BranchConfigurationDto branchConfigurationDto){
         return service.createBranchConfiguration(branchConfigurationDto);
     }
 
+    @AdminOnly
     @PutMapping()
     public BranchConfigurationDto updateBranchConfiguration(@Valid @RequestBody BranchConfigurationDto branchConfigurationDto){
         return service.updateBranchConfiguration(branchConfigurationDto);

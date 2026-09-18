@@ -5,6 +5,7 @@ import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.domain.service.BranchDService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class BranchController{
         return service.getById(branchId)
                 .orElseThrow(() -> new ResourceNotFoundException("Branch", branchId));
     }
+    @AdminOnly
     @PostMapping
     public BranchDto createBranch(@Valid @RequestBody BranchDto branchDto){
         return service.createBranch(branchDto);
