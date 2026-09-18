@@ -58,6 +58,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:mysql'
+	testImplementation 'com.tngtech.archunit:archunit-junit5:1.4.1'
 
 	constraints {
 		// Testcontainers 1.21.x still ships commons-compress 1.24.0 (CVE-2024-25710, CVE-2024-26308)
