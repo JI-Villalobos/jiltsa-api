@@ -2,7 +2,7 @@ package com.jiltsa.admin.seller.controller;
 
 import jakarta.validation.Valid;
 import com.jiltsa.admin.seller.domain.dto.SellerDto;
-import com.jiltsa.admin.seller.domain.service.SellerDService;
+import com.jiltsa.admin.seller.domain.service.SellerService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin
 public class SellerController {
-    private final SellerDService service;
+    private final SellerService service;
 
     @GetMapping
     public List<SellerDto> getSellers(){
@@ -27,8 +27,8 @@ public class SellerController {
     }
     @AdminOnly
     @PostMapping
-    public SellerDto newSeller(@Valid @RequestBody SellerDto sellerDto){
-        return service.newSeller(sellerDto);
+    public SellerDto createSeller(@Valid @RequestBody SellerDto sellerDto){
+        return service.createSeller(sellerDto);
     }
 
     @AdminOnly

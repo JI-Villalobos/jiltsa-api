@@ -15,12 +15,12 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class BranchDService {
+public class BranchService {
     private final BranchRepository repository;
     private final BranchMapper mapper;
 
     public List<BranchDto> getAll() {
-        return mapper.toBranchesDto(repository.findAll());
+        return mapper.toBranchDtoList(repository.findAll());
     }
 
     public Optional<BranchDto> getById(Integer branchId) {

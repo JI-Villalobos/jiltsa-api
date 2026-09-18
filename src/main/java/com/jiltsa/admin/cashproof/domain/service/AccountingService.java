@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class AccountingDService {
+public class AccountingService {
     private final AccountingRepository repository;
     private final AccountingMapper mapper;
 

@@ -34,7 +34,7 @@ public class BillController {
     @GetMapping("/after")
     public Page<BillDto> getBills(
             @PageableDefault(size = 12, sort = "date") Pageable pageable){
-        return service.getBillsAfterADate(pageable);
+        return service.getRecentBills(pageable);
     }
 
     @GetMapping("/between")

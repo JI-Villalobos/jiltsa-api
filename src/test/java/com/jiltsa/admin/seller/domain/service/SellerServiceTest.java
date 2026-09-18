@@ -26,11 +26,11 @@ import static org.mockito.Mockito.when;
 class SellerServiceTest {
     @Mock
     private SellerRepository repository;
-    private SellerDService serviceUnderTest;
+    private SellerService serviceUnderTest;
 
     @BeforeEach
     void setUp() {
-        serviceUnderTest = new SellerDService(repository, Mappers.getMapper(SellerMapper.class));
+        serviceUnderTest = new SellerService(repository, Mappers.getMapper(SellerMapper.class));
     }
 
     @Test
@@ -43,10 +43,10 @@ class SellerServiceTest {
     }
 
     @Test
-    void newSellerKeepsTheDefaultPassword() {
+    void createSellerKeepsTheDefaultPassword() {
         when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        serviceUnderTest.newSeller(new SellerDto(null, "Diana Path", 3, true));
+        serviceUnderTest.createSeller(new SellerDto(null, "Diana Path", 3, true));
 
         ArgumentCaptor<Seller> saved = ArgumentCaptor.forClass(Seller.class);
         verify(repository).save(saved.capture());

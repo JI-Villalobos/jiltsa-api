@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface SellerMapper {
     SellerDto toSellerDto(Seller seller);
-    List<SellerDto> toSellersDto(List<Seller> sellers);
+    List<SellerDto> toSellerDtoList(List<Seller> sellers);
 
     @InheritInverseConfiguration
     @Mappings({

@@ -44,17 +44,17 @@ public class CashWithdrawalService {
 
     public Page<CashWithdrawalDto> getLatestMonthRegistries(Pageable pageable, String branch) {
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
-        return mapper.toCashwithdrawalPage(repository.findByBranchAndDateBetween(branch, start, LocalDateTime.now(), pageable));
+        return mapper.toCashWithdrawalDtoPage(repository.findByBranchAndDateBetween(branch, start, LocalDateTime.now(), pageable));
     }
 
     public Page<CashWithdrawalDto> getRegistriesByTagAndDate(Pageable pageable, String branch, String concept, LocalDateTime start,
                                                                     LocalDateTime finish) {
-        return mapper.toCashwithdrawalPage(repository.findByBranchAndConceptContainingAndDateBetween(
+        return mapper.toCashWithdrawalDtoPage(repository.findByBranchAndConceptContainingAndDateBetween(
                 branch, concept, start, finish, pageable));
     }
 
     public Page<CashWithdrawalDto> getRegistriesByDateBetween(Pageable pageable, String branch, LocalDateTime start, LocalDateTime finish) {
-        return mapper.toCashwithdrawalPage(repository.findByBranchAndDateBetween(branch, start, finish, pageable));
+        return mapper.toCashWithdrawalDtoPage(repository.findByBranchAndDateBetween(branch, start, finish, pageable));
     }
 
     public Optional<CashWithdrawalDto> getCashWithdrawal(Integer cashWithdrawalId) {

@@ -30,7 +30,7 @@ class BranchMapperTest {
 
     @Test
     @Disabled
-    void toBranchesDto() {
+    void toBranchDtoList() {
     }
 
     @Test
@@ -50,6 +50,6 @@ class BranchMapperTest {
 
     @Test
     @Disabled
-    void toBranches() {
+    void toBranchList() {
     }
 }

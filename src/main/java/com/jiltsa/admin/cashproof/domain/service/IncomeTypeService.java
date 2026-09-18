@@ -18,7 +18,7 @@ public class IncomeTypeService {
     private final IncomeTypeMapper mapper;
 
     public List<IncomeTypeDto> getIncomeTypes() {
-        return mapper.incomeTypeDtoList(repository.findAll());
+        return mapper.toIncomeTypeDtoList(repository.findAll());
     }
 
     @Transactional

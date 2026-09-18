@@ -27,7 +27,7 @@ public class CashWithdrawalController {
     }
 
     @PostMapping
-    public CreateCashWithdrawalDto createCashWithdrawalDto(@Valid @RequestBody CreateCashWithdrawalDto createCashWithdrawalDto){
+    public CreateCashWithdrawalDto createCashWithdrawal(@Valid @RequestBody CreateCashWithdrawalDto createCashWithdrawalDto){
         return service.createCashWithdrawal(createCashWithdrawalDto);
     }
 

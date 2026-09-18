@@ -29,7 +29,7 @@ public class BillService {
         return mapper.toBillDtoPage(repository.findByIsPaidFalse(pageable));
     }
 
-    public Page<BillDto> getBillsAfterADate(Pageable pageable) {
+    public Page<BillDto> getRecentBills(Pageable pageable) {
         return mapper.toBillDtoPage(repository.findByDateAfter(pageable, LocalDateTime.now().minusMonths(4)));
     }
 

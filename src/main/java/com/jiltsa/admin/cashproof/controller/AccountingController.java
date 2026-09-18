@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import com.jiltsa.admin.cashproof.domain.dto.AccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CreateAccountingDto;
 import com.jiltsa.admin.cashproof.domain.dto.CustomAccountingDto;
-import com.jiltsa.admin.cashproof.domain.service.AccountingDService;
+import com.jiltsa.admin.cashproof.domain.service.AccountingService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping("jiltsa/api/v1/accounts")
 @RequiredArgsConstructor
 public class AccountingController {
-    private final AccountingDService service;
+    private final AccountingService service;
 
     @GetMapping
-    public Page<AccountingDto> getLastesAccountingRegitriesAllBranches(
+    public Page<AccountingDto> getLatestAccountingRegistriesAllBranches(
             @PageableDefault(size = 12, sort = "date") Pageable pageable
     ){
         return service.getLastAccountingRegistriesAllBranches(pageable);
@@ -36,7 +36,7 @@ public class AccountingController {
     }
 
     @GetMapping("/by-page")
-    public Page<AccountingDto> getgetLatestAccountingRegistriesByPage(
+    public Page<AccountingDto> getLatestAccountingRegistriesByPage(
             @RequestParam Integer branchId,
             @PageableDefault(size = 12, sort = "date", direction = Sort.Direction.DESC) Pageable pageable
     ){

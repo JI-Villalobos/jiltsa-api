@@ -6,7 +6,7 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface BreakEventPointMapper {
+public interface BreakEvenPointMapper {
     BreakEvenPointDto toBreakEvenPointDto(BreakEvenPoint breakEvenPoint);
 
     @InheritInverseConfiguration

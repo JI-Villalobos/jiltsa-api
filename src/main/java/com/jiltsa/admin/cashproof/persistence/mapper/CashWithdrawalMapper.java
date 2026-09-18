@@ -14,7 +14,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CashWithdrawalMapper {
-    default Page<CashWithdrawalDto> toCashwithdrawalPage(Page<CashWithdrawal> cashWithdrawals){
+    default Page<CashWithdrawalDto> toCashWithdrawalDtoPage(Page<CashWithdrawal> cashWithdrawals){
         return cashWithdrawals.map(this::toCashWithdrawalDto);
     }
     CashWithdrawalDto toCashWithdrawalDto(CashWithdrawal cashWithdrawal);

@@ -2,7 +2,7 @@ package com.jiltsa.admin.operativity.controller;
 
 import jakarta.validation.Valid;
 import com.jiltsa.admin.operativity.domain.dto.BreakEvenPointDto;
-import com.jiltsa.admin.operativity.domain.service.BreakEventPointService;
+import com.jiltsa.admin.operativity.domain.service.BreakEvenPointService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("jiltsa/api/v1/bep")
 @RequiredArgsConstructor
 public class BreakEvenPointController {
-    private final BreakEventPointService service;
+    private final BreakEvenPointService service;
 
     @PostMapping
     public BreakEvenPointDto saveBEP(@Valid @RequestBody BreakEvenPointDto breakEvenPointDto){
@@ -26,7 +26,7 @@ public class BreakEvenPointController {
 
     @GetMapping("/branch/{branchId}")
     public BreakEvenPointDto getBEP(@PathVariable("branchId") Integer branchId){
-        return service.getBreakEvenPointDto(branchId)
+        return service.getBreakEvenPoint(branchId)
                 .orElseThrow(() -> new ResourceNotFoundException("BreakEvenPoint", branchId));
     }
 }

@@ -15,20 +15,20 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class SellerDService {
+public class SellerService {
     private final SellerRepository repository;
     private final SellerMapper mapper;
 
     public List<SellerDto> getAllSellers() {
-        return mapper.toSellersDto(repository.findByIsActiveTrue());
+        return mapper.toSellerDtoList(repository.findByIsActiveTrue());
     }
 
     public List<SellerDto> getSellersByBranch(Integer branchId) {
-        return mapper.toSellersDto(repository.findByBranchIdAndIsActiveTrue(branchId));
+        return mapper.toSellerDtoList(repository.findByBranchIdAndIsActiveTrue(branchId));
     }
 
     @Transactional
-    public SellerDto newSeller(SellerDto sellerDto) {
+    public SellerDto createSeller(SellerDto sellerDto) {
         Seller seller = mapper.toSeller(sellerDto);
         return mapper.toSellerDto(repository.save(seller));
     }

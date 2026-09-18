@@ -2,8 +2,8 @@ package com.jiltsa.admin.operativity.domain.service;
 
 import com.jiltsa.admin.operativity.domain.dto.BreakEvenPointDto;
 import com.jiltsa.admin.operativity.persistence.entity.BreakEvenPoint;
-import com.jiltsa.admin.operativity.persistence.mapper.BreakEventPointMapper;
-import com.jiltsa.admin.operativity.persistence.repository.BreakEventPointRepository;
+import com.jiltsa.admin.operativity.persistence.mapper.BreakEvenPointMapper;
+import com.jiltsa.admin.operativity.persistence.repository.BreakEvenPointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +13,9 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class BreakEventPointService {
-    private final BreakEventPointRepository breakEventPointRepository;
-    private final BreakEventPointMapper mapper;
+public class BreakEvenPointService {
+    private final BreakEvenPointRepository breakEventPointRepository;
+    private final BreakEvenPointMapper mapper;
 
     @Transactional
     public BreakEvenPointDto saveBEP(BreakEvenPointDto breakEvenPointDto){
@@ -24,7 +24,7 @@ public class BreakEventPointService {
         return mapper.toBreakEvenPointDto(breakEventPointRepository.save(breakEvenPoint));
     }
 
-    public Optional<BreakEvenPointDto> getBreakEvenPointDto(Integer branchId){
+    public Optional<BreakEvenPointDto> getBreakEvenPoint(Integer branchId){
         return breakEventPointRepository.findByBranchId(branchId).map(mapper::toBreakEvenPointDto);
     }
 }

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BreakEventPointRepository extends JpaRepository<BreakEvenPoint, Integer> {
+public interface BreakEvenPointRepository extends JpaRepository<BreakEvenPoint, Integer> {
     Optional<BreakEvenPoint> findByBranchId(Integer branchId);
 }

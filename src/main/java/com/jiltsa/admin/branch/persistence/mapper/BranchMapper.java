@@ -11,9 +11,9 @@ import java.util.List;
 public interface BranchMapper {
     BranchDto toBranchDto(Branch branch);
 
-    List<BranchDto> toBranchesDto(List<Branch> branches);
+    List<BranchDto> toBranchDtoList(List<Branch> branches);
 
     @InheritInverseConfiguration
     Branch toBranch(BranchDto branchDto);
-    List<Branch> toBranches(List<BranchDto> branchesDto);
+    List<Branch> toBranchList(List<BranchDto> branchesDto);
 }

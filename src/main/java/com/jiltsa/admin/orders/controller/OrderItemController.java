@@ -29,7 +29,7 @@ public class OrderItemController {
 
     @PostMapping("/save-all")
     public List<OrderItemDto> saveAll(@RequestBody List<@Valid OrderItemDto> itemDtoList){
-        return service.saveOrderItemDtoList(itemDtoList);
+        return service.saveOrderItems(itemDtoList);
     }
 
     @AdminOnly
@@ -45,7 +45,7 @@ public class OrderItemController {
 
     @PutMapping("/update-all")
     public List<OrderItemDto> updateAll(@RequestBody List<@Valid OrderItemDto> itemDtoList){
-        return service.saveOrderItemDtoList(itemDtoList);
+        return service.saveOrderItems(itemDtoList);
     }
 
     @PutMapping("/disable/{orderId}")

@@ -3,7 +3,7 @@ package com.jiltsa.admin.branch.controller;
 import jakarta.validation.Valid;
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
-import com.jiltsa.admin.branch.domain.service.BranchDService;
+import com.jiltsa.admin.branch.domain.service.BranchService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.security.AdminOnly;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("jiltsa/api/v1/branches")
 @RequiredArgsConstructor
 public class BranchController{
-    private final BranchDService service;
+    private final BranchService service;
     @GetMapping
     public List<BranchDto> getBranches(){
         return service.getAll();

@@ -23,14 +23,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AccountingDServiceTest {
+class AccountingServiceTest {
     @Mock
     private AccountingRepository repository;
-    private AccountingDService serviceUnderTest;
+    private AccountingService serviceUnderTest;
 
     @BeforeEach
     void setUp() {
-        serviceUnderTest = new AccountingDService(repository, Mappers.getMapper(AccountingMapper.class));
+        serviceUnderTest = new AccountingService(repository, Mappers.getMapper(AccountingMapper.class));
     }
 
     @Test

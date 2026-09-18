@@ -24,11 +24,11 @@ import static org.mockito.Mockito.when;
 class BranchServiceTest {
     @Mock
     private BranchRepository repository;
-    private BranchDService serviceUnderTest;
+    private BranchService serviceUnderTest;
 
     @BeforeEach
     void setUp() {
-        serviceUnderTest = new BranchDService(repository, Mappers.getMapper(BranchMapper.class));
+        serviceUnderTest = new BranchService(repository, Mappers.getMapper(BranchMapper.class));
     }
 
     @Test

@@ -25,7 +25,7 @@ public class OrderItemService {
     }
 
     @Transactional
-    public List<OrderItemDto> saveOrderItemDtoList(List<OrderItemDto> items) {
+    public List<OrderItemDto> saveOrderItems(List<OrderItemDto> items) {
         List<OrderItem> itemList = mapper.toOrderItemList(items);
         return mapper.toOrderItemDtoList(repository.saveAll(itemList));
     }

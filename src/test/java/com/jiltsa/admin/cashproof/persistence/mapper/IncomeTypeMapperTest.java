@@ -39,10 +39,10 @@ class IncomeTypeMapperTest {
         incomeTypeList.add(incomeType2);
 
         //when
-        List<IncomeTypeDto> incomeTypeDtoList = mapper.incomeTypeDtoList(incomeTypeList);
+        List<IncomeTypeDto> toIncomeTypeDtoList = mapper.toIncomeTypeDtoList(incomeTypeList);
 
         //then
-        assertThat(incomeTypeDtoList.size()).isEqualTo(2);
+        assertThat(toIncomeTypeDtoList.size()).isEqualTo(2);
     }
 
     @Test
