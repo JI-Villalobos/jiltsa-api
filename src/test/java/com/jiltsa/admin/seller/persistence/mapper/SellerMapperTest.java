@@ -17,7 +17,7 @@ class SellerMapperTest {
         //given
         SellerMapper mapper = Mappers.getMapper(SellerMapper.class);
         Branch branch = new Branch();
-        Seller seller = new Seller(1, "Diana Path", 1, "1234", true, branch);
+        Seller seller = new Seller(1, "Diana Path", 1, true, branch);
 
         //when
         SellerDto sellerDto = mapper.toSellerDto(seller);
@@ -32,7 +32,6 @@ class SellerMapperTest {
         //given
         SellerMapper mapper = Mappers.getMapper(SellerMapper.class);
         SellerDto sellerDto = new SellerDto(1, "Diana Path", 1, true);
-        String defaultPass = "1234";
 
         //when
         Seller seller = mapper.toSeller(sellerDto);
@@ -43,6 +42,5 @@ class SellerMapperTest {
         assertThat(seller.getFullName()).isEqualTo("Diana Path");
         assertThat(seller.getBranchId()).isEqualTo(1);
         assertThat(seller.getIsActive()).isTrue();
-        assertThat(seller.getPassword()).isEqualTo(defaultPass);
     }
 }

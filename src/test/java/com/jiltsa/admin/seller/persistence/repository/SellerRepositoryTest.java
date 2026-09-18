@@ -24,9 +24,9 @@ class SellerRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Seller seller = new Seller("Diana Path", 1, "1234", true);
-        Seller seller2 = new Seller("Diana Path", 1, "1234", false);
-        Seller seller3 = new Seller("Diana Path", 1, "1234", true);
+        Seller seller = new Seller("Diana Path", 1, true);
+        Seller seller2 = new Seller("Diana Path", 1, false);
+        Seller seller3 = new Seller("Diana Path", 1, true);
 
         sellerRepositoryUnderTest.save(seller);
         sellerRepositoryUnderTest.save(seller2);

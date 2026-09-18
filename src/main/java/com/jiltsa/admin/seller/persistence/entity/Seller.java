@@ -24,7 +24,6 @@ public class Seller {
     @Column(name = "branch_id")
     @NotNull
     private Integer branchId;
-    private String password = "1234";
     @NotNull
     @Column(name = "is_active")
     private Boolean isActive;
@@ -33,10 +32,9 @@ public class Seller {
     @JoinColumn(name = "branch_id", insertable = false, updatable = false)
     private Branch branch;
 
-    public Seller(String fullName, Integer branchId, String password, Boolean isActive) {
+    public Seller(String fullName, Integer branchId, Boolean isActive) {
         this.fullName = fullName;
         this.branchId = branchId;
-        this.password = password;
         this.isActive = isActive;
     }
 }

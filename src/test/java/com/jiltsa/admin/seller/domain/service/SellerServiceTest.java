@@ -35,7 +35,7 @@ class SellerServiceTest {
 
     @Test
     void allSellersOnlyListsActiveOnes() {
-        when(repository.findByIsActiveTrue()).thenReturn(List.of(new Seller("Diana Path", 1, "1234", true)));
+        when(repository.findByIsActiveTrue()).thenReturn(List.of(new Seller("Diana Path", 1, true)));
 
         List<SellerDto> sellers = serviceUnderTest.getAllSellers();
 
@@ -43,7 +43,7 @@ class SellerServiceTest {
     }
 
     @Test
-    void createSellerKeepsTheDefaultPassword() {
+    void createSellerMapsTheDtoOntoTheEntity() {
         when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
         serviceUnderTest.createSeller(new SellerDto(null, "Diana Path", 3, true));
@@ -52,12 +52,12 @@ class SellerServiceTest {
         verify(repository).save(saved.capture());
         assertThat(saved.getValue().getFullName()).isEqualTo("Diana Path");
         assertThat(saved.getValue().getBranchId()).isEqualTo(3);
-        assertThat(saved.getValue().getPassword()).isEqualTo("1234");
+        assertThat(saved.getValue().getIsActive()).isTrue();
     }
 
     @Test
     void disableSellerFlagsTheEntityInactive() {
-        Seller seller = new Seller("Diana Path", 1, "1234", true);
+        Seller seller = new Seller("Diana Path", 1, true);
         when(repository.findById(1)).thenReturn(Optional.of(seller));
         when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
