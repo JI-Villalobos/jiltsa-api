@@ -5,7 +5,8 @@ services:
     image: jiltsa-api:2.0.0
     restart: unless-stopped
     # Same variables run.sh uses: JLTS_DATASOURCE_*, JWT_KEY, PORT (optional, default 8080)
-    # Optional: JWT_EXPIRATION (e.g. 12h), APP_CORS_ALLOWED_ORIGINS (e.g. https://admin.example.com)
+    # Optional: JWT_EXPIRATION (e.g. 12h), APP_CORS_ALLOWED_ORIGINS (required in any real deployment,
+    #   e.g. https://admin.example.com,https://caja.example.com)
     env_file:
       - .env
     ports:

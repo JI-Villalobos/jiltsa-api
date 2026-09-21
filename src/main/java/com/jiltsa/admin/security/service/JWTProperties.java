@@ -9,9 +9,12 @@ import java.time.Duration;
 
 /**
  * {@code jwt.key}: base64-encoded HMAC key of at least 256 bits (env JWT_KEY, required).
- * {@code jwt.expiration}: token lifetime, e.g. 30d, 12h (env JWT_EXPIRATION, default 30 days).
+ * {@code jwt.expiration}: token lifetime, e.g. 12h, 30m (env JWT_EXPIRATION, default 12 hours).
+ * <p>
+ * The token carries no revocation data, so its lifetime is the window a leaked token
+ * stays usable: keep it around one working day, not weeks.
  */
 @Validated
 @ConfigurationProperties("jwt")
-public record JWTProperties(@NotBlank String key, @DefaultValue("30d") Duration expiration) {
+public record JWTProperties(@NotBlank String key, @DefaultValue("12h") Duration expiration) {
 }
