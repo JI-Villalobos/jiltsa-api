@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface SaleRepository extends JpaRepository<Sale, Long> {
+public interface SaleRepository extends JpaRepository<Sale, Long>, SaleBatchRepository {
     List<Sale> findByBranchIdAndTimestampBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
     List<Sale> findByBranchId(Integer branchId);
     List<Sale> findByBranchIdAndTimestampBetweenAndCategoryIn(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate, List<String> categories);
