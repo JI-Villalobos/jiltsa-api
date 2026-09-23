@@ -13,15 +13,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "sales")
+@Table(name = "sales", uniqueConstraints = @UniqueConstraint(name = "uk_sales_branch_ticket_key", columnNames = {"branch_id", "ticket", "key"}))
 public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "branch_id")
+    @Column(name = "branch_id", nullable = false)
     private Integer branchId;
+    @Column(nullable = false)
     private String key;
     private String description;
+    @Column(nullable = false)
     private Long ticket;
     private String category;
     private Integer quantity;
