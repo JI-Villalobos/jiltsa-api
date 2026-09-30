@@ -18,6 +18,7 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.tags.Tag;
 import jakarta.validation.Valid;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springdoc.core.customizers.OperationCustomizer;
@@ -41,6 +42,10 @@ import java.util.Optional;
 /**
  * OpenAPI description at /v3/api-docs, Swagger UI at /swagger-ui.html.
  * Everything except /auth/authenticate needs a bearer JWT; errors are RFC 7807 ProblemDetail.
+ * Controllers document what each operation does, its parameters and its 404/409 cases;
+ * the responses shared by many operations (401, 403, 400) are added here. An operation that
+ * declares an @ApiResponse must also declare its success one (useReturnTypeSchema = true) unless
+ * it has @ResponseStatus, or springdoc leaves the 200 out.
  */
 @Configuration
 public class OpenApiConfig {
@@ -65,6 +70,16 @@ public class OpenApiConfig {
                         .description("Cash proof, billing, orders and operative reports for the Jiltsa branches. "
                                 + "Paginated endpoints take page, elements, sortBy and sortDirection (asc|desc)."))
                 .components(components)
+                .tags(List.of(
+                        tag("billing", "Provider bills, the payments that settle them, and the provider catalog"),
+                        tag("branch", "Branches, their configuration and their cash balance"),
+                        tag("cashproof", "Daily cash proof: accountings, incomes, expenses, withdrawals, "
+                                + "cash sorting, check lists and credit sales"),
+                        tag("operativity", "Operative expenses, break-even point, weekly sale results and expense reports"),
+                        tag("orders", "Orders to providers and their items"),
+                        tag("sales", "POS sale and product uploads, and sales reports"),
+                        tag("security", "Login and user registration"),
+                        tag("seller", "Sellers working at each branch")))
                 .addSecurityItem(new SecurityRequirement().addList(BEARER));
     }
 
@@ -90,6 +105,10 @@ public class OpenApiConfig {
             if (hasValidatedBody(handler)) {
                 responses.addApiResponse("400", problem("Validation failed; detail names the offending field"));
             }
+            // Errors declared with @ApiResponse on a controller (404, 409) carry a ProblemDetail too
+            responses.forEach((code, response) -> {
+                if (code.startsWith("4") || code.startsWith("5")) response.setContent(problemContent());
+            });
             return operation;
         };
     }
@@ -144,7 +163,15 @@ public class OpenApiConfig {
     }
 
     private static ApiResponse problem(String description) {
-        return new ApiResponse().description(description).content(new Content().addMediaType(PROBLEM_JSON,
-                new MediaType().schema(new Schema<>().$ref("#/components/schemas/" + PROBLEM))));
+        return new ApiResponse().description(description).content(problemContent());
+    }
+
+    private static Content problemContent() {
+        return new Content().addMediaType(PROBLEM_JSON,
+                new MediaType().schema(new Schema<>().$ref("#/components/schemas/" + PROBLEM)));
+    }
+
+    private static Tag tag(String name, String description) {
+        return new Tag().name(name).description(description);
     }
 }

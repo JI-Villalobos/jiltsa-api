@@ -6,6 +6,9 @@ import com.jiltsa.admin.cashproof.domain.dto.CreateCashWithdrawalDto;
 import com.jiltsa.admin.cashproof.domain.service.CashWithdrawalService;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import com.jiltsa.admin.security.AdminOnly;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,61 +24,72 @@ import java.util.List;
 public class CashWithdrawalController {
     private final CashWithdrawalService service;
 
+    @Operation(summary = "List all cash withdrawals of a branch")
     @GetMapping("/all/{branch}")
-    public List<CashWithdrawalDto> getCashWithdrawals(@PathVariable("branch") String branch){
+    public List<CashWithdrawalDto> getCashWithdrawals(@Parameter(description = "Branch name") @PathVariable("branch") String branch){
         return service.getCashWithdrawals(branch);
     }
 
+    @Operation(summary = "Register a cash withdrawal", description = "The date is set by the server.")
     @PostMapping
     public CreateCashWithdrawalDto createCashWithdrawal(@Valid @RequestBody CreateCashWithdrawalDto createCashWithdrawalDto){
         return service.createCashWithdrawal(createCashWithdrawalDto);
     }
 
+    @Operation(summary = "List a branch's cash withdrawals from the last month")
     @GetMapping("/last-month/{branch}")
     public Page<CashWithdrawalDto> getLatestMonthRegistries(
             @PageableDefault(size = 15, sort = "date") Pageable pageable,
-            @PathVariable("branch") String branch){
+            @Parameter(description = "Branch name") @PathVariable("branch") String branch){
         return service.getLatestMonthRegistries(pageable, branch);
     }
 
+    @Operation(summary = "List a branch's cash withdrawals from the last 24 hours")
     @GetMapping("/current/{branch}")
-    public List<CashWithdrawalDto> getCurrentRegistries(@PathVariable("branch") String branch){
+    public List<CashWithdrawalDto> getCurrentRegistries(@Parameter(description = "Branch name") @PathVariable("branch") String branch){
         return service.getCurrentCashWithdrawalsRegistries(branch);
     }
 
+    @Operation(summary = "List a branch's cash withdrawals by concept within a date range", description = "Matches withdrawals whose concept contains the tag.")
     @GetMapping("/latest/{branch}/{start}/to/{finish}/{tag}")
     public Page<CashWithdrawalDto> getRegistriesByTagAndDate(
             @PageableDefault(size = 15, sort = "date") Pageable pageable,
-            @PathVariable("branch") String branch,
-            @PathVariable("start") LocalDateTime start,
-            @PathVariable("finish") LocalDateTime finish,
-            @PathVariable("tag") String concept){
+            @Parameter(description = "Branch name") @PathVariable("branch") String branch,
+            @Parameter(description = "Range start", example = "2026-03-01T00:00:00") @PathVariable("start") LocalDateTime start,
+            @Parameter(description = "Range end", example = "2026-03-31T23:59:59") @PathVariable("finish") LocalDateTime finish,
+            @Parameter(description = "Text the concept must contain") @PathVariable("tag") String concept){
         return service.getRegistriesByTagAndDate(pageable, branch, concept, start, finish);
     }
 
+    @Operation(summary = "List a branch's cash withdrawals within a date range")
     @GetMapping("/{branch}/since/{start}/to/{finish}")
     public Page<CashWithdrawalDto> getRegistriesByDate(
             @PageableDefault(size = 15, sort = "date") Pageable pageable,
-            @PathVariable("branch") String branch,
-            @PathVariable("start") LocalDateTime start,
-            @PathVariable("finish") LocalDateTime finish){
+            @Parameter(description = "Branch name") @PathVariable("branch") String branch,
+            @Parameter(description = "Range start", example = "2026-03-01T00:00:00") @PathVariable("start") LocalDateTime start,
+            @Parameter(description = "Range end", example = "2026-03-31T23:59:59") @PathVariable("finish") LocalDateTime finish){
         return service.getRegistriesByDateBetween(pageable, branch, start, finish);
     }
 
+    @Operation(summary = "Get a cash withdrawal")
+    @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
+    @ApiResponse(responseCode = "404", description = "No cash withdrawal with that id")
     @GetMapping("/{cashId}")
-    public CashWithdrawalDto getCashWithdrawal(@PathVariable("cashId") Integer cashId){
+    public CashWithdrawalDto getCashWithdrawal(@Parameter(description = "Cash withdrawal id") @PathVariable("cashId") Integer cashId){
         return service.getCashWithdrawal(cashId)
                 .orElseThrow(() -> new ResourceNotFoundException("CashWithdrawal", cashId));
     }
 
+    @Operation(summary = "Update a cash withdrawal")
     @PutMapping
     public CashWithdrawalDto updateCashWithdrawal(@Valid @RequestBody CashWithdrawalDto cashWithdrawalDto){
         return service.updateCashWithdrawal(cashWithdrawalDto);
     }
 
+    @Operation(summary = "Delete a cash withdrawal")
     @AdminOnly
     @DeleteMapping("/{cashId}")
-    public void deleteCashWithdrawal(@PathVariable("cashId") Integer cashId){
+    public void deleteCashWithdrawal(@Parameter(description = "Cash withdrawal id") @PathVariable("cashId") Integer cashId){
         service.deleteCashWithdrawal(cashId);
     }
 }

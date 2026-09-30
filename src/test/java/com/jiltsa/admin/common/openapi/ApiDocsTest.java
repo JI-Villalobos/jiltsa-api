@@ -1,5 +1,7 @@
 package com.jiltsa.admin.common.openapi;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,6 +10,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,6 +28,8 @@ class ApiDocsTest {
     private static final String DOCS = "/v3/api-docs";
     private static final String RANGE = "$.paths['/jiltsa/api/v1/accounts/range'].get";
     private static final String DELETE_ACCOUNT = "$.paths['/jiltsa/api/v1/accounts/account/{accountingId}'].delete";
+    private static final String GET_ACCOUNT = "$.paths['/jiltsa/api/v1/accounts/account/{accountingId}'].get";
+    private static final String SALES_BATCH = "$.paths['/jiltsa/api/v1/sales/batch'].post";
     private static final String LOGIN = "$.paths['/jiltsa/api/v1/auth/authenticate'].post";
 
     @Autowired
@@ -69,5 +77,37 @@ class ApiDocsTest {
                 .andExpect(jsonPath("$.paths['/jiltsa/api/v1/bills/save-all'].post.responses.400").exists())
                 .andExpect(jsonPath(RANGE + ".responses.200.content['application/json'].schema.$ref")
                         .value("#/components/schemas/PageAccountingDto"));
+    }
+
+    @Test
+    void operationsDescribeThemselvesAndTheirNotFoundAndConflictCases() throws Exception {
+        mockMvc.perform(get(DOCS))
+                .andExpect(jsonPath("$.tags[?(@.name=='cashproof')].description").isNotEmpty())
+                .andExpect(jsonPath(RANGE + ".summary").value("List a branch's accountings within a date range"))
+                .andExpect(jsonPath(RANGE + ".parameters[?(@.name=='initial')].description").value("Range start"))
+                .andExpect(jsonPath(GET_ACCOUNT + ".responses.404.description").value("No accounting with that id"))
+                .andExpect(jsonPath(GET_ACCOUNT + ".responses.404.content['application/problem+json'].schema.$ref")
+                        .value("#/components/schemas/ProblemDetail"))
+                .andExpect(jsonPath(GET_ACCOUNT + ".responses.200.content['application/json'].schema.$ref")
+                        .value("#/components/schemas/AccountingDto"))
+                .andExpect(jsonPath(SALES_BATCH + ".responses.409.content['application/problem+json'].schema.$ref")
+                        .value("#/components/schemas/ProblemDetail"))
+                .andExpect(jsonPath(SALES_BATCH + ".responses.201").exists());
+    }
+
+    @Test
+    void everyOperationDocumentsItsSuccessResponse() throws Exception {
+        String body = mockMvc.perform(get(DOCS)).andReturn().getResponse().getContentAsString();
+        List<String> withoutSuccess = new ArrayList<>();
+        new ObjectMapper().readTree(body).get("paths").properties().forEach(path ->
+                path.getValue().properties().forEach(operation -> {
+                    JsonNode responses = operation.getValue().get("responses");
+                    boolean hasSuccess = false;
+                    for (var codes = responses.fieldNames(); codes.hasNext(); ) {
+                        hasSuccess |= codes.next().startsWith("2");
+                    }
+                    if (!hasSuccess) withoutSuccess.add(operation.getKey() + " " + path.getKey());
+                }));
+        assertThat(withoutSuccess).isEmpty();
     }
 }
