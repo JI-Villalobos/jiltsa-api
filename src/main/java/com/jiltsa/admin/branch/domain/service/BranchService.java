@@ -5,6 +5,7 @@ import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.persistence.entity.Branch;
 import com.jiltsa.admin.branch.persistence.mapper.BranchMapper;
 import com.jiltsa.admin.branch.persistence.repository.BranchRepository;
+import com.jiltsa.admin.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +35,9 @@ public class BranchService {
     }
 
     public TotalBalanceDto getTotalBalance(Integer branchId) {
-        String branch = repository.findById(branchId).get().getName();
-        Double total = repository.getTotalBalance(branchId, branch);
-
-        return  new TotalBalanceDto(total);
+        if (!repository.existsById(branchId)) {
+            throw new ResourceNotFoundException("Branch", branchId);
+        }
+        return new TotalBalanceDto(repository.getTotalBalance(branchId));
     }
 }

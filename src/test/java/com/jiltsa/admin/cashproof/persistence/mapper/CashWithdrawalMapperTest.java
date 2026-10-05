@@ -25,16 +25,18 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                "Nazas",
+                1,
                 "Dany"
                 );
 
         //when
-        CashWithdrawalDto cashWithdrawalDto = mapper.toCashWithdrawalDto(cashWithdrawal);
+        CashWithdrawalDto cashWithdrawalDto = mapper.toCashWithdrawalDto(cashWithdrawal, "Nazas");
 
         //then
         assertThat(cashWithdrawalDto).isNotNull();
         assertThat(cashWithdrawalDto.getAmount()).isEqualTo(456.5);
+        assertThat(cashWithdrawalDto.getBranchId()).isEqualTo(1);
+        assertThat(cashWithdrawalDto.getBranch()).isEqualTo("Nazas");
     }
 
     @Test
@@ -47,7 +49,7 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                "Nazas",
+                1,
                 "Dany"
         );
         CashWithdrawal cashWithdrawal2 = new CashWithdrawal(
@@ -55,14 +57,14 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                "Nazas",
+                1,
                 "Dany"
         );
         cashWithdrawalList.add(cashWithdrawal);
         cashWithdrawalList.add(cashWithdrawal2);
 
         //when
-        List<CashWithdrawalDto> cashWithdrawalDtoList = mapper.toCashWithdrawalDtoList(cashWithdrawalList);
+        List<CashWithdrawalDto> cashWithdrawalDtoList = mapper.toCashWithdrawalDtoList(cashWithdrawalList, "Nazas");
 
         //then
         assertThat(cashWithdrawalDtoList).isNotNull();
@@ -78,12 +80,12 @@ class CashWithdrawalMapperTest {
                 LocalDateTime.now(),
                 456.50,
                 "Cash with concept",
-                "Nazas",
+                1,
                 "Dany"
         );
 
         //when
-        CreateCashWithdrawalDto createCashWithdrawalDto = mapper.toCreateCashWithdrawalDto(cashWithdrawal);
+        CreateCashWithdrawalDto createCashWithdrawalDto = mapper.toCreateCashWithdrawalDto(cashWithdrawal, "Nazas");
 
         //then
         assertThat(createCashWithdrawalDto).isNotNull();
@@ -99,7 +101,8 @@ class CashWithdrawalMapperTest {
                 645.5,
                 "Cash concept",
                 "Dany",
-                "Nazas"
+                1,
+                null
                 );
 
         //when
@@ -107,7 +110,8 @@ class CashWithdrawalMapperTest {
 
         //then
         assertThat(cashWithdrawal).isNotNull();
-        // date is ignored by the mapper; CashWithdrawalRepositoryImplementation sets it on save
+        // date is ignored by the mapper; CashWithdrawalService sets it on create
         assertThat(cashWithdrawal.getDate()).isNull();
+        assertThat(cashWithdrawal.getBranchId()).isEqualTo(1);
     }
 }

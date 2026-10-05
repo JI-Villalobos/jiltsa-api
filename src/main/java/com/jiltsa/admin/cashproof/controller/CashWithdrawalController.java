@@ -25,9 +25,9 @@ public class CashWithdrawalController {
     private final CashWithdrawalService service;
 
     @Operation(summary = "List all cash withdrawals of a branch")
-    @GetMapping("/all/{branch}")
-    public List<CashWithdrawalDto> getCashWithdrawals(@Parameter(description = "Branch name") @PathVariable("branch") String branch){
-        return service.getCashWithdrawals(branch);
+    @GetMapping("/all/{branchId}")
+    public List<CashWithdrawalDto> getCashWithdrawals(@Parameter(description = "Branch id") @PathVariable("branchId") Integer branchId){
+        return service.getCashWithdrawals(branchId);
     }
 
     @Operation(summary = "Register a cash withdrawal", description = "The date is set by the server.")
@@ -37,38 +37,38 @@ public class CashWithdrawalController {
     }
 
     @Operation(summary = "List a branch's cash withdrawals from the last month")
-    @GetMapping("/last-month/{branch}")
+    @GetMapping("/last-month/{branchId}")
     public Page<CashWithdrawalDto> getLatestMonthRegistries(
             @PageableDefault(size = 15, sort = "date") Pageable pageable,
-            @Parameter(description = "Branch name") @PathVariable("branch") String branch){
-        return service.getLatestMonthRegistries(pageable, branch);
+            @Parameter(description = "Branch id") @PathVariable("branchId") Integer branchId){
+        return service.getLatestMonthRegistries(pageable, branchId);
     }
 
     @Operation(summary = "List a branch's cash withdrawals from the last 24 hours")
-    @GetMapping("/current/{branch}")
-    public List<CashWithdrawalDto> getCurrentRegistries(@Parameter(description = "Branch name") @PathVariable("branch") String branch){
-        return service.getCurrentCashWithdrawalsRegistries(branch);
+    @GetMapping("/current/{branchId}")
+    public List<CashWithdrawalDto> getCurrentRegistries(@Parameter(description = "Branch id") @PathVariable("branchId") Integer branchId){
+        return service.getCurrentCashWithdrawalsRegistries(branchId);
     }
 
     @Operation(summary = "List a branch's cash withdrawals by concept within a date range", description = "Matches withdrawals whose concept contains the tag.")
-    @GetMapping("/latest/{branch}/{start}/to/{finish}/{tag}")
+    @GetMapping("/latest/{branchId}/{start}/to/{finish}/{tag}")
     public Page<CashWithdrawalDto> getRegistriesByTagAndDate(
             @PageableDefault(size = 15, sort = "date") Pageable pageable,
-            @Parameter(description = "Branch name") @PathVariable("branch") String branch,
+            @Parameter(description = "Branch id") @PathVariable("branchId") Integer branchId,
             @Parameter(description = "Range start", example = "2026-03-01T00:00:00") @PathVariable("start") LocalDateTime start,
             @Parameter(description = "Range end", example = "2026-03-31T23:59:59") @PathVariable("finish") LocalDateTime finish,
             @Parameter(description = "Text the concept must contain") @PathVariable("tag") String concept){
-        return service.getRegistriesByTagAndDate(pageable, branch, concept, start, finish);
+        return service.getRegistriesByTagAndDate(pageable, branchId, concept, start, finish);
     }
 
     @Operation(summary = "List a branch's cash withdrawals within a date range")
-    @GetMapping("/{branch}/since/{start}/to/{finish}")
+    @GetMapping("/{branchId}/since/{start}/to/{finish}")
     public Page<CashWithdrawalDto> getRegistriesByDate(
             @PageableDefault(size = 15, sort = "date") Pageable pageable,
-            @Parameter(description = "Branch name") @PathVariable("branch") String branch,
+            @Parameter(description = "Branch id") @PathVariable("branchId") Integer branchId,
             @Parameter(description = "Range start", example = "2026-03-01T00:00:00") @PathVariable("start") LocalDateTime start,
             @Parameter(description = "Range end", example = "2026-03-31T23:59:59") @PathVariable("finish") LocalDateTime finish){
-        return service.getRegistriesByDateBetween(pageable, branch, start, finish);
+        return service.getRegistriesByDateBetween(pageable, branchId, start, finish);
     }
 
     @Operation(summary = "Get a cash withdrawal")
