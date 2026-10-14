@@ -30,6 +30,13 @@ public class SalesProjectionController {
         return salesProjectionService.getSalesProjection(branchId, initialDate, finalDate);
     }
 
+    @Operation(summary = "Summarize each active branch's sales per day over the last 30 days",
+            description = "Excludes 'TA' lines. Days without uploaded sales are marked pending; the average only counts days with sales.")
+    @GetMapping("/daily")
+    public DailySalesProjectionDto getDailySales() {
+        return salesProjectionService.getDailySales();
+    }
+
     @Operation(summary = "Total a branch's sales within a date range")
     @GetMapping("/total-sales")
     public TotalSalesDto getTotalSales(

@@ -1,5 +1,7 @@
 package com.jiltsa.admin.sales.projections;
 
+import com.jiltsa.admin.branch.domain.dto.BranchDto;
+import com.jiltsa.admin.branch.domain.service.BranchService;
 import com.jiltsa.admin.sales.domain.dto.*;
 import com.jiltsa.admin.sales.persistence.entity.Sale;
 import com.jiltsa.admin.sales.persistence.repository.SaleRepository;
@@ -7,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -16,7 +20,10 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class SalesProjectionService {
+    static final int DAILY_SALES_DAYS = 30;
+
     private final SaleRepository saleRepository;
+    private final BranchService branchService;
 
     public SalesProjectionDto getSalesProjection(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate){
         List<Sale> rawSales = saleRepository.findByBranchIdAndTimestampBetween(branchId, initialDate, finalDate);
@@ -117,5 +124,43 @@ public class SalesProjectionService {
 
         return consignmentSales;
     }
-}
 
+    public DailySalesProjectionDto getDailySales() {
+        //user of this app are only from mx
+        return getDailySales(LocalDate.now(ZoneId.of("America/Mexico_City")));
+    }
+
+    /** Sales per active branch for each of the {@value DAILY_SALES_DAYS} days ending on {@code today}. */
+    DailySalesProjectionDto getDailySales(LocalDate today) {
+        LocalDate initialDate = today.minusDays(DAILY_SALES_DAYS - 1);
+        Map<Integer, Map<LocalDate, DailySaleTotal>> totalsByBranch = saleRepository
+                .sumDailyByBranch(initialDate.atStartOfDay(), today.plusDays(1).atStartOfDay()).stream()
+                .collect(Collectors.groupingBy(DailySaleTotal::branchId,
+                        Collectors.toMap(DailySaleTotal::date, total -> total)));
+
+        List<BranchDailySalesDto> branches = branchService.getAll().stream()
+                .map(branch -> branchDailySales(branch, initialDate,
+                        totalsByBranch.getOrDefault(branch.getId(), Map.of())))
+                .toList();
+
+        return new DailySalesProjectionDto(initialDate, today, branches);
+    }
+
+    private BranchDailySalesDto branchDailySales(BranchDto branch, LocalDate initialDate, Map<LocalDate, DailySaleTotal> totalsByDate) {
+        List<DailySalesDto> days = initialDate.datesUntil(initialDate.plusDays(DAILY_SALES_DAYS))
+                .map(date -> Optional.ofNullable(totalsByDate.get(date))
+                        .map(total -> new DailySalesDto(date, orZero(total.total()), orZero(total.approximatedUtility()), false))
+                        .orElseGet(() -> new DailySalesDto(date, 0, 0, true)))
+                .toList();
+
+        double totalSales = days.stream().mapToDouble(DailySalesDto::total).sum();
+        long daysWithSales = days.stream().filter(day -> !day.pending()).count();
+        double average = daysWithSales == 0 ? 0 : totalSales / daysWithSales;
+
+        return new BranchDailySalesDto(branch.getId(), branch.getName(), totalSales, average, days);
+    }
+
+    private static double orZero(Double value) {
+        return value == null ? 0 : value;
+    }
+}
