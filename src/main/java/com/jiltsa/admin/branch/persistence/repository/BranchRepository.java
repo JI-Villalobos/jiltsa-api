@@ -5,7 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface BranchRepository extends JpaRepository<Branch, Integer> {
+    List<Branch> findByIsActiveTrue();
+
     /** Initial balance + incomes - expenses - withdrawals; null when the branch has no configuration. */
     @Query(value = """
             SELECT bc.initial_balance

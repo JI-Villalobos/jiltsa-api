@@ -21,7 +21,7 @@ public class BranchService {
     private final BranchMapper mapper;
 
     public List<BranchDto> getAll() {
-        return mapper.toBranchDtoList(repository.findAll());
+        return mapper.toBranchDtoList(repository.findByIsActiveTrue());
     }
 
     public Optional<BranchDto> getById(Integer branchId) {

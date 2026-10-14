@@ -45,8 +45,8 @@ class BranchServiceTest {
     }
 
     @Test
-    void getAllMapsEveryBranch() {
-        when(repository.findAll()).thenReturn(List.of(new Branch("nazas", true), new Branch("coyote", false)));
+    void getAllMapsActiveBranches() {
+        when(repository.findByIsActiveTrue()).thenReturn(List.of(new Branch("nazas", true), new Branch("coyote", true)));
 
         assertThat(serviceUnderTest.getAll()).extracting(BranchDto::getName).containsExactly("nazas", "coyote");
     }
