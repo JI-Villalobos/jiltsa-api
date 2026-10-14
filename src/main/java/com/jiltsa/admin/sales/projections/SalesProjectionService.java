@@ -15,12 +15,16 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class SalesProjectionService {
-    static final int DAILY_SALES_DAYS = 30;
+    static final int PROJECTION_DAYS = 30;
+    /** Branches open 7:50 to 22:15, so hourly projections cover 7:00 to 23:00. */
+    static final int FIRST_HOUR = 7;
+    static final int LAST_HOUR = 22;
 
     private final SaleRepository saleRepository;
     private final BranchService branchService;
@@ -126,13 +130,12 @@ public class SalesProjectionService {
     }
 
     public DailySalesProjectionDto getDailySales() {
-        //user of this app are only from mx
-        return getDailySales(LocalDate.now(ZoneId.of("America/Mexico_City")));
+        return getDailySales(mxToday());
     }
 
-    /** Sales per active branch for each of the {@value DAILY_SALES_DAYS} days ending on {@code today}. */
+    /** Sales per active branch for each of the {@value PROJECTION_DAYS} days ending on {@code today}. */
     DailySalesProjectionDto getDailySales(LocalDate today) {
-        LocalDate initialDate = today.minusDays(DAILY_SALES_DAYS - 1);
+        LocalDate initialDate = today.minusDays(PROJECTION_DAYS - 1);
         Map<Integer, Map<LocalDate, DailySaleTotal>> totalsByBranch = saleRepository
                 .sumDailyByBranch(initialDate.atStartOfDay(), today.plusDays(1).atStartOfDay()).stream()
                 .collect(Collectors.groupingBy(DailySaleTotal::branchId,
@@ -147,7 +150,7 @@ public class SalesProjectionService {
     }
 
     private BranchDailySalesDto branchDailySales(BranchDto branch, LocalDate initialDate, Map<LocalDate, DailySaleTotal> totalsByDate) {
-        List<DailySalesDto> days = initialDate.datesUntil(initialDate.plusDays(DAILY_SALES_DAYS))
+        List<DailySalesDto> days = initialDate.datesUntil(initialDate.plusDays(PROJECTION_DAYS))
                 .map(date -> Optional.ofNullable(totalsByDate.get(date))
                         .map(total -> new DailySalesDto(date, orZero(total.total()), orZero(total.approximatedUtility()), false))
                         .orElseGet(() -> new DailySalesDto(date, 0, 0, true)))
@@ -158,6 +161,42 @@ public class SalesProjectionService {
         double average = daysWithSales == 0 ? 0 : totalSales / daysWithSales;
 
         return new BranchDailySalesDto(branch.getId(), branch.getName(), totalSales, average, days);
+    }
+
+    public HourlySalesProjectionDto getHourlySales() {
+        return getHourlySales(mxToday());
+    }
+
+    /** Average sales per hour of each active branch over the {@value PROJECTION_DAYS} days ending on {@code today}. */
+    HourlySalesProjectionDto getHourlySales(LocalDate today) {
+        LocalDate initialDate = today.minusDays(PROJECTION_DAYS - 1);
+        Map<Integer, List<HourlySaleTotal>> totalsByBranch = saleRepository
+                .sumHourlyByBranch(initialDate.atStartOfDay(), today.plusDays(1).atStartOfDay()).stream()
+                .collect(Collectors.groupingBy(HourlySaleTotal::branchId));
+
+        List<BranchHourlySalesDto> branches = branchService.getAll().stream()
+                .map(branch -> branchHourlySales(branch, totalsByBranch.getOrDefault(branch.getId(), List.of())))
+                .toList();
+
+        return new HourlySalesProjectionDto(initialDate, today, branches);
+    }
+
+    private BranchHourlySalesDto branchHourlySales(BranchDto branch, List<HourlySaleTotal> totals) {
+        int daysWithSales = (int) totals.stream().map(HourlySaleTotal::date).distinct().count();
+        Map<Integer, Double> totalByHour = totals.stream().collect(
+                Collectors.groupingBy(HourlySaleTotal::hour, Collectors.summingDouble(total -> orZero(total.total()))));
+
+        List<HourlySalesDto> hours = IntStream.rangeClosed(FIRST_HOUR, LAST_HOUR)
+                .mapToObj(hour -> new HourlySalesDto(hour,
+                        daysWithSales == 0 ? 0 : totalByHour.getOrDefault(hour, 0.0) / daysWithSales))
+                .toList();
+
+        return new BranchHourlySalesDto(branch.getId(), branch.getName(), daysWithSales, hours);
+    }
+
+    private static LocalDate mxToday() {
+        //user of this app are only from mx
+        return LocalDate.now(ZoneId.of("America/Mexico_City"));
     }
 
     private static double orZero(Double value) {

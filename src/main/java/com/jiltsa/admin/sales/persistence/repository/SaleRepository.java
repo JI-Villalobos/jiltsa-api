@@ -1,6 +1,7 @@
 package com.jiltsa.admin.sales.persistence.repository;
 
 import com.jiltsa.admin.sales.domain.dto.DailySaleTotal;
+import com.jiltsa.admin.sales.domain.dto.HourlySaleTotal;
 import com.jiltsa.admin.sales.persistence.entity.Sale;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,13 @@ public interface SaleRepository extends JpaRepository<Sale, Long>, SaleBatchRepo
             WHERE s.timestamp >= :from AND s.timestamp < :to AND s.key <> 'TA'
             GROUP BY s.branchId, CAST(s.timestamp AS LocalDate)""")
     List<DailySaleTotal> sumDailyByBranch(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+
+    /** Totals per branch, day and hour in [from, to), leaving out 'TA' lines. Hours without sales are absent. */
+    @Query("""
+            SELECT new com.jiltsa.admin.sales.domain.dto.HourlySaleTotal(
+                s.branchId, CAST(s.timestamp AS LocalDate), EXTRACT(HOUR FROM s.timestamp), SUM(s.total))
+            FROM Sale s
+            WHERE s.timestamp >= :from AND s.timestamp < :to AND s.key <> 'TA'
+            GROUP BY s.branchId, CAST(s.timestamp AS LocalDate), EXTRACT(HOUR FROM s.timestamp)""")
+    List<HourlySaleTotal> sumHourlyByBranch(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 }

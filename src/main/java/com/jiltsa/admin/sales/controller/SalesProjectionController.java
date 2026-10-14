@@ -37,6 +37,13 @@ public class SalesProjectionController {
         return salesProjectionService.getDailySales();
     }
 
+    @Operation(summary = "Average each active branch's sales per hour over the last 30 days",
+            description = "Hours 7:00 to 23:00, excluding 'TA' lines. Days without uploaded sales are left out of the average.")
+    @GetMapping("/hourly")
+    public HourlySalesProjectionDto getHourlySales() {
+        return salesProjectionService.getHourlySales();
+    }
+
     @Operation(summary = "Total a branch's sales within a date range")
     @GetMapping("/total-sales")
     public TotalSalesDto getTotalSales(

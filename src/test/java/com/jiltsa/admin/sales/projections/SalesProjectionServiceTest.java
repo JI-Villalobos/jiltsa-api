@@ -3,9 +3,13 @@ package com.jiltsa.admin.sales.projections;
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.domain.service.BranchService;
 import com.jiltsa.admin.sales.domain.dto.BranchDailySalesDto;
+import com.jiltsa.admin.sales.domain.dto.BranchHourlySalesDto;
 import com.jiltsa.admin.sales.domain.dto.DailySaleTotal;
 import com.jiltsa.admin.sales.domain.dto.DailySalesDto;
 import com.jiltsa.admin.sales.domain.dto.DailySalesProjectionDto;
+import com.jiltsa.admin.sales.domain.dto.HourlySaleTotal;
+import com.jiltsa.admin.sales.domain.dto.HourlySalesDto;
+import com.jiltsa.admin.sales.domain.dto.HourlySalesProjectionDto;
 import com.jiltsa.admin.sales.persistence.repository.SaleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,5 +60,29 @@ class SalesProjectionServiceTest {
         assertThat(coyote.days()).allMatch(DailySalesDto::pending);
         assertThat(coyote.totalSales()).isZero();
         assertThat(coyote.averageDailySales()).isZero();
+    }
+
+    @Test
+    void getHourlySalesAveragesEachHourOverDaysWithSales() {
+        when(branchService.getAll()).thenReturn(List.of(new BranchDto(1, "nazas", true), new BranchDto(2, "coyote", true)));
+        when(saleRepository.sumHourlyByBranch(FIRST_DAY.atStartOfDay(), TODAY.plusDays(1).atStartOfDay())).thenReturn(List.of(
+                new HourlySaleTotal(1, FIRST_DAY, 8, 100.0),
+                new HourlySaleTotal(1, FIRST_DAY, 21, 40.0),
+                new HourlySaleTotal(1, TODAY.minusDays(3), 8, 200.0)));
+
+        HourlySalesProjectionDto projection = serviceUnderTest.getHourlySales(TODAY);
+
+        assertThat(projection.initialDate()).isEqualTo(FIRST_DAY);
+        assertThat(projection.finalDate()).isEqualTo(TODAY);
+
+        BranchHourlySalesDto nazas = projection.branches().get(0);
+        assertThat(nazas.daysWithSales()).isEqualTo(2);
+        assertThat(nazas.hours()).extracting(HourlySalesDto::hour).containsExactly(7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22);
+        assertThat(nazas.hours()).filteredOn(hour -> hour.averageSales() > 0)
+                .containsExactly(new HourlySalesDto(8, 150.0), new HourlySalesDto(21, 20.0));
+
+        BranchHourlySalesDto coyote = projection.branches().get(1);
+        assertThat(coyote.daysWithSales()).isZero();
+        assertThat(coyote.hours()).hasSize(16).allMatch(hour -> hour.averageSales() == 0);
     }
 }
