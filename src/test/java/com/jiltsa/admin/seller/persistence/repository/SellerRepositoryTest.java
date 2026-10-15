@@ -21,12 +21,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class SellerRepositoryTest {
     @Autowired
     private SellerRepository sellerRepositoryUnderTest;
+    // the database is shared with other test classes, so only the sellers saved here are counted
+    private int activeSellersBefore;
 
     @BeforeEach
     void setUp() {
-        Seller seller = new Seller("Diana Path", 1, "1234", true);
-        Seller seller2 = new Seller("Diana Path", 1, "1234", false);
-        Seller seller3 = new Seller("Diana Path", 1, "1234", true);
+        activeSellersBefore = sellerRepositoryUnderTest.findByIsActiveTrue().size();
+        Seller seller = new Seller("Diana Path", 1, true);
+        Seller seller2 = new Seller("Diana Path", 1, false);
+        Seller seller3 = new Seller("Diana Path", 1, true);
 
         sellerRepositoryUnderTest.save(seller);
         sellerRepositoryUnderTest.save(seller2);
@@ -39,6 +42,6 @@ class SellerRepositoryTest {
 
         //then
         assertThat(sellers).isInstanceOf(ArrayList.class);
-        assertThat(sellers.size()).isEqualTo(6);
+        assertThat(sellers.size()).isEqualTo(activeSellersBefore + 2);
     }
 }

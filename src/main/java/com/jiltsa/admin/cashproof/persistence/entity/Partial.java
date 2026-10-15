@@ -32,7 +32,7 @@ public class Partial {
     @NotNull
     private Double amount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "credit_sale_id", insertable = false, updatable = false)
     private CreditSale creditSale;
 

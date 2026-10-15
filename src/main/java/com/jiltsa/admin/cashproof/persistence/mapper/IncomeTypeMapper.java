@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface IncomeTypeMapper {
     IncomeTypeDto toIncomeTypeDto(IncomeType incomeType);
-    List<IncomeTypeDto> incomeTypeDtoList(List<IncomeType> incomeTypeList);
+    List<IncomeTypeDto> toIncomeTypeDtoList(List<IncomeType> incomeTypeList);
 
     @InheritInverseConfiguration
     @Mapping(target = "incomeRegistries", ignore = true)

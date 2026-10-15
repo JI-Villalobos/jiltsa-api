@@ -1,7 +1,7 @@
 package com.jiltsa.admin.branch.persistence.repository;
 
 import com.jiltsa.admin.branch.persistence.entity.BranchConfiguration;
-import com.jiltsa.admin.branch.persistence.entity.Profile;
+import com.jiltsa.admin.branch.domain.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

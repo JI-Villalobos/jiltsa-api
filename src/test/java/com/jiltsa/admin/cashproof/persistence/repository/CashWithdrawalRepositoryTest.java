@@ -1,5 +1,7 @@
 package com.jiltsa.admin.cashproof.persistence.repository;
 
+import com.jiltsa.admin.branch.persistence.entity.Branch;
+import com.jiltsa.admin.branch.persistence.repository.BranchRepository;
 import com.jiltsa.admin.cashproof.persistence.entity.CashWithdrawal;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,10 +12,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
@@ -23,30 +24,25 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class CashWithdrawalRepositoryTest {
     @Autowired
     CashWithdrawalRepository repositoryUnderTest;
+    @Autowired
+    BranchRepository branchRepository;
+
+    private Integer nazas;
 
    @BeforeAll
     void setUp() {
-        CashWithdrawal cashWithdrawal = new CashWithdrawal(
-                LocalDateTime.now(), 234.00, "OXXO", "Nazas", "Diana"
-        );
-        repositoryUnderTest.save(cashWithdrawal);
-        CashWithdrawal cashWithdrawal2 = new CashWithdrawal(
-                LocalDateTime.now(), 234.00, "OXXO", "Nazas", "Maria"
-        );
-        repositoryUnderTest.save(cashWithdrawal2);
-        CashWithdrawal cashWithdrawal3 = new CashWithdrawal(
-                LocalDateTime.now(), 234.00, "OXXO", "Pen", "Gina"
-        );
-        repositoryUnderTest.save(cashWithdrawal3);
+        nazas = branchRepository.save(new Branch("Nazas", true)).getId();
+        Integer pen = branchRepository.save(new Branch("Pen", true)).getId();
+        repositoryUnderTest.save(new CashWithdrawal(LocalDateTime.now(), 234.00, "OXXO", nazas, "Diana"));
+        repositoryUnderTest.save(new CashWithdrawal(LocalDateTime.now(), 234.00, "OXXO", nazas, "Maria"));
+        repositoryUnderTest.save(new CashWithdrawal(LocalDateTime.now(), 234.00, "OXXO", pen, "Gina"));
     }
     @Test
     void shouldFindAWithdrawalListByBranch() {
         //when
-        List<CashWithdrawal> cashWithdrawalList = repositoryUnderTest.findByBranch("Nazas");
+        List<CashWithdrawal> cashWithdrawalList = repositoryUnderTest.findByBranchId(nazas);
 
         //then
-        assertThat(cashWithdrawalList).isInstanceOf(ArrayList.class);
-        assertThat(cashWithdrawalList.size()).isEqualTo(2);
-
+        assertThat(cashWithdrawalList).extracting(CashWithdrawal::getSellerName).containsExactlyInAnyOrder("Diana", "Maria");
     }
 }

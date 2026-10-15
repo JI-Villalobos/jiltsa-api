@@ -11,14 +11,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "products")
+@Table(name = "products", uniqueConstraints = @UniqueConstraint(name = "uk_products_branch_key", columnNames = {"branch_id", "key"}))
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String key;
     private String category;
     private String description;
+    @Column(nullable = false)
     private Integer branchId;
 }

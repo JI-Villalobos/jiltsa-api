@@ -2,16 +2,11 @@ package com.jiltsa.admin.branch.persistence.mapper;
 
 import com.jiltsa.admin.branch.domain.dto.BranchDto;
 import com.jiltsa.admin.branch.persistence.entity.Branch;
-import com.jiltsa.admin.cashproof.persistence.entity.Accounting;
-import com.jiltsa.admin.seller.persistence.entity.Seller;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -22,9 +17,7 @@ class BranchMapperTest {
     void shouldMapToBranchDto() {
         //given
         BranchMapper mapper = Mappers.getMapper(BranchMapper.class);
-        List<Seller> sellers = new ArrayList<>();
-        List<Accounting> accountingList = new ArrayList<>();
-        Branch branch = new Branch(1, "nazas", true, sellers, accountingList);
+        Branch branch = new Branch(1, "nazas", true);
 
         //when
         BranchDto branchDto = mapper.toBranchDto(branch);
@@ -37,7 +30,7 @@ class BranchMapperTest {
 
     @Test
     @Disabled
-    void toBranchesDto() {
+    void toBranchDtoList() {
     }
 
     @Test
@@ -57,6 +50,6 @@ class BranchMapperTest {
 
     @Test
     @Disabled
-    void toBranches() {
+    void toBranchList() {
     }
 }

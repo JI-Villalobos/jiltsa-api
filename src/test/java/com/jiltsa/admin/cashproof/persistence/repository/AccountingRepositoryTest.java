@@ -101,7 +101,7 @@ class AccountingRepositoryTest {
 
         //when
         Page<Accounting> accountingPage =
-                accountingRepositoryUnderTest.findByDateBetweenAndBranchIdOrderByDateAsc(
+                accountingRepositoryUnderTest.findByDateBetweenAndBranchId(
                         PageRequest.of(0, 20), start, end, 1
                 );
 

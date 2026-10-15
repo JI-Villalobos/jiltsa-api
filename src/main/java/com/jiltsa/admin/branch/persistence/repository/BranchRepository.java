@@ -1,12 +1,24 @@
 package com.jiltsa.admin.branch.persistence.repository;
 
-import com.jiltsa.admin.branch.domain.dto.TotalBalanceDto;
 import com.jiltsa.admin.branch.persistence.entity.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface BranchRepository extends JpaRepository<Branch, Integer> {
-    @Procedure(value = "get_totals", outputParameterName = "totals")
-    Double getTotalBalance(@Param("selected_branch_id") Integer selectedBranchId, @Param("branch_name") String branchName);
+    List<Branch> findByIsActiveTrue();
+
+    /** Initial balance + incomes - expenses - withdrawals; null when the branch has no configuration. */
+    @Query(value = """
+            SELECT bc.initial_balance
+                + (SELECT COALESCE(SUM(cr.amount), 0) FROM cash_registry cr
+                   JOIN accounts a ON a.id = cr.accounting_id WHERE a.branch_id = :branchId)
+                - (SELECT COALESCE(SUM(er.amount), 0) FROM expense_registry er
+                   JOIN accounts a ON a.id = er.accounting_id WHERE a.branch_id = :branchId)
+                - (SELECT COALESCE(SUM(cw.amount), 0) FROM cash_withdrawals cw WHERE cw.branch_id = :branchId)
+            FROM branch_config bc
+            WHERE bc.branch_id = :branchId""", nativeQuery = true)
+    Double getTotalBalance(@Param("branchId") Integer branchId);
 }

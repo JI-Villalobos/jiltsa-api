@@ -37,11 +37,11 @@ public class IncomeRegistry {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accounting_Id", updatable = false, insertable = false)
     private Accounting accounting;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "income_type_id", insertable = false, updatable = false)
     private IncomeType incomeType;
 

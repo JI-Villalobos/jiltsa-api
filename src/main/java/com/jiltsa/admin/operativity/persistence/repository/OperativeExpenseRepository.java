@@ -12,11 +12,18 @@ public interface OperativeExpenseRepository  extends JpaRepository<OperativeExpe
     List<OperativeExpense> findByBranchIdAndExpenseDateAfter(Integer branchId, LocalDateTime date);
     List<OperativeExpense> findByBranchIdAndExpenseDateBetween(Integer branchId, LocalDateTime initialDate, LocalDateTime finalDate);
 
-    //, outputParameterName = "total_expenses"
-    @Query(value = "CALL sp_total_expenses(:p_branch_id, :p_fecha_inicio, :p_fecha_fin)", nativeQuery = true)
+    /** Operative expenses plus the branch's own expense registries, each rounded to cents. */
+    @Query(value = """
+            SELECT CAST((SELECT COALESCE(SUM(oe.amount), 0) FROM operative_expense oe
+                         WHERE oe.branch_id = :branchId AND oe.expense_date BETWEEN :initialDate AND :finalDate)
+                        AS DECIMAL(10, 2))
+                 + CAST((SELECT COALESCE(SUM(er.amount), 0) FROM expense_registry er
+                         JOIN accounts a ON a.id = er.accounting_id
+                         WHERE a.branch_id = :branchId AND a.date BETWEEN :initialDate AND :finalDate)
+                        AS DECIMAL(10, 2))""", nativeQuery = true)
     Double getTotalExpenses(
-            @Param("p_branch_id") Integer branchId,
-            @Param("p_fecha_inicio") LocalDateTime initialDate,
-            @Param("p_fecha_fin") LocalDateTime finalDate
+            @Param("branchId") Integer branchId,
+            @Param("initialDate") LocalDateTime initialDate,
+            @Param("finalDate") LocalDateTime finalDate
     );
 }

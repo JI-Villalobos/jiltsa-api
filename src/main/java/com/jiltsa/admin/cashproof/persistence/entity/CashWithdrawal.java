@@ -25,16 +25,17 @@ public class CashWithdrawal {
     @NotNull
     private String concept;
     @NotNull
-    private String branch;
+    @Column(name = "branch_id")
+    private Integer branchId;
     @NotNull
     @Column(name = "seller_name")
     private String sellerName;
 
-    public CashWithdrawal(LocalDateTime date, Double amount, String concept, String branch, String sellerName) {
+    public CashWithdrawal(LocalDateTime date, Double amount, String concept, Integer branchId, String sellerName) {
         this.date = date;
         this.amount = amount;
         this.concept = concept;
-        this.branch = branch;
+        this.branchId = branchId;
         this.sellerName = sellerName;
     }
 }
