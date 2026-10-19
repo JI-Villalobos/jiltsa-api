@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductBatchRepository {
     List<Product> findByBranchIdAndKeyIn(Integer branchId, Collection<String> keys);
+
+    List<Product> findByBranchIdOrderByKey(Integer branchId);
 }

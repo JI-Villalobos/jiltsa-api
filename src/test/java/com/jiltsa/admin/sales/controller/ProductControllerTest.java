@@ -20,6 +20,9 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -124,6 +127,60 @@ class ProductControllerTest {
     @Test
     void requiresAuthentication() throws Exception {
         mockMvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content("[" + productJson(861, "K") + "]"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void listsOnlyTheBranchCatalogOrderedByKey() throws Exception {
+        productRepository.insertAll(List.of(
+                new Product(null, "B", "MEDICAMENTO", "Ibuprofeno", 871),
+                new Product(null, "A", "VITAMINA", "Vitamina C", 871),
+                new Product(null, "A", "MEDICAMENTO", "Otra sucursal", 872)));
+
+        mockMvc.perform(get("/jiltsa/api/v1/products/branch/871"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].key", contains("A", "B")))
+                .andExpect(jsonPath("$[0].category").value("VITAMINA"))
+                .andExpect(jsonPath("$[0].description").value("Vitamina C"))
+                .andExpect(jsonPath("$[0].branchId").value(871));
+
+        mockMvc.perform(get("/jiltsa/api/v1/products/branch/879"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
+    @WithMockUser
+    void lookupReturnsOnlyTheBranchProductsWithTheGivenKeys() throws Exception {
+        productRepository.insertAll(List.of(
+                new Product(null, "K1", "MEDICAMENTO", null, 881),
+                new Product(null, "K2", "VITAMINA", null, 881),
+                new Product(null, "K3", "ABARROTES", null, 881),
+                new Product(null, "K1", "OTRA", null, 882)));
+
+        mockMvc.perform(post("/jiltsa/api/v1/products/branch/881/lookup").contentType(MediaType.APPLICATION_JSON)
+                        .content("[\"K1\",\"K2\",\"K1\",\"UNKNOWN\"]"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].key", containsInAnyOrder("K1", "K2")))
+                .andExpect(jsonPath("$[?(@.key=='K1')].category").value("MEDICAMENTO"));
+    }
+
+    @Test
+    @WithMockUser
+    void lookupRejectsEmptyOrBlankKeys() throws Exception {
+        String url = "/jiltsa/api/v1/products/branch/891/lookup";
+        mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content("[]"))
+                .andExpect(status().isBadRequest());
+        mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content("[\" \"]"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void readingRequiresAuthentication() throws Exception {
+        mockMvc.perform(get("/jiltsa/api/v1/products/branch/1"))
+                .andExpect(status().isUnauthorized());
+        mockMvc.perform(post("/jiltsa/api/v1/products/branch/1/lookup").contentType(MediaType.APPLICATION_JSON).content("[\"K\"]"))
                 .andExpect(status().isUnauthorized());
     }
 
