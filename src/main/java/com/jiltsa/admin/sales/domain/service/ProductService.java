@@ -3,6 +3,7 @@ package com.jiltsa.admin.sales.domain.service;
 import com.jiltsa.admin.common.exception.ConflictException;
 import com.jiltsa.admin.sales.domain.dto.CreateProductDto;
 import com.jiltsa.admin.sales.domain.dto.ProductBatchResultDto;
+import com.jiltsa.admin.sales.domain.dto.ProductDto;
 import com.jiltsa.admin.sales.persistence.entity.Product;
 import com.jiltsa.admin.sales.persistence.mapper.ProductMapper;
 import com.jiltsa.admin.sales.persistence.repository.ProductRepository;
@@ -49,6 +50,15 @@ public class ProductService {
 
         repository.insertAll(mapper.toProductList(products));
         return new ProductBatchResultDto(products.size());
+    }
+
+    public List<ProductDto> getByBranch(Integer branchId) {
+        return mapper.toProductDtoList(repository.findByBranchIdOrderByKey(branchId));
+    }
+
+    /** Products of the branch whose key is among the given ones; unknown keys are left out. */
+    public List<ProductDto> getByBranchAndKeys(Integer branchId, Collection<String> keys) {
+        return mapper.toProductDtoList(repository.findByBranchIdAndKeyIn(branchId, new LinkedHashSet<>(keys)));
     }
 
     private static String describe(Integer branchId, String key) {
