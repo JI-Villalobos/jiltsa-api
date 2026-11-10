@@ -75,6 +75,7 @@ public class OpenApiConfig {
                         tag("common", "Version of the running API"),
                         tag("billing", "Provider bills, the payments that settle them, and the provider catalog"),
                         tag("branch", "Branches, their configuration and their cash balance"),
+                        tag("files", "Files in object storage (S3): presigned upload and download URLs and the record of each object"),
                         tag("cashproof", "Daily cash proof: accountings, incomes, expenses, withdrawals, "
                                 + "cash sorting, check lists and credit sales"),
                         tag("operativity", "Operative expenses, break-even point, weekly sale results and expense reports"),

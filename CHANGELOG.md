@@ -8,6 +8,23 @@ what counts as a breaking change in this API and how a release is cut.
 ## [Unreleased]
 
 ### Added
+- Files in S3 through presigned URLs (migration V10, `files` module): `POST /files/upload-url`
+  records the file for its owner entity and returns a presigned PUT; `POST /files/{id}/confirm`
+  checks the object is in the bucket; `GET /files/{id}`, `GET /files/{id}/download-url`,
+  `GET /files/by-owner/{ownerType}/{ownerId}` and `GET /files/by-promotion/{promotionId}` hand
+  out presigned GETs; `DELETE /files/{id}` removes object and record. First owner type:
+  `PROMOTION_ITEM`, for the pictures of the medicine in a promotion.
+
+### Changed
+- New required variable `APP_STORAGE_BUCKET` plus S3 credentials (`APP_STORAGE_ACCESS_KEY` /
+  `APP_STORAGE_SECRET_KEY`, or the AWS default chain); optional `APP_STORAGE_REGION` and
+  `APP_STORAGE_ENDPOINT`. The app does not start without a bucket.
+- Requests that break an application rule (disallowed content type, oversized file) answer
+  400 with a ProblemDetail, like validation errors.
+
+## [2.2.0] - 2026-11-10
+
+### Added
 - Promotions of medicine close to expiring (migration V9): `/promotions` (create, get with items,
   update, list by branch within a creation-date range, list active, delete), `/promotion-items`
   (add one or a batch, list by promotion, update, delete) and `POST /promotions/{id}/close`, which
@@ -61,6 +78,7 @@ Spring Boot 3.5 rewrite of the 1.x API (#2). Clients of 1.x must re-check every 
 
 The 1.x line (branches `jiltsa-1.1.0` … `jiltsa-1.7.0`) was never tagged. Its history is only in git.
 
-[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/JI-Villalobos/jiltsa-api/releases/tag/v2.0.0
