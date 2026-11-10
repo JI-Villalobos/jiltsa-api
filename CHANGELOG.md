@@ -5,6 +5,17 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
+## [Unreleased]
+
+### Added
+- Promotions of medicine close to expiring (migration V9): `/promotions` (create, get with items,
+  update, list by branch within a creation-date range, list active, delete), `/promotion-items`
+  (add one or a batch, list by promotion, update, delete) and `POST /promotions/{id}/close`, which
+  deactivates the promotion and records the loss of what was left at purchase price.
+- `/expiration-losses`: get a loss record by id or by promotion, list a branch's records within a
+  date range, and `GET /expiration-losses/projection` totalling the range and breaking it down by
+  promotion and medicine.
+
 ## [2.1.0] - 2026-11-10
 
 ### Added
@@ -50,5 +61,6 @@ Spring Boot 3.5 rewrite of the 1.x API (#2). Clients of 1.x must re-check every 
 
 The 1.x line (branches `jiltsa-1.1.0` … `jiltsa-1.7.0`) was never tagged. Its history is only in git.
 
-[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/JI-Villalobos/jiltsa-api/releases/tag/v2.0.0

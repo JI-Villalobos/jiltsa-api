@@ -79,6 +79,7 @@ public class OpenApiConfig {
                                 + "cash sorting, check lists and credit sales"),
                         tag("operativity", "Operative expenses, break-even point, weekly sale results and expense reports"),
                         tag("orders", "Orders to providers and their items"),
+                        tag("promotions", "Promotions of medicine close to expiring, their items, and the loss recorded when they close"),
                         tag("sales", "POS sale and product uploads, and sales reports"),
                         tag("security", "Login and user registration"),
                         tag("seller", "Sellers working at each branch")))
