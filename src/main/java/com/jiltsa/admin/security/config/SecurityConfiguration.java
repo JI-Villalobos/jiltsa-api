@@ -3,6 +3,7 @@ package com.jiltsa.admin.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -32,6 +33,7 @@ public class SecurityConfiguration {
                 // Role rules live on the controllers (@AdminOnly); here only anonymous vs authenticated
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/jiltsa/api/v1/auth/authenticate").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/jiltsa/api/v1/version").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                 // Missing or invalid token -> 401; role denials are 403 (see GlobalExceptionHandler)

@@ -1,5 +1,6 @@
 package com.jiltsa.admin.common.openapi;
 
+import com.jiltsa.admin.common.version.VersionController;
 import com.jiltsa.admin.common.web.PageRequestResolver;
 import com.jiltsa.admin.security.AdminOnly;
 import io.swagger.v3.core.converter.ModelConverters;
@@ -41,7 +42,7 @@ import java.util.Optional;
 
 /**
  * OpenAPI description at /v3/api-docs, Swagger UI at /swagger-ui.html.
- * Everything except /auth/authenticate needs a bearer JWT; errors are RFC 7807 ProblemDetail.
+ * Everything except /auth/authenticate and GET /version needs a bearer JWT; errors are RFC 7807 ProblemDetail.
  * Controllers document what each operation does, its parameters and its 404/409 cases;
  * the responses shared by many operations (401, 403, 400) are added here. An operation that
  * declares an @ApiResponse must also declare its success one (useReturnTypeSchema = true) unless
@@ -71,6 +72,7 @@ public class OpenApiConfig {
                                 + "Paginated endpoints take page, elements, sortBy and sortDirection (asc|desc)."))
                 .components(components)
                 .tags(List.of(
+                        tag("common", "Version of the running API"),
                         tag("billing", "Provider bills, the payments that settle them, and the provider catalog"),
                         tag("branch", "Branches, their configuration and their cash balance"),
                         tag("cashproof", "Daily cash proof: accountings, incomes, expenses, withdrawals, "
@@ -93,9 +95,12 @@ public class OpenApiConfig {
             ApiResponses responses = operation.getResponses();
             boolean isLogin = handler.getMethod().getName().equals("authenticate")
                     && handler.getBeanType().getSimpleName().equals("AuthenticationController");
+            boolean isVersion = handler.getBeanType().equals(VersionController.class);
             if (isLogin) {
                 operation.setSecurity(List.of());
                 responses.addApiResponse("401", problem("Wrong credentials"));
+            } else if (isVersion) {
+                operation.setSecurity(List.of());
             } else {
                 responses.addApiResponse("401", problem("Missing, invalid or expired token"));
             }

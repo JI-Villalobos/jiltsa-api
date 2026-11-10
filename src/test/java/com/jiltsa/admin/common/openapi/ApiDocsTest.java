@@ -16,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,6 +32,8 @@ class ApiDocsTest {
     private static final String GET_ACCOUNT = "$.paths['/jiltsa/api/v1/accounts/account/{accountingId}'].get";
     private static final String SALES_BATCH = "$.paths['/jiltsa/api/v1/sales/batch'].post";
     private static final String LOGIN = "$.paths['/jiltsa/api/v1/auth/authenticate'].post";
+    private static final String VERSION = "$.paths['/jiltsa/api/v1/version'].get";
+    private static final String SEMVER = "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$";
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,8 +42,19 @@ class ApiDocsTest {
     void docsAndUiArePublic() throws Exception {
         mockMvc.perform(get(DOCS)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.info.title").value("Jiltsa API"))
-                .andExpect(jsonPath("$.info.version").value("2.0.0"));
+                // The version Gradle wrote to build-info.properties, i.e. the one in gradle.properties
+                .andExpect(jsonPath("$.info.version", matchesPattern(SEMVER)));
         mockMvc.perform(get("/swagger-ui/index.html")).andExpect(status().isOk());
+    }
+
+    @Test
+    void versionEndpointIsPublicAndDocumentedAsSuch() throws Exception {
+        mockMvc.perform(get(DOCS))
+                .andExpect(jsonPath(VERSION + ".tags[0]").value("common"))
+                .andExpect(jsonPath(VERSION + ".security.length()").value(0))
+                .andExpect(jsonPath(VERSION + ".responses.401").doesNotExist())
+                .andExpect(jsonPath(VERSION + ".responses.200.content['application/json'].schema.$ref")
+                        .value("#/components/schemas/VersionDto"));
     }
 
     @Test

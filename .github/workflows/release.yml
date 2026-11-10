@@ -1,0 +1,56 @@
+# Cut a release by pushing a tag vMAJOR.MINOR.PATCH (see VERSIONING.md).
+# Refuses to release when the tag, gradle.properties and CHANGELOG.md disagree.
+name: Release
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check that the tag matches gradle.properties and CHANGELOG.md
+        run: |
+          VERSION=$(sed -n 's/^version=//p' gradle.properties)
+          TAG=${GITHUB_REF_NAME#v}
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "::error::tag v$TAG does not match version=$VERSION in gradle.properties" >&2
+            exit 1
+          fi
+          if ! grep -q "^## \[$VERSION\]" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md has no '## [$VERSION]' section" >&2
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # Tests need Docker (Testcontainers MySQL); ubuntu-latest provides it.
+      - name: Build and test
+        run: ./gradlew build --no-daemon
+
+      - name: Extract this version's changelog section
+        run: |
+          awk -v header="## [$VERSION]" '
+            index($0, "## ") == 1 { printing = (index($0, header) == 1) }
+            printing' CHANGELOG.md > release-notes.md
+          cat release-notes.md
+
+      - name: Publish the GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ env.VERSION }}
+          body_path: release-notes.md
+          prerelease: ${{ contains(env.VERSION, '-') }}
+          files: build/libs/*.jar
