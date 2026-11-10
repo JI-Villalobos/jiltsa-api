@@ -5,7 +5,10 @@ plugins {
 }
 
 group = 'com.jiltsa'
-version = '2.0.0'
+// version comes from gradle.properties (see VERSIONING.md); fail fast if it is not MAJOR.MINOR.PATCH[-pre][+build]
+if (!(version.toString() ==~ /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$/)) {
+	throw new GradleException("version '${version}' in gradle.properties is not a semantic version (MAJOR.MINOR.PATCH)")
+}
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)

@@ -3,7 +3,7 @@ FROM gradle:8.14-jdk21 AS build
 WORKDIR /home/gradle/src
 
 # Resolve dependencies in their own layer so source changes don't re-download them
-COPY --chown=gradle:gradle build.gradle settings.gradle ./
+COPY --chown=gradle:gradle build.gradle settings.gradle gradle.properties ./
 RUN gradle dependencies --no-daemon -q > /dev/null || true
 
 COPY --chown=gradle:gradle src ./src
