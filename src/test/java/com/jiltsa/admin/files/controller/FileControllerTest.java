@@ -1,5 +1,6 @@
 package com.jiltsa.admin.files.controller;
 
+import com.jiltsa.admin.files.domain.FileDocumentType;
 import com.jiltsa.admin.files.domain.FileOwnerType;
 import com.jiltsa.admin.files.domain.FileStatus;
 import com.jiltsa.admin.files.persistence.entity.StoredFile;
@@ -8,6 +9,10 @@ import com.jiltsa.admin.promotions.persistence.entity.Promotion;
 import com.jiltsa.admin.promotions.persistence.entity.PromotionItem;
 import com.jiltsa.admin.promotions.persistence.repository.PromotionItemRepository;
 import com.jiltsa.admin.promotions.persistence.repository.PromotionRepository;
+import com.jiltsa.admin.seller.persistence.entity.Seller;
+import com.jiltsa.admin.seller.persistence.entity.SellerProfile;
+import com.jiltsa.admin.seller.persistence.repository.SellerProfileRepository;
+import com.jiltsa.admin.seller.persistence.repository.SellerRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +60,8 @@ class FileControllerTest {
     @Autowired private StoredFileRepository repository;
     @Autowired private PromotionRepository promotionRepository;
     @Autowired private PromotionItemRepository itemRepository;
+    @Autowired private SellerRepository sellerRepository;
+    @Autowired private SellerProfileRepository sellerProfileRepository;
     @MockitoBean private S3Client s3Client;
 
     private PromotionItem item(String name) {
@@ -69,7 +76,7 @@ class FileControllerTest {
 
     private StoredFile uploaded(PromotionItem item, String fileName) {
         StoredFile file = new StoredFile("promotion-items/" + item.getId() + "/" + fileName, BUCKET, fileName, "image/png", 10L,
-                FileOwnerType.PROMOTION_ITEM, item.getId(), "tester");
+                FileOwnerType.PROMOTION_ITEM, item.getId(), null, "tester");
         file.setStatus(FileStatus.UPLOADED);
         file.setUploadedAt(LocalDateTime.now());
         return repository.save(file);
@@ -139,7 +146,7 @@ class FileControllerTest {
     void confirmsAnUploadOnlyWhenTheObjectIsInTheBucket() throws Exception {
         PromotionItem item = item("CONFIRMAR");
         StoredFile file = repository.save(new StoredFile("promotion-items/" + item.getId() + "/pending.png", BUCKET, "pending.png",
-                "image/png", 500L, FileOwnerType.PROMOTION_ITEM, item.getId(), "tester"));
+                "image/png", 500L, FileOwnerType.PROMOTION_ITEM, item.getId(), null, "tester"));
 
         when(s3Client.headObject(any(HeadObjectRequest.class))).thenThrow(NoSuchKeyException.builder().build());
         mockMvc.perform(post(URL + "/" + file.getId() + "/confirm"))
@@ -195,6 +202,51 @@ class FileControllerTest {
                 .andExpect(jsonPath("$.items[0].files.length()").value(2));
         mockMvc.perform(get(URL + "/by-promotion/999999")).andExpect(status().isNotFound());
         mockMvc.perform(get(URL + "/by-owner/UNKNOWN/1")).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void sellerProfileDocumentsCarryTheirDocumentType() throws Exception {
+        Seller seller = sellerRepository.save(new Seller("Vendedora Documentos", 1, true));
+        SellerProfile profile = new SellerProfile();
+        profile.setSellerId(seller.getId());
+        profile.setFullName("Vendedora Documentos");
+        profile.setBirthDate(LocalDate.of(1990, 1, 1));
+        profile.setPhone("8711234567");
+        profile.setEmergencyContactName("Contacto");
+        profile.setEmergencyContactPhone("8717654321");
+        profile.setHireDate(LocalDate.of(2024, 1, 1));
+        profile.setPosition("Vendedora");
+        profile.setSalary(8000.0);
+        profile.setPrivacyNoticeAccepted(true);
+        profile.setPrivacyNoticeAcceptedAt(LocalDateTime.now());
+        profile.setRegisteredBy("tester");
+        profile.setCreatedAt(LocalDateTime.now());
+        profile.setUpdatedAt(LocalDateTime.now());
+        profile = sellerProfileRepository.save(profile);
+        String base = "{\"fileName\":\"ine.jpg\",\"contentType\":\"image/jpeg\",\"sizeBytes\":100,\"ownerType\":\"SELLER_PROFILE\",\"ownerId\":" + profile.getId();
+
+        mockMvc.perform(post(URL + "/upload-url").contentType(MediaType.APPLICATION_JSON).content(base + "}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.detail", containsString("documentType is required")));
+        mockMvc.perform(post(URL + "/upload-url").contentType(MediaType.APPLICATION_JSON).content(base + ",\"documentType\":\"INE_FRONT\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.objectKey", startsWith("seller-profiles/" + profile.getId() + "/")));
+        mockMvc.perform(post(URL + "/upload-url").contentType(MediaType.APPLICATION_JSON)
+                        .content(base.replace("\"ownerId\":" + profile.getId(), "\"ownerId\":999999") + ",\"documentType\":\"INE_FRONT\"}"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("SellerProfile not found: 999999"));
+
+        StoredFile proof = new StoredFile("seller-profiles/" + profile.getId() + "/proof.pdf", BUCKET, "proof.pdf", "application/pdf", 10L,
+                FileOwnerType.SELLER_PROFILE, (long) profile.getId(), FileDocumentType.ADDRESS_PROOF, "tester");
+        proof.setStatus(FileStatus.UPLOADED);
+        proof.setUploadedAt(LocalDateTime.now());
+        repository.save(proof);
+        mockMvc.perform(get(URL + "/by-owner/SELLER_PROFILE/" + profile.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].documentType").value("ADDRESS_PROOF"))
+                .andExpect(jsonPath("$[0].downloadUrl", containsString("X-Amz-Signature=")));
     }
 
     @Test

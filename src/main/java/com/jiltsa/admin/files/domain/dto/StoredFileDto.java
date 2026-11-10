@@ -1,5 +1,6 @@
 package com.jiltsa.admin.files.domain.dto;
 
+import com.jiltsa.admin.files.domain.FileDocumentType;
 import com.jiltsa.admin.files.domain.FileOwnerType;
 import com.jiltsa.admin.files.domain.FileStatus;
 
@@ -15,6 +16,7 @@ public record StoredFileDto(
         FileStatus status,
         FileOwnerType ownerType,
         Long ownerId,
+        FileDocumentType documentType,
         String uploadedBy,
         LocalDateTime createdAt,
         LocalDateTime uploadedAt,

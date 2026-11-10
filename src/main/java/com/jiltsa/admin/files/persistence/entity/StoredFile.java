@@ -1,5 +1,6 @@
 package com.jiltsa.admin.files.persistence.entity;
 
+import com.jiltsa.admin.files.domain.FileDocumentType;
 import com.jiltsa.admin.files.domain.FileOwnerType;
 import com.jiltsa.admin.files.domain.FileStatus;
 import jakarta.persistence.*;
@@ -57,6 +58,10 @@ public class StoredFile {
     @NotNull
     private Long ownerId;
 
+    @Column(name = "document_type")
+    @Enumerated(EnumType.STRING)
+    private FileDocumentType documentType;
+
     @Column(name = "uploaded_by")
     @NotNull
     private String uploadedBy;
@@ -69,7 +74,7 @@ public class StoredFile {
     private LocalDateTime uploadedAt;
 
     public StoredFile(String objectKey, String bucket, String fileName, String contentType, Long sizeBytes,
-                      FileOwnerType ownerType, Long ownerId, String uploadedBy) {
+                      FileOwnerType ownerType, Long ownerId, FileDocumentType documentType, String uploadedBy) {
         this.objectKey = objectKey;
         this.bucket = bucket;
         this.fileName = fileName;
@@ -78,6 +83,7 @@ public class StoredFile {
         this.status = FileStatus.PENDING;
         this.ownerType = ownerType;
         this.ownerId = ownerId;
+        this.documentType = documentType;
         this.uploadedBy = uploadedBy;
         this.createdAt = LocalDateTime.now();
     }

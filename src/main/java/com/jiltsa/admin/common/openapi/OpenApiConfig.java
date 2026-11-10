@@ -83,7 +83,7 @@ public class OpenApiConfig {
                         tag("promotions", "Promotions of medicine close to expiring, their items, and the loss recorded when they close"),
                         tag("sales", "POS sale and product uploads, and sales reports"),
                         tag("security", "Login and user registration"),
-                        tag("seller", "Sellers working at each branch")))
+                        tag("seller", "Sellers working at each branch and their employee profiles")))
                 .addSecurityItem(new SecurityRequirement().addList(BEARER));
     }
 

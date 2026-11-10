@@ -5,6 +5,20 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
+## [Unreleased]
+
+### Added
+- Seller profiles (migration V11): the "Información de Empleados" form behind each seller.
+  `POST /seller-profiles` is how the seller sends her own form (any account, for a seller of its
+  branch) and how an admin registers employees who answered the previous form; the privacy notice
+  must be accepted, and who sent it and when is recorded. Reading (by id, by seller, by branch)
+  and updating are ADMIN only. RFC and CURP are optional and validated; the emergency contact is
+  split into name and phone.
+- Files gain an optional `documentType` (`INE_FRONT`, `INE_BACK`, `ADDRESS_PROOF`) and the owner
+  type `SELLER_PROFILE`, which requires it: the INE pictures and the address proof of a profile
+  go through `POST /files/upload-url` like any other file and are listed by
+  `GET /files/by-owner/SELLER_PROFILE/{profileId}`.
+
 ## [2.3.0] - 2026-11-10
 ### Added
 - Files in S3 through presigned URLs (migration V10, `files` module): `POST /files/upload-url`
@@ -77,7 +91,8 @@ Spring Boot 3.5 rewrite of the 1.x API (#2). Clients of 1.x must re-check every 
 
 The 1.x line (branches `jiltsa-1.1.0` … `jiltsa-1.7.0`) was never tagged. Its history is only in git.
 
-[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/JI-Villalobos/jiltsa-api/releases/tag/v2.0.0
