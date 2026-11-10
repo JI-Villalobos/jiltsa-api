@@ -5,7 +5,7 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
-## [Unreleased]
+## [2.2.0] - 2026-11-10
 
 ### Added
 - Promotions of medicine close to expiring (migration V9): `/promotions` (create, get with items,
