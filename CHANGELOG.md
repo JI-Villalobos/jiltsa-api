@@ -5,7 +5,7 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
-## [Unreleased]
+## [2.1.0] - 2026-11-10
 
 ### Added
 - `GET /jiltsa/api/v1/version`: public endpoint reporting the running version and build time.
