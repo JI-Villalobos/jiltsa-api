@@ -5,8 +5,7 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
-## [Unreleased]
-
+## [2.3.0] - 2026-11-10
 ### Added
 - Files in S3 through presigned URLs (migration V10, `files` module): `POST /files/upload-url`
   records the file for its owner entity and returns a presigned PUT; `POST /files/{id}/confirm`
