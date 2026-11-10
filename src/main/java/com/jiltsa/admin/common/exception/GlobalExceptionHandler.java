@@ -26,6 +26,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problem(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(InvalidRequestException.class)
+    ProblemDetail handleInvalidRequest(InvalidRequestException ex) {
+        return problem(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(ConflictException.class)
     ProblemDetail handleConflict(ConflictException ex) {
         return problem(HttpStatus.CONFLICT, ex.getMessage());
