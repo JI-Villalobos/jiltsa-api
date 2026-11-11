@@ -27,6 +27,8 @@ public class Seller {
     @NotNull
     @Column(name = "is_active")
     private Boolean isActive;
+    @Column(name = "user_turn")
+    private String userTurn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", insertable = false, updatable = false)

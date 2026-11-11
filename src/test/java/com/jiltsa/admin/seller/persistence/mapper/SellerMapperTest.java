@@ -17,7 +17,7 @@ class SellerMapperTest {
         //given
         SellerMapper mapper = Mappers.getMapper(SellerMapper.class);
         Branch branch = new Branch();
-        Seller seller = new Seller(1, "Diana Path", 1, true, branch);
+        Seller seller = new Seller(1, "Diana Path", 1, true, "MATUTINO", branch);
 
         //when
         SellerDto sellerDto = mapper.toSellerDto(seller);
@@ -25,13 +25,14 @@ class SellerMapperTest {
         //then
         assertThat(sellerDto).isNotNull();
         assertThat(sellerDto.getIsActive()).isTrue();
+        assertThat(sellerDto.getUserTurn()).isEqualTo("MATUTINO");
     }
 
     @Test
     void shouldMapToSeller() {
         //given
         SellerMapper mapper = Mappers.getMapper(SellerMapper.class);
-        SellerDto sellerDto = new SellerDto(1, "Diana Path", 1, true);
+        SellerDto sellerDto = new SellerDto(1, "Diana Path", 1, true, "VESPERTINO");
 
         //when
         Seller seller = mapper.toSeller(sellerDto);
@@ -42,5 +43,15 @@ class SellerMapperTest {
         assertThat(seller.getFullName()).isEqualTo("Diana Path");
         assertThat(seller.getBranchId()).isEqualTo(1);
         assertThat(seller.getIsActive()).isTrue();
+        assertThat(seller.getUserTurn()).isEqualTo("VESPERTINO");
+    }
+
+    @Test
+    void userTurnIsOptional() {
+        SellerMapper mapper = Mappers.getMapper(SellerMapper.class);
+
+        Seller seller = mapper.toSeller(new SellerDto(1, "Diana Path", 1, true, null));
+
+        assertThat(seller.getUserTurn()).isNull();
     }
 }

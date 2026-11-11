@@ -2,6 +2,7 @@ package com.jiltsa.admin.seller.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,6 @@ public class SellerDto {
     private Integer branchId;
     @NotNull
     private Boolean isActive;
+    @Size(max = 255)
+    private String userTurn;
 }
