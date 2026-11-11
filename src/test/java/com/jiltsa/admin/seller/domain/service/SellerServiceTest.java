@@ -46,13 +46,14 @@ class SellerServiceTest {
     void createSellerMapsTheDtoOntoTheEntity() {
         when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        serviceUnderTest.createSeller(new SellerDto(null, "Diana Path", 3, true));
+        serviceUnderTest.createSeller(new SellerDto(null, "Diana Path", 3, true, "MATUTINO"));
 
         ArgumentCaptor<Seller> saved = ArgumentCaptor.forClass(Seller.class);
         verify(repository).save(saved.capture());
         assertThat(saved.getValue().getFullName()).isEqualTo("Diana Path");
         assertThat(saved.getValue().getBranchId()).isEqualTo(3);
         assertThat(saved.getValue().getIsActive()).isTrue();
+        assertThat(saved.getValue().getUserTurn()).isEqualTo("MATUTINO");
     }
 
     @Test

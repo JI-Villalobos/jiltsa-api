@@ -8,6 +8,13 @@ what counts as a breaking change in this API and how a release is cut.
 ## [Unreleased]
 
 ### Added
+- Sellers gain an optional `userTurn` (migration V12, column `seller.user_turn`): the shift the
+  seller works. Accepted on `POST /sellers` and returned by every seller response; omitted or
+  null when not set, up to 255 characters.
+
+## [2.4.0] - 2026-11-10
+
+### Added
 - Seller profiles (migration V11): the "Información de Empleados" form behind each seller.
   `POST /seller-profiles` is how the seller sends her own form (any account, for a seller of its
   branch) and how an admin registers employees who answered the previous form; the privacy notice
@@ -91,7 +98,8 @@ Spring Boot 3.5 rewrite of the 1.x API (#2). Clients of 1.x must re-check every 
 
 The 1.x line (branches `jiltsa-1.1.0` … `jiltsa-1.7.0`) was never tagged. Its history is only in git.
 
-[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.0.0...v2.1.0
