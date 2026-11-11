@@ -5,7 +5,7 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
-## [Unreleased]
+## [2.4.0] - 2026-11-10
 
 ### Added
 - Seller profiles (migration V11): the "Información de Empleados" form behind each seller.
