@@ -3,6 +3,7 @@ package com.jiltsa.admin.files.domain.service;
 import com.jiltsa.admin.common.exception.ConflictException;
 import com.jiltsa.admin.common.exception.InvalidRequestException;
 import com.jiltsa.admin.common.exception.ResourceNotFoundException;
+import com.jiltsa.admin.files.domain.FileDocumentType;
 import com.jiltsa.admin.files.domain.FileOwnerType;
 import com.jiltsa.admin.files.domain.FileStatus;
 import com.jiltsa.admin.files.domain.dto.*;
@@ -15,6 +16,7 @@ import com.jiltsa.admin.promotions.domain.dto.PromotionDto;
 import com.jiltsa.admin.promotions.domain.dto.PromotionItemDto;
 import com.jiltsa.admin.promotions.domain.service.PromotionItemService;
 import com.jiltsa.admin.promotions.domain.service.PromotionService;
+import com.jiltsa.admin.seller.domain.service.SellerProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,6 +50,7 @@ public class StoredFileService {
     private final StorageProperties properties;
     private final PromotionItemService promotionItemService;
     private final PromotionService promotionService;
+    private final SellerProfileService sellerProfileService;
 
     @Transactional
     public UploadUrlDto requestUpload(UploadRequestDto request) {
@@ -59,10 +63,14 @@ public class StoredFileService {
                     + properties.maxFileSize().toBytes() + " bytes");
         }
         requireOwner(request.ownerType(), request.ownerId());
+        if (request.ownerType() == FileOwnerType.SELLER_PROFILE && request.documentType() == null) {
+            throw new InvalidRequestException("documentType is required for SELLER_PROFILE files: "
+                    + Arrays.toString(FileDocumentType.values()));
+        }
 
         String key = objectKey(request);
         StoredFile file = repository.save(new StoredFile(key, storage.bucket(), request.fileName(),
-                request.contentType(), request.sizeBytes(), request.ownerType(), request.ownerId(), currentUser()));
+                request.contentType(), request.sizeBytes(), request.ownerType(), request.ownerId(), request.documentType(), currentUser()));
         S3Storage.PresignedUrl upload = storage.presignUpload(key, request.contentType(), request.sizeBytes());
         return new UploadUrlDto(file.getId(), key, "PUT", upload.url(),
                 Map.of("Content-Type", request.contentType(), "Content-Length", String.valueOf(request.sizeBytes())),
@@ -144,6 +152,8 @@ public class StoredFileService {
         switch (ownerType) {
             case PROMOTION_ITEM -> promotionItemService.getItem(ownerId)
                     .orElseThrow(() -> new ResourceNotFoundException("PromotionItem", ownerId));
+            case SELLER_PROFILE -> sellerProfileService.getProfile(Math.toIntExact(ownerId))
+                    .orElseThrow(() -> new ResourceNotFoundException("SellerProfile", ownerId));
         }
     }
 
