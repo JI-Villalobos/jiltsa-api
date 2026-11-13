@@ -211,10 +211,22 @@ class SellerProfileControllerTest {
     }
 
     @Test
+    void aSellerReadsHerOwnProfileBySeller() throws Exception {
+        Seller seller = seller("Carla Consulta", 2);
+        String body = mockMvc.perform(post(URL).with(userOfBranch("carla@jiltsa.com", 2)).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(seller.getId(), "Carla Consulta Ruiz", null, null, 1)))
+                .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
+
+        mockMvc.perform(get(URL + "/by-seller/" + seller.getId()).with(userOfBranch("carla@jiltsa.com", 2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(idOf(body)))
+                .andExpect(jsonPath("$.fullName").value("Carla Consulta Ruiz"));
+    }
+
+    @Test
     @WithMockUser(authorities = "USER")
-    void readingAndEditingProfilesIsAdminOnly() throws Exception {
+    void listingAndEditingProfilesIsAdminOnly() throws Exception {
         mockMvc.perform(get(URL + "/by-branch/1")).andExpect(status().isForbidden());
-        mockMvc.perform(get(URL + "/by-seller/1")).andExpect(status().isForbidden());
         mockMvc.perform(get(URL + "/1")).andExpect(status().isForbidden());
         mockMvc.perform(put(URL + "/1").contentType(MediaType.APPLICATION_JSON).content(json(1, "X", null, null, 1)))
                 .andExpect(status().isForbidden());

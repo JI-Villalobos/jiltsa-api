@@ -17,7 +17,9 @@ import java.util.List;
 
 /**
  * Sending the form is open to every account (the seller fills her own in, for a seller of her
- * branch); reading and editing the profiles, which carry salary and identity data, is ADMIN only.
+ * branch), and so is reading one seller's profile, so the seller can check her own and ask an
+ * admin for corrections. Listing profiles and editing them, which carry salary and identity
+ * data, is ADMIN only.
  */
 @RestController
 @RequestMapping("jiltsa/api/v1/seller-profiles")
@@ -35,10 +37,10 @@ public class SellerProfileController {
                 .orElseThrow(() -> new ResourceNotFoundException("SellerProfile", profileId));
     }
 
-    @Operation(summary = "Get the profile of a seller")
+    @Operation(summary = "Get the profile of a seller",
+            description = "Open to every account: the seller checks her own profile and asks an admin for any correction.")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     @ApiResponse(responseCode = "404", description = "The seller has no profile")
-    @AdminOnly
     @GetMapping("/by-seller/{sellerId}")
     public SellerProfileDto getProfileBySeller(@Parameter(description = "Seller id") @PathVariable("sellerId") Integer sellerId) {
         return service.getProfileBySeller(sellerId)
