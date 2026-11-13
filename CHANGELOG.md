@@ -11,6 +11,8 @@ what counts as a breaking change in this API and how a release is cut.
 - Sellers gain an optional `userTurn` (migration V12, column `seller.user_turn`): the shift the
   seller works. Accepted on `POST /sellers` and returned by every seller response; omitted or
   null when not set, up to 255 characters.
+- `PUT /sellers/{sellerId}` (ADMIN) updates a seller: `fullName`, `branchId`, `isActive` and
+  `userTurn` are all replaced by the body; 404 when there is no seller with that id.
 
 ## [2.4.0] - 2026-11-10
 

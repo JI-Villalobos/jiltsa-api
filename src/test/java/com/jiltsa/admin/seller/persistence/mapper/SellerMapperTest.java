@@ -54,4 +54,20 @@ class SellerMapperTest {
 
         assertThat(seller.getUserTurn()).isNull();
     }
+
+    @Test
+    void updateFromDtoKeepsIdAndBranchAssociation() {
+        SellerMapper mapper = Mappers.getMapper(SellerMapper.class);
+        Branch branch = new Branch();
+        Seller seller = new Seller(1, "Diana Path", 1, true, "MATUTINO", branch);
+
+        mapper.updateFromDto(new SellerDto(99, "Diana Path López", 2, false, null), seller);
+
+        assertThat(seller.getId()).isEqualTo(1);
+        assertThat(seller.getBranch()).isSameAs(branch);
+        assertThat(seller.getFullName()).isEqualTo("Diana Path López");
+        assertThat(seller.getBranchId()).isEqualTo(2);
+        assertThat(seller.getIsActive()).isFalse();
+        assertThat(seller.getUserTurn()).isNull();
+    }
 }

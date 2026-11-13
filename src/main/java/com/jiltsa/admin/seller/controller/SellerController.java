@@ -37,6 +37,17 @@ public class SellerController {
         return service.createSeller(sellerDto);
     }
 
+    @Operation(summary = "Update a seller", description = "Name, branch, active flag and turn.")
+    @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
+    @ApiResponse(responseCode = "404", description = "No seller with that id")
+    @AdminOnly
+    @PutMapping("/{sellerId}")
+    public SellerDto updateSeller(
+            @Parameter(description = "Seller id") @PathVariable("sellerId") Integer id,
+            @Valid @RequestBody SellerDto sellerDto){
+        return service.updateSeller(id, sellerDto);
+    }
+
     @Operation(summary = "Disable a seller")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     @ApiResponse(responseCode = "404", description = "No seller with that id")
