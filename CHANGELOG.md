@@ -5,14 +5,18 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
+## [2.6.0] - 2026-11-13
+
+### Added
+- `PUT /sellers/{sellerId}` (ADMIN) updates a seller: `fullName`, `branchId`, `isActive` and
+  `userTurn` are all replaced by the body; 404 when there is no seller with that id.
+
 ## [2.5.0] - 2026-11-11
 
 ### Added
 - Sellers gain an optional `userTurn` (migration V12, column `seller.user_turn`): the shift the
   seller works. Accepted on `POST /sellers` and returned by every seller response; omitted or
   null when not set, up to 255 characters.
-- `PUT /sellers/{sellerId}` (ADMIN) updates a seller: `fullName`, `branchId`, `isActive` and
-  `userTurn` are all replaced by the body; 404 when there is no seller with that id.
 
 ## [2.4.0] - 2026-11-10
 
@@ -100,7 +104,9 @@ Spring Boot 3.5 rewrite of the 1.x API (#2). Clients of 1.x must re-check every 
 
 The 1.x line (branches `jiltsa-1.1.0` … `jiltsa-1.7.0`) was never tagged. Its history is only in git.
 
-[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.6.0...HEAD
+[2.6.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.5.0...v2.6.0
+[2.5.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.1.0...v2.2.0
