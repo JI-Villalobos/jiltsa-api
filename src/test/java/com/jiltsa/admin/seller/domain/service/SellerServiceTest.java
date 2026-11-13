@@ -57,6 +57,32 @@ class SellerServiceTest {
     }
 
     @Test
+    void updateSellerCopiesEveryFieldOntoTheEntity() {
+        Seller seller = new Seller(7, "Diana Path", 1, true, "MATUTINO", null);
+        when(repository.findById(7)).thenReturn(Optional.of(seller));
+        when(repository.saveAndFlush(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        SellerDto updated = serviceUnderTest.updateSeller(7, new SellerDto(null, "Diana Path López", 3, false, "VESPERTINO"));
+
+        assertThat(seller.getId()).isEqualTo(7);
+        assertThat(seller.getFullName()).isEqualTo("Diana Path López");
+        assertThat(seller.getBranchId()).isEqualTo(3);
+        assertThat(seller.getIsActive()).isFalse();
+        assertThat(seller.getUserTurn()).isEqualTo("VESPERTINO");
+        assertThat(updated.getId()).isEqualTo(7);
+        assertThat(updated.getUserTurn()).isEqualTo("VESPERTINO");
+    }
+
+    @Test
+    void updateUnknownSellerIsNotFound() {
+        when(repository.findById(99)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> serviceUnderTest.updateSeller(99, new SellerDto(null, "Diana Path", 1, true, null)))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Seller not found: 99");
+    }
+
+    @Test
     void disableSellerFlagsTheEntityInactive() {
         Seller seller = new Seller("Diana Path", 1, true);
         when(repository.findById(1)).thenReturn(Optional.of(seller));

@@ -33,6 +33,15 @@ public class SellerService {
         return mapper.toSellerDto(repository.save(seller));
     }
 
+    /** Every field may change: name, branch, active flag and turn. */
+    @Transactional
+    public SellerDto updateSeller(Integer sellerId, SellerDto sellerDto) {
+        Seller seller = repository.findById(sellerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Seller", sellerId));
+        mapper.updateFromDto(sellerDto, seller);
+        return mapper.toSellerDto(repository.saveAndFlush(seller));
+    }
+
     @Transactional
     public SellerDto disableSeller(Integer sellerId) {
         return mapper.toSellerDto(repository.findById(sellerId).map(seller -> {
