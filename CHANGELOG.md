@@ -5,7 +5,7 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
-## [Unreleased]
+## [2.7.0] - 2026-11-13
 
 ### Changed
 - `GET /seller-profiles/by-seller/{sellerId}` is no longer ADMIN only: any account may read one
@@ -111,7 +111,8 @@ Spring Boot 3.5 rewrite of the 1.x API (#2). Clients of 1.x must re-check every 
 
 The 1.x line (branches `jiltsa-1.1.0` … `jiltsa-1.7.0`) was never tagged. Its history is only in git.
 
-[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.6.0...v2.7.0
 [2.6.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/JI-Villalobos/jiltsa-api/compare/v2.3.0...v2.4.0
