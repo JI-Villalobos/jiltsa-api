@@ -5,6 +5,13 @@ All notable changes to the Jiltsa API are recorded here. The format follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html); see VERSIONING.md for
 what counts as a breaking change in this API and how a release is cut.
 
+## [Unreleased]
+
+### Changed
+- `GET /seller-profiles/by-seller/{sellerId}` is no longer ADMIN only: any account may read one
+  seller's profile, so the seller can check her own and ask an admin for corrections. Listing by
+  branch, reading by profile id and updating stay ADMIN only.
+
 ## [2.6.0] - 2026-11-13
 
 ### Added
